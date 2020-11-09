@@ -16,98 +16,14 @@
 #include "ShaderManager.hpp"
 #include "Camera.hpp"
 #include "Utils.hpp"
-
-struct Position
-{
-	static constexpr GLint kValueCount = 3;
-
-	float x;
-	float y;
-	float z;
-};
-
-struct Color
-{
-	static constexpr GLint kValueCount = 4;
-
-	float r;
-	float g;
-	float b;
-	float a;
-};
-
-struct MyVertex
-{
-	Position pos;
-	Color col;
-};
+#include "Vertex.hpp"
+#include "Cube.hpp"
 
 int main()
 {
 	AppWindow window;
 
-	MyVertex vertices[8]{
-		// Position					Color
-		{{-0.5f, -0.5f, -0.5f},   {1, 0, 0, 1}},
-		{{0.5f,  -0.5f, -0.5f},   {0, 1, 0, 1}},
-		{{ 0.5f,  0.5f, -0.5f},   {0, 0, 1, 1}},
-		{{ -0.5f, 0.5f, -0.5f},   {0, 0, 0, 1}},
-
-		{{-0.5f, -0.5f, 0.5f},    {1, 1, 0, 1}},
-		{{0.5f,  -0.5f, 0.5f},    {0, 1, 1, 1}},
-		{{ 0.5f,  0.5f, 0.5f},    {1, 0, 1, 1}},
-		{{ -0.5f, 0.5f, 0.5f},    {1, 1, 1, 1}},
-
-	};
-	unsigned int indices[]{
-		// BOTTOM
-		0, 1, 2,
-		0, 2, 3,
-
-		// FRONT
-		0, 7, 3,
-		0, 4, 7,
-
-		// LEFT
-		0, 1, 5,
-		0, 5, 4,
-
-		// BACK
-		1, 2, 6,
-		1, 6, 5,
-
-		// RIGHT
-		2, 3, 7,
-		2, 7, 6,
-
-		// UP
-		4, 5, 6,
-		4, 6, 7,
-	};
-
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-	glVertexAttribPointer(0,
-		Position::kValueCount,
-		GL_FLOAT,
-		GL_FALSE,
-		sizeof(MyVertex),
-		(void*)offsetof(MyVertex, pos));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1,
-		Color::kValueCount,
-		GL_FLOAT,
-		GL_FALSE,
-		sizeof(MyVertex),
-		(void*)offsetof(MyVertex, col));
-	glEnableVertexAttribArray(1);
+	Cube cube(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 
 	ShaderManager sm;
 
@@ -150,12 +66,12 @@ int main()
 
 		// Mouse
 		auto mouseMove = window.getMouseMovemement();
-		//cam.rotateEuler(glm::vec3(mouseMove.y* rotSpeed, mouseMove.x* rotSpeed, 0));
 		cam.applyMouseMovement(mouseMove.x * rotSpeed, mouseMove.y * rotSpeed);
 
 		glm::mat4 model = glm::mat4(1);
 		sm.uploadUniformMat4("model", model);
 		sm.uploadUniformMat4("viewProj", cam.getViewProjMatrix());
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(*indices), GL_UNSIGNED_INT, indices);
+
+		cube.draw();
 	}
 }

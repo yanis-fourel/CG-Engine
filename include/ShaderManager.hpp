@@ -19,7 +19,8 @@ public:
     ~ShaderManager();
     void addShader(GLenum type, const std::string &path);
     void validate();
-
+    
+    void use();
     void uploadUniformMat4(const std::string &name, const glm::mat4 &mat);
 private:
     static const char *kShaderDir;

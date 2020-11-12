@@ -20,10 +20,18 @@ public:
 
     bool isKeyDown(int key);
     glm::vec2 getMouseMovemement();
+
+    void setMouseCapture(bool enabled) { m_captureMouse = enabled; }
+    void toggleMouseCapture() { m_captureMouse = !m_captureMouse; }
 private:
+    void onFrameBegin();
+    void onFrameEnd();
+
     void processInputs();
 
 private:
+    bool m_captureMouse = true;
+
     GLFWwindow *m_window;
     bool m_firstFrame = true;
 

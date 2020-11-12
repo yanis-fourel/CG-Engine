@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <imgui.h>
 
 #include "AppWindow.hpp"
 #include "ShaderManager.hpp"
@@ -45,6 +46,17 @@ int main()
 	auto rotSpeed = 0.001f;
 
 	while (window.run()) {
+		ImGui::ShowDemoWindow();
+
+		if (ImGui::Begin("First window")) {
+			ImGui::Text("Do you like it ?");
+
+			ImGui::Button("Yes");
+			ImGui::Button("No");
+		}
+		ImGui::End();
+
+
 		//
 // INPUTS
 //
@@ -63,6 +75,8 @@ int main()
 		if (window.isKeyDown(GLFW_KEY_E))
 			cam.moveRelative(glm::vec3{ 0, 1, 0 }*camSpeed);
 
+		if (window.isKeyDown(GLFW_KEY_F1))
+			window.toggleMouseCapture();
 
 		// Mouse
 		auto mouseMove = window.getMouseMovemement();
@@ -72,6 +86,7 @@ int main()
 		sm.uploadUniformMat4("model", model);
 		sm.uploadUniformMat4("viewProj", cam.getViewProjMatrix());
 
+		sm.use();
 		cube.draw();
 	}
 }

@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include;$(SolutionDir)vendor\imgui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -104,7 +104,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include;$(SolutionDir)vendor\imgui\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -122,7 +122,7 @@
       <AdditionalLibraryDirectories>C:\Graphics\Tools\glew\lib\x64;C:\Graphics\Tools\glfw\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include;$(SolutionDir)vendor\imgui\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +131,7 @@
       <AdditionalLibraryDirectories>C:\Graphics\Tools\glew\lib\x64;C:\Graphics\Tools\glfw\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;C:\Graphics\Tools\glfw\include;C:\Graphics\Tools\glm;C:\Graphics\Tools\glew\include;$(SolutionDir)vendor\imgui\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -141,6 +141,12 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\imgui\src\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AppWindow.hpp" />

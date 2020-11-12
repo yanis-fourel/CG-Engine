@@ -65,6 +65,11 @@ void ShaderManager::validate()
     glUseProgram(_program);
 }
 
+void ShaderManager::use()
+{
+    glUseProgram(_program);
+}
+
 void ShaderManager::uploadUniformMat4(const std::string& name, const glm::mat4& mat)
 {
     auto position = glGetUniformLocation(_program, name.c_str());

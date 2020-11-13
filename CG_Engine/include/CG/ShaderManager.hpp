@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2019
-** Project
-** File description:
-** ShaderManager.hpp
-*/
-
 #pragma once
 
 #include <vector>
@@ -13,6 +6,8 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+
+namespace CG {
 
 class ShaderManager
 {
@@ -30,3 +25,5 @@ private:
     std::vector<GLuint> _shaders;
     GLuint _program = -1;
 };
+
+}

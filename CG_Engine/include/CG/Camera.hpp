@@ -2,6 +2,7 @@
 
 #include <glm/mat4x4.hpp>
 
+namespace CG {
 class Camera
 {
 public:
@@ -17,22 +18,21 @@ public:
 	void setAspectRatio(float aspect);
 	void setRenderDistance(float distance);
 
-	void rotateEuler(const glm::vec3 &euler);
-
-	auto getViewProjMatrix() -> glm::mat4x4;
-	auto getPosition() -> const glm::vec3 & { return m_pos; }
+	auto getViewProjMatrix()->glm::mat4x4;
+	auto getPosition() -> const glm::vec3& { return m_pos; }
 
 	void applyMouseMovement(float deltaYaw, float deltaPitch);
 
 private:
-	auto getViewMatrix() -> glm::mat4x4;
+	auto getViewMatrix()->glm::mat4x4;
 
 private:
-	glm::vec3 m_pos = {0, 0, 0};
-	glm::vec3 m_facing = {0, 0, -1};
-	glm::vec3 m_up = {0, 1, 0};
+	glm::vec3 m_pos = { 0, 0, 0 };
+	glm::vec3 m_facing = { 0, 0, -1 };
+	glm::vec3 m_up = { 0, 1, 0 };
 
 	float m_fov = 45; // Degree
 	float m_aspectRatio = 16 / 9; // Horizontal
 	float m_renderDistance = 1;
 };
+}

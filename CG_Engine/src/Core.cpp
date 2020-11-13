@@ -1,6 +1,6 @@
 #include "CG/Core.hpp"
 #include "CG/Camera.hpp"
-#include "CG/AppWindow.hpp"
+#include "CG/Window.hpp"
 #include "CG/ShaderManager.hpp"
 
 #include "CG/internal/Shaders.hpp"
@@ -10,7 +10,7 @@ CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 
 int CG::Core::run()
 {
-	AppWindow window;
+	Window window;
 
 
 	ShaderManager sm;

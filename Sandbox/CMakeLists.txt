@@ -2,9 +2,9 @@
 
 
 add_executable(Sandbox
-	src/main.cpp
-	src/Cube.cpp
- "include/Sandbox.hpp" "src/Sandbox.cpp")
+	"src/main.cpp"
+	"src/Cube.cpp"
+	"src/Sandbox.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

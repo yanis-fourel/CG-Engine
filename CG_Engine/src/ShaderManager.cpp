@@ -1,19 +1,10 @@
-/*
-** EPITECH PROJECT, 2019
-** Project
-** File description:
-** ShaderManager.cpp
-*/
-
 #include <fstream>
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "CG/ShaderManager.hpp"
 
-const char *ShaderManager::kShaderDir = "./Shaders/";
-
-ShaderManager::~ShaderManager()
+CG::ShaderManager::~ShaderManager()
 {
     if (_validated)
         glDeleteProgram(_program);
@@ -21,7 +12,7 @@ ShaderManager::~ShaderManager()
         glDeleteShader(s);
 }
 
-void ShaderManager::addShader(GLenum type, const std::string_view content)
+void CG::ShaderManager::addShader(GLenum type, const std::string_view content)
 {
     if (_validated)
         throw std::logic_error("Program already validated");
@@ -44,7 +35,7 @@ void ShaderManager::addShader(GLenum type, const std::string_view content)
         _shaders.push_back(shader);
 }
 
-void ShaderManager::validate()
+void CG::ShaderManager::validate()
 {
     _validated = true;
 
@@ -58,12 +49,12 @@ void ShaderManager::validate()
     glUseProgram(_program);
 }
 
-void ShaderManager::use()
+void CG::ShaderManager::use()
 {
     glUseProgram(_program);
 }
 
-void ShaderManager::uploadUniformMat4(const std::string& name, const glm::mat4& mat)
+void CG::ShaderManager::uploadUniformMat4(const std::string& name, const glm::mat4& mat)
 {
     auto position = glGetUniformLocation(_program, name.c_str());
 

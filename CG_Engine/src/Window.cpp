@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2019
-** Project
-** File description:
-** AppWindow.cpp
-*/
-
 #include <stdexcept>
 #include <iostream>
 #include <GL/glew.h>
@@ -12,15 +5,15 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include "CG/AppWindow.hpp"
+#include "CG/Window.hpp"
 
-AppWindow::AppWindow()
+CG::Window::Window()
 {
 	if (!glfwInit())
 		throw std::runtime_error("Failed to init glfw");
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	m_window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
@@ -58,7 +51,7 @@ AppWindow::AppWindow()
 	ImGui_ImplOpenGL3_Init();
 }
 
-AppWindow::~AppWindow()
+CG::Window::~Window()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
@@ -68,7 +61,7 @@ AppWindow::~AppWindow()
 	glfwTerminate();
 }
 
-bool AppWindow::run()
+bool CG::Window::run()
 {
 	if (m_firstFrame)
 		m_firstFrame = false;
@@ -84,7 +77,7 @@ bool AppWindow::run()
 	return true;
 }
 
-void AppWindow::onFrameBegin()
+void CG::Window::onFrameBegin()
 {
 	glfwPollEvents();
 
@@ -95,7 +88,7 @@ void AppWindow::onFrameBegin()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void AppWindow::onFrameEnd()
+void CG::Window::onFrameEnd()
 {
 	ImGui::Render();
 	int display_w, display_h;
@@ -106,17 +99,17 @@ void AppWindow::onFrameEnd()
 	glfwSwapBuffers(m_window);
 }
 
-bool AppWindow::isKeyDown(int key)
+bool CG::Window::isKeyDown(int key)
 {
 	return glfwGetKey(m_window, key) == GLFW_PRESS;
 }
 
-glm::vec2 AppWindow::getMouseMovemement()
+glm::vec2 CG::Window::getMouseMovemement()
 {
 	return m_mouseMovement;
 }
 
-void AppWindow::processInputs()
+void CG::Window::processInputs()
 {
 	if (isKeyDown(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(m_window, true);

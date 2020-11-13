@@ -7,6 +7,7 @@
 #include "CG/Core.hpp"
 
 namespace CG {
+
 template <typename Game>
 int run(int ac, char **av)
 {
@@ -17,4 +18,5 @@ int run(int ac, char **av)
 		return EXIT_FAILURE;
 	}
 }
+
 }

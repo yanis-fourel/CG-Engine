@@ -28,11 +28,11 @@ target_compile_definitions(glfw_imgui_impl PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLEW)
 
 
 add_library(CG_Engine STATIC
-    src/AppWindow.cpp
-    src/Camera.cpp
-    src/ShaderManager.cpp
-    
-    src/Core.cpp)
+    "src/Window.cpp"
+    "src/Camera.cpp"
+    "src/ShaderManager.cpp"
+    "src/Core.cpp"
+)
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

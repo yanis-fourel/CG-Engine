@@ -13,7 +13,7 @@ public:
 
 	int run();
 
-private:
+public:
 	std::unique_ptr<AGame> m_game;
 };
 

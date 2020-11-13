@@ -30,13 +30,14 @@ CG::Window::Window()
 		glfwTerminate();
 
 		throw std::runtime_error(std::string("glewInit")
-			+ (const char*)glewGetErrorString(
+			+ (const char *)glewGetErrorString(
 				glewInitResult));
 
 	}
 
 	glEnable(GL_DEPTH_TEST);
 
+	// TODO: move out into InputManager
 	if (glfwRawMouseMotionSupported()) {
 		glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
@@ -70,11 +71,15 @@ bool CG::Window::run()
 
 	onFrameBegin();
 
-	processInputs();
 	if (glfwWindowShouldClose(m_window))
 		return false;
 
 	return true;
+}
+
+void CG::Window::close() noexcept
+{
+	glfwSetWindowShouldClose(m_window, true);
 }
 
 void CG::Window::onFrameBegin()
@@ -97,28 +102,4 @@ void CG::Window::onFrameEnd()
 
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(m_window);
-}
-
-bool CG::Window::isKeyDown(int key)
-{
-	return glfwGetKey(m_window, key) == GLFW_PRESS;
-}
-
-glm::vec2 CG::Window::getMouseMovemement()
-{
-	return m_mouseMovement;
-}
-
-void CG::Window::processInputs()
-{
-	if (isKeyDown(GLFW_KEY_ESCAPE))
-		glfwSetWindowShouldClose(m_window, true);
-
-	if (m_captureMouse) {
-		glfwGetCursorPos(m_window, &m_mouseMovement.x, &m_mouseMovement.y);
-		glfwSetCursorPos(m_window, 0, 0);
-	}
-	else {
-		m_mouseMovement = { 0, 0 };
-	}
 }

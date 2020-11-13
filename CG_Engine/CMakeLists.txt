@@ -32,7 +32,7 @@ add_library(CG_Engine STATIC
     "src/Camera.cpp"
     "src/ShaderManager.cpp"
     "src/Core.cpp"
-)
+ "src/GameObject.cpp" "src/Game.cpp" "src/InputManager.cpp")
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

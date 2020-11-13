@@ -4,7 +4,7 @@
 add_executable(Sandbox
 	"src/main.cpp"
 	"src/Cube.cpp"
-	"src/Sandbox.cpp")
+	"src/Sandbox.cpp" "include/GameObjects/FreeCamera.hpp" "src/GameObjects/FreeCamera.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

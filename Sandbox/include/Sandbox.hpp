@@ -4,5 +4,6 @@
 
 class Sandbox : public CG::AGame {
 public:
-	void update(float deltatime) override;
+	void start() override;
+	void update(double deltatime) override;
 };

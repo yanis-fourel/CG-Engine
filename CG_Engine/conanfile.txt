@@ -1,0 +1,33 @@
+[requires]
+# UI API
+imgui/1.78
+
+# Reslove the conflict of dependencies
+opengl/system
+
+# Window / Cursor / Event libary
+glfw/3.3.2
+
+# OpenGL loader
+glew/2.1.0
+
+# Mathematics
+glm/0.9.9.5@g-truc/stable
+
+# Logging libary, spdlog use {fmt} so we can use CONAN_PKG::fmt
+spdlog/1.6.0
+
+# ECS / cache manager
+entt/3.5.2
+
+[options]
+# lib shared required to set the path of the .dll for app.exe
+glew:shared=False
+glfw:shared=False
+imgui:shared=False
+spdlog:header_only=True
+fmt:header_only=True
+
+[generators]
+cmake
+

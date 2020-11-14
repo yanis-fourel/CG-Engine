@@ -13,7 +13,7 @@ void FreeCamera::start()
 	getGame()->getCamera().setUpDirection(glm::vec3(0, 1, 0));
 	getGame()->getCamera().setFov(103);
 	getGame()->getCamera().setAspectRatio(16 / 9);
-	getGame()->getCamera().setRenderDistance(20);
+	getGame()->getCamera().setRenderDistance(200);
 }
 
 void FreeCamera::update(double deltatime)

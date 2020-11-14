@@ -32,7 +32,11 @@ add_library(CG_Engine STATIC
     "src/Camera.cpp"
     "src/ShaderManager.cpp"
     "src/Core.cpp"
- "src/GameObject.cpp" "src/Game.cpp" "src/InputManager.cpp")
+    "src/GameObject.cpp"
+    "src/Game.cpp"
+    "src/InputManager.cpp"
+    "src/internal/Drawable.cpp"
+    "src/components/renderer/CubeRenderer.cpp" "include/CG/Vector3.hpp" )
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}
@@ -47,6 +51,5 @@ target_link_libraries(CG_Engine PUBLIC
     CONAN_PKG::spdlog
     CONAN_PKG::entt
 )
-
 
 target_compile_features(CG_Engine PUBLIC cxx_std_17)

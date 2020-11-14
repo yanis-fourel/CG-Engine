@@ -11,6 +11,9 @@ public:
 	AGameObject();
 	virtual ~AGameObject();
 
+	// Called once upon gameobject creation
+	virtual void start() {};
+
 	template<typename T>
 	T &getComponent();
 
@@ -20,7 +23,6 @@ protected:
 	template<typename T, typename... TArgs>
 	T &addComponent(TArgs &&... args);
 
-	virtual void start() {};
 
 private:
 	entt::registry::entity_type m_entity;

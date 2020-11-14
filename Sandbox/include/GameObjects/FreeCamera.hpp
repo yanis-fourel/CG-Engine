@@ -11,6 +11,6 @@ public:
 	void update(double deltatime);
 
 private:
-	float m_speed = 0.1;
-	float m_rotSpeed = 0.1f;
+	double m_speed = 0.1;
+	double m_rotSpeed = 0.1f;
 };

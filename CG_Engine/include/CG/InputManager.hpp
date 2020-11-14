@@ -1,6 +1,10 @@
 #pragma once
 
-#include <glm/vec2.hpp>
+// TODO: abstract the keys, this is way too heavy to be included by every user's gameobject
+#include <GL/glew.h> // needed by Glf3w
+#include <GLFW/glfw3.h> // input keys
+
+#include <CG/Vector2.hpp>
 
 struct GLFWwindow;
 
@@ -15,14 +19,17 @@ public:
 	void update();
 
 	[[nodiscard]] auto isKeyDown(int key) const noexcept -> bool;
-	[[nodiscard]] auto getMouseMovement() const noexcept -> glm::vec2;
+	[[nodiscard]] auto getMouseMovement() const noexcept -> Vector2;
 
-	void setMouseCapture(bool enabled) noexcept ;
+	void setMouseCapture(bool enabled) noexcept;
 	void toggleMouseCapture() noexcept;
 
 private:
-	bool m_captureMouse = true;
-	glm::vec<2, double> m_mouseMovement{ 0, 0 };
+	void resetCursorPos() const noexcept;
+
+private:
+	bool m_captureMouse{}; // only set via `setMouseCapture`
+	Vector2 m_mouseMovement{ 0, 0 };
 
 	GLFWwindow *m_window;
 };

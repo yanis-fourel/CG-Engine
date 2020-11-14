@@ -1,6 +1,9 @@
 #include <stdexcept>
 #include <iostream>
+
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -36,12 +39,6 @@ CG::Window::Window()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-
-	// TODO: move out into InputManager
-	if (glfwRawMouseMotionSupported()) {
-		glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	}
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -80,6 +77,17 @@ bool CG::Window::run()
 void CG::Window::close() noexcept
 {
 	glfwSetWindowShouldClose(m_window, true);
+}
+
+auto CG::Window::getSize() const noexcept -> CG::Vector2
+{
+	int display_w, display_h;
+	glfwGetFramebufferSize(m_window, &display_w, &display_h);
+
+	return {
+		static_cast<CG::Vector2::value_type>(display_w),
+		static_cast<CG::Vector2::value_type>(display_h)
+	};
 }
 
 void CG::Window::onFrameBegin()

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/vec2.hpp>
+#include "CG/Vector2.hpp"
+
+struct GLFWwindow;
 
 namespace CG {
 
@@ -16,6 +16,9 @@ public:
 
 	[[nodiscard]] auto getWindow() noexcept { return m_window; };
 	void close() noexcept;
+
+	auto getSize() const noexcept -> CG::Vector2;
+
 private:
 	void onFrameBegin();
 	void onFrameEnd();

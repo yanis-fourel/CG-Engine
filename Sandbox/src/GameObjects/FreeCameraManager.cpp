@@ -39,7 +39,7 @@ void FreeCameraManager::update(double deltatime)
 	GameCamera->moveRelative(move * static_cast<float>(m_speed * deltatime));
 
 
-	if (InputManager->isKeyDown(GLFW_KEY_F1))
+	if (InputManager->isKeyPressed(GLFW_KEY_F1))
 		InputManager->toggleMouseCapture();
 
 	// Mouse

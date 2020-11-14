@@ -18,7 +18,16 @@ public:
 	// Don't call that yourself
 	void update();
 
+	// True while key is down
 	[[nodiscard]] auto isKeyDown(int key) const noexcept -> bool;
+
+	// True only the tick the key was pressed
+	[[nodiscard]] auto isKeyPressed(int key) const noexcept -> bool;
+
+	// True while key is up
+	[[nodiscard]] auto isKeyUp(int key) const noexcept -> bool;
+
+	// Only return a value if currently capturing mouse
 	[[nodiscard]] auto getMouseMovement() const noexcept -> Vector2;
 
 	void setMouseCapture(bool enabled) noexcept;

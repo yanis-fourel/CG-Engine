@@ -1,10 +1,16 @@
 #include <spdlog/spdlog.h>
 
+#include <imgui_impl_glfw.h>
+
 #include "CG/InputManager.hpp"
 
 CG::InputManager::InputManager(GLFWwindow *window) : m_window(window)
 {
 	setMouseCapture(true);
+
+    ::glfwSetCharCallback(m_window, ImGui_ImplGlfw_CharCallback);
+    ::glfwSetKeyCallback(m_window, ImGui_ImplGlfw_KeyCallback);
+    ::glfwSetMouseButtonCallback(m_window, ImGui_ImplGlfw_MouseButtonCallback);
 }
 
 void CG::InputManager::update()
@@ -27,7 +33,17 @@ void CG::InputManager::update()
 
 bool CG::InputManager::isKeyDown(int key) const noexcept
 {
-	return glfwGetKey(m_window, key) == GLFW_PRESS;
+	return ImGui::IsKeyDown(key);
+}
+
+bool CG::InputManager::isKeyPressed(int key) const noexcept
+{
+	return ImGui::IsKeyPressed(key);
+}
+
+bool CG::InputManager::isKeyUp(int key) const noexcept
+{
+	return ImGui::IsKeyReleased(key);
 }
 
 CG::Vector2 CG::InputManager::getMouseMovement() const noexcept

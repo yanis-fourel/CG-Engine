@@ -17,6 +17,7 @@ void FreeCameraManager::start()
 	GameCamera->setFov(103);
 	GameCamera->setAspectRatio(16 / 9);
 	GameCamera->setRenderDistance(200);
+	InputManager->setMouseCapture(false);
 }
 
 void FreeCameraManager::update(double deltatime)

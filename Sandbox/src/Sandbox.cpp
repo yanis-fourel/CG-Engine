@@ -29,14 +29,22 @@ void Sandbox::update(double deltatime)
 	if (getInputManager().isKeyDown(GLFW_KEY_ESCAPE))
 		getWindow().close();
 
+	if (getInputManager().isMouseCaptured())
+		return;
+
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(ImVec2(std::max(getWindow().getSize().x * 0.5f, 400.0f), getWindow().getSize().y));
+
 	ImGui::Begin("Config");
 
 	ImGui::Text(fmt::format("{:.1f} fps", 1/deltatime).c_str());
 
 	if (ImGui::CollapsingHeader("Controls", ImGuiTreeNodeFlags_DefaultOpen)) {
-		ImGui::Text("Camera rotation is like a First person shooter game, with the mouse");
-		ImGui::Text("You can toggle the mouse capture by pressing F1, so you can click on the options here");
+		ImGui::TextColored(ImVec4(1, 0.5, 0.5, 1), "READ THIS FIRST");
 		ImGui::Text("Camera movement is with WASD, plus E/Q for up/down");
+		ImGui::Text("Camera rotation is like a First person shooter game, with the mouse");
+		ImGui::Text("Camera rotation is paused while this screen is up");
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Press F1 to switch between scene config and FPS mode");
 	}
 
 	if (ImGui::CollapsingHeader("Grid parameters", ImGuiTreeNodeFlags_DefaultOpen)) {

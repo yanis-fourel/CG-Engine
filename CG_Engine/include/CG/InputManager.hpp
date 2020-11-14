@@ -32,7 +32,7 @@ public:
 
 	void setMouseCapture(bool enabled) noexcept;
 	void toggleMouseCapture() noexcept;
-
+	bool isMouseCaptured() const noexcept { return m_captureMouse; }
 private:
 	void resetCursorPos() const noexcept;
 

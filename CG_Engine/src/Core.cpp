@@ -15,6 +15,8 @@
 #include "CG/components/renderer/CubeRenderer.hpp"
 #include "CG/components/renderer/PlaneRenderer.hpp"
 
+#include "CG/RendererHelper.hpp"
+
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 {
 	m_onlyShader.addShader(GL_VERTEX_SHADER, CG::shaders::simple_vert);
@@ -71,23 +73,13 @@ void CG::Core::displayGame()
 	m_onlyShader.uploadUniformMat4("viewProj", m_game->getCamera().getViewProjMatrix());
 
 
-	m_game->getWorld().view<CG::CubeRenderer, CG::Transform>().each([&](const CG::CubeRenderer &u, const CG::Transform &t) {
-		glm::mat4 model = glm::mat4(1); // TODO: make from gameobject transform
-		model = glm::translate(model, static_cast<glm::vec3>(t.position));
-		// TODO: rotation
-		//		model = glm::rotate(model, );
-		model = glm::scale(model, static_cast<glm::vec3>(t.scale));
-		m_onlyShader.uploadUniformMat4("model", model);
-		u.draw();
+#define ADD_RENDERER(type) \
+	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
+		render(r, t, m_onlyShader); \
 		});
 
-	m_game->getWorld().view<CG::PlaneRenderer, CG::Transform>().each([&](const CG::PlaneRenderer &u, const CG::Transform &t) {
-		glm::mat4 model = glm::mat4(1); // TODO: make from gameobject transform
-		model = glm::translate(model, static_cast<glm::vec3>(t.position));
-		// TODO: rotation
-		//		model = glm::rotate(model, );
-		model = glm::scale(model, static_cast<glm::vec3>(t.scale));
-		m_onlyShader.uploadUniformMat4("model", model);
-		u.draw();
-		});
+	ADD_RENDERER(CG::CubeRenderer);
+	ADD_RENDERER(CG::PlaneRenderer);
+
+#undef ADD_RENDERER
 }

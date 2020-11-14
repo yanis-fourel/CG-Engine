@@ -45,7 +45,7 @@ void FreeCameraManager::update(double deltatime)
 	// Mouse
 	auto mouseMove = InputManager->getMouseMovement();
 	GameCamera->applyMouseMovement(
-		static_cast<float>(mouseMove.x * m_rotSpeed * deltatime),
-		static_cast<float>(mouseMove.y * m_rotSpeed * deltatime)
+		static_cast<float>(mouseMove.x * m_rotSpeed),
+		static_cast<float>(mouseMove.y * m_rotSpeed)
 	);
 }

@@ -31,6 +31,8 @@ void Sandbox::update(double deltatime)
 
 	ImGui::Begin("Config");
 
+	ImGui::Text(fmt::format("{:.1f} fps", 1/deltatime).c_str());
+
 	if (ImGui::CollapsingHeader("Controls", ImGuiTreeNodeFlags_DefaultOpen)) {
 		ImGui::Text("Camera rotation is like a First person shooter game, with the mouse");
 		ImGui::Text("You can toggle the mouse capture by pressing F1, so you can click on the options here");

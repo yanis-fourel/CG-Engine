@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <chrono>
 
 #include <glm/gtx/transform.hpp>
 
@@ -25,13 +26,20 @@ int CG::Core::run()
 {
 	m_game->start();
 
-	while (m_game->getWindow().run()) {
+	double deltatime = 0;
 
-		updateGame(0.016);
+	while (m_game->getWindow().run()) {
+		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+		updateGame(deltatime);
 
 		cleanupDeadGameobjects();
 
 		displayGame();
+
+		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+		deltatime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() * 1e-9;
 	}
 
 	return 0;

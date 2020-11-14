@@ -7,4 +7,5 @@ Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Color &co
 {
 	addComponent<CG::Transform>(pos, scale);
 	addComponent<CG::PlaneRenderer>(color);
+	setTag<"tile"_hs>();
 }

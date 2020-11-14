@@ -9,7 +9,7 @@ namespace CG {
 class Window
 {
 public:
-	Window();
+	Window(const CG::Vector2 windowSize, const std::string &windowName);
 	~Window();
 
 	bool run();

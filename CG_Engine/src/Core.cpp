@@ -8,6 +8,7 @@
 
 #include "CG/internal/Shaders.hpp"
 
+#include "CG/internal/ToDelete.hpp"
 #include "CG/components/Updateable.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/renderer/CubeRenderer.hpp"
@@ -27,8 +28,10 @@ int CG::Core::run()
 	while (m_game->getWindow().run()) {
 
 		updateGame(0.016);
-		displayGame();
 
+		cleanupDeadGameobjects();
+
+		displayGame();
 	}
 
 	return 0;
@@ -44,6 +47,12 @@ void CG::Core::updateGame(double deltatime)
 		u.call(deltatime);
 		});
 
+}
+
+void CG::Core::cleanupDeadGameobjects()
+{
+	for (const auto &e : m_game->getWorld().view<CG::ToDelete>())
+		m_game->immediateDestroy(e);
 }
 
 void CG::Core::displayGame()

@@ -15,6 +15,7 @@ public:
 	int run();
 private:
 	void updateGame(double deltatime);
+	void cleanupDeadGameobjects();
 	void displayGame();
 
 public:

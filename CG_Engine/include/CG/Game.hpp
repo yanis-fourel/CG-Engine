@@ -1,6 +1,8 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include <functional>
+#include <cstdint>
 
 #include "CG/Window.hpp"
 #include "CG/GameObject.hpp"
@@ -11,20 +13,26 @@ namespace CG {
 
 class AGame {
 public:
-	AGame();
+	AGame(const CG::Vector2 windowSize = {640, 480},const std::string &windowName = "CG Application");
 
 	[[nodiscard]] static inline AGame *getGame() noexcept { return instance; }
 
 	virtual void start() {};
 	virtual void update(double deltatime) {};
 
-	[[nodiscard]] auto getWindow() -> Window &{ return m_window; }
-	[[nodiscard]] auto getInputManager() -> InputManager &{ return m_inputManager; }
-	[[nodiscard]] auto getCamera() -> Camera &{ return m_camera; }
-	[[nodiscard]] auto getWorld() -> entt::registry &{ return m_world; }
+	[[nodiscard]] auto getWindow() noexcept -> Window &{ return m_window; }
+	[[nodiscard]] auto getInputManager()noexcept -> InputManager &{ return m_inputManager; }
+	[[nodiscard]] auto getCamera() noexcept -> Camera &{ return m_camera; }
+	[[nodiscard]] auto getWorld() noexcept -> entt::registry &{ return m_world; }
 
 	template <typename T, typename... TArgs>
 	T &instanciate(TArgs &&... args);
+
+	template <std::uint32_t Tag>
+	void getObjectsOfTag(std::function<void(AGameObject &)> func);
+
+	// Call `obj.destroy()` unless you know what you're doing
+	void immediateDestroy(AGameObject::id_type obj);
 
 public:
 	static inline AGame *instance = nullptr;
@@ -35,7 +43,7 @@ private:
 	Camera m_camera;
 
 	entt::registry m_world;
-	std::vector<std::unique_ptr<AGameObject>> m_objects;
+	std::unordered_map<AGameObject::id_type, std::unique_ptr<AGameObject>> m_objects;
 };
 
 }
@@ -43,10 +51,18 @@ private:
 template <typename T, typename... TArgs>
 T &CG::AGame::instanciate(TArgs &&... args)
 {
-	m_objects.emplace_back(std::make_unique<T>(std::forward<TArgs>(args)...));
-	T &result = *dynamic_cast<T *>(m_objects.back().get());
+	auto ptr = std::make_unique<T>(std::forward<TArgs>(args)...);
+	T &result = *ptr;
+
+	m_objects[ptr->getId()] = std::move(ptr);
 
 	result.start();
-
 	return result;
+}
+
+template<std::uint32_t Tag>
+void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject&)> func) 
+{
+	for (auto id : m_world.view<entt::tag<Tag>>())
+		func(*m_objects.at(id));
 }

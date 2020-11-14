@@ -10,7 +10,7 @@
 
 #include "CG/Window.hpp"
 
-CG::Window::Window()
+CG::Window::Window(const CG::Vector2 windowSize, const std::string &windowName)
 {
 	if (!glfwInit())
 		throw std::runtime_error("Failed to init glfw");
@@ -19,7 +19,7 @@ CG::Window::Window()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	m_window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
+	m_window = glfwCreateWindow(static_cast<int>(windowSize.x), static_cast<int>(windowSize.y), windowName.c_str(), nullptr, nullptr);
 	if (!m_window) {
 		glfwTerminate();
 		throw std::runtime_error("Failed to create window");

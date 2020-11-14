@@ -2,6 +2,8 @@
 
 #include <glm/vec2.hpp>
 
+struct GLFWwindow;
+
 namespace CG {
 
 class InputManager

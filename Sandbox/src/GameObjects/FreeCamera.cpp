@@ -8,40 +8,40 @@ FreeCamera::FreeCamera()
 
 void FreeCamera::start()
 {
-	getGame()->getCamera().setPosition(glm::vec3(0, 0, 5));
-	getGame()->getCamera().setFacingDirection(glm::vec3(0, 0, -1));
-	getGame()->getCamera().setUpDirection(glm::vec3(0, 1, 0));
-	getGame()->getCamera().setFov(103);
-	getGame()->getCamera().setAspectRatio(16 / 9);
-	getGame()->getCamera().setRenderDistance(200);
+	GameCamera->setPosition(glm::vec3(0, 0, 5));
+	GameCamera->setFacingDirection(glm::vec3(-1, 0, 0));
+	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
+	GameCamera->setFov(103);
+	GameCamera->setAspectRatio(16 / 9);
+	GameCamera->setRenderDistance(200);
 }
 
 void FreeCamera::update(double deltatime)
 {
 	glm::vec3 move(0);
 
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_W))
+	if (InputManager->isKeyDown(GLFW_KEY_W))
 		move.z -= 1;
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_S))
+	if (InputManager->isKeyDown(GLFW_KEY_S))
 		move.z += 1;
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_A))
+	if (InputManager->isKeyDown(GLFW_KEY_A))
 		move.x -= 1;
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_D))
+	if (InputManager->isKeyDown(GLFW_KEY_D))
 		move.x += 1;
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_Q))
+	if (InputManager->isKeyDown(GLFW_KEY_Q))
 		move.y -= 1;
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_E))
+	if (InputManager->isKeyDown(GLFW_KEY_E))
 		move.y += 1;
 
-	getGame()->getCamera().moveRelative(move * static_cast<float>(m_speed * deltatime));
+	GameCamera->moveRelative(move * static_cast<float>(m_speed * deltatime));
 
 
-	if (getGame()->getInputManager().isKeyDown(GLFW_KEY_F1))
-		getGame()->getInputManager().toggleMouseCapture();
+	if (InputManager->isKeyDown(GLFW_KEY_F1))
+		InputManager->toggleMouseCapture();
 
 	// Mouse
-	auto mouseMove = getGame()->getInputManager().getMouseMovement();
-	getGame()->getCamera().applyMouseMovement(
+	auto mouseMove = InputManager->getMouseMovement();
+	GameCamera->applyMouseMovement(
 		static_cast<float>(mouseMove.x * m_rotSpeed * deltatime),
 		static_cast<float>(mouseMove.y * m_rotSpeed * deltatime)
 	);

@@ -2,6 +2,9 @@
 
 #include <entt/entt.hpp>
 
+#include "CG/InputManager.hpp"
+#include "CG/Camera.hpp"
+
 namespace CG {
 
 class AGame;
@@ -23,6 +26,9 @@ protected:
 	template<typename T, typename... TArgs>
 	T &addComponent(TArgs &&... args);
 
+	// QoL getters
+	InputManager *InputManager;
+	Camera *GameCamera;
 
 private:
 	entt::registry::entity_type m_entity;

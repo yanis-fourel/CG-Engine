@@ -4,6 +4,8 @@
 
 CG::AGameObject::AGameObject() : m_entity(getGame()->getWorld().create())
 {
+	InputManager = &getGame()->getInputManager();
+	GameCamera = &getGame()->getCamera();
 }
 
 CG::AGameObject::~AGameObject()

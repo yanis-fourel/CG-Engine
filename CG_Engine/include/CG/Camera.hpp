@@ -20,6 +20,7 @@ public:
 
 	auto getViewProjMatrix()->glm::mat4x4;
 	auto getPosition() -> const glm::vec3& { return m_pos; }
+	auto getFacing() -> const glm::vec3& { return m_facing; }
 
 	void applyMouseMovement(float deltaYaw, float deltaPitch);
 

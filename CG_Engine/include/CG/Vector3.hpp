@@ -50,6 +50,10 @@ struct Vector3
 
 
 	static constexpr Vector3 Zero() { return { 0, 0, 0 }; }
+	static constexpr Vector3 One() { return { 1, 1, 1 }; }
+	static constexpr Vector3 Up() { return { 0, 1, 0 }; }
+	static constexpr Vector3 Forward() { return { 0, 0, -1 }; }
+	static constexpr Vector3 Right() { return { 1, 0, 0 }; }
 };
 
 }

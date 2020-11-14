@@ -11,6 +11,7 @@
 #include "CG/components/Updateable.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/renderer/CubeRenderer.hpp"
+#include "CG/components/renderer/PlaneRenderer.hpp"
 
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 {
@@ -61,6 +62,15 @@ void CG::Core::displayGame()
 		model = glm::scale(model, static_cast<glm::vec3>(t.scale));
 		m_onlyShader.uploadUniformMat4("model", model);
 		u.draw();
-	});
+		});
 
+	m_game->getWorld().view<CG::PlaneRenderer, CG::Transform>().each([&](const CG::PlaneRenderer &u, const CG::Transform &t) {
+		glm::mat4 model = glm::mat4(1); // TODO: make from gameobject transform
+		model = glm::translate(model, static_cast<glm::vec3>(t.position));
+		// TODO: rotation
+		//		model = glm::rotate(model, );
+		model = glm::scale(model, static_cast<glm::vec3>(t.scale));
+		m_onlyShader.uploadUniformMat4("model", model);
+		u.draw();
+		});
 }

@@ -36,7 +36,8 @@ add_library(CG_Engine STATIC
     "src/Game.cpp"
     "src/InputManager.cpp"
     "src/internal/Drawable.cpp"
-    "src/components/renderer/CubeRenderer.cpp" "include/CG/Vector3.hpp" )
+    "src/components/renderer/CubeRenderer.cpp"
+)
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

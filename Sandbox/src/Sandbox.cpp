@@ -1,12 +1,12 @@
 #include "Sandbox.hpp"
 #include "imgui.h"
 
-#include "GameObjects/FreeCamera.hpp"
+#include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/TestCube.hpp"
 
 void Sandbox::start()
 {
-	instanciate<FreeCamera>();
+	instanciate<FreeCameraManager>();
 	instanciate<TestCube>();
 }
 

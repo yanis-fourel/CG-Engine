@@ -2,10 +2,10 @@
 
 #include "CG/GameObject.hpp"
 
-class FreeCamera : public CG::AGameObject
+class FreeCameraManager : public CG::AGameObject
 {
 public:
-	FreeCamera();
+	FreeCameraManager();
 
 	void start() override;
 	void update(double deltatime);

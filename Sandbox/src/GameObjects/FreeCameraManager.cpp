@@ -1,12 +1,13 @@
 #include <CG/components/Updateable.hpp>
-#include "GameObjects/FreeCamera.hpp"
 
-FreeCamera::FreeCamera()
+#include "GameObjects/FreeCameraManager.hpp"
+
+FreeCameraManager::FreeCameraManager()
 {
 	addComponent<CG::Updateable>([this](double d) { update(d); });
 }
 
-void FreeCamera::start()
+void FreeCameraManager::start()
 {
 	GameCamera->setPosition(glm::vec3(0, 0, 5));
 	GameCamera->setFacingDirection(glm::vec3(-1, 0, 0));
@@ -16,7 +17,7 @@ void FreeCamera::start()
 	GameCamera->setRenderDistance(200);
 }
 
-void FreeCamera::update(double deltatime)
+void FreeCameraManager::update(double deltatime)
 {
 	glm::vec3 move(0);
 

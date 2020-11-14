@@ -18,9 +18,10 @@ CG::CubeRenderer::CubeRenderer(const std::array<Color, 8> &colors)
 #undef P
 #undef N
 
-	glGenBuffers(1, &m_drawable.vbo);
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_drawable.vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &m_drawable.vao);

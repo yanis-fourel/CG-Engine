@@ -4,7 +4,7 @@ namespace CG {
 
 struct Color
 {
-	double r, g, b, a;
+	float r, g, b, a;
 };
 
 }

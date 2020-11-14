@@ -1,11 +1,55 @@
 #pragma once
 
+#include <glm/vec3.hpp>
 
 namespace CG {
 
 struct Vector3
 {
-	double x, y, z;
+	using value_type = float;
+
+	value_type x, y, z;
+
+	constexpr operator glm::vec3() const noexcept
+	{
+		return glm::vec3(x, y, z);
+	}
+
+	template <typename T>
+	constexpr Vector3 operator*(T fact) const noexcept
+	{
+		return {
+			x * static_cast<value_type>(fact),
+			y * static_cast<value_type>(fact),
+			z * static_cast<value_type>(fact)
+		};
+	}
+
+	Vector3 operator+(const Vector3 &other)
+	{
+		return { x + other.x, y + other.y, z + other.z };
+	}
+
+	Vector3 operator-(const Vector3 &other)
+	{
+		return { x + other.x, y + other.y, z + other.z };
+	}
+
+	Vector3 &operator+=(const Vector3 &other)
+	{
+		*this = *this + other;
+		return *this;
+	}
+
+	Vector3 &operator-=(const Vector3 &other)
+	{
+		*this = *this - other;
+		return *this;
+	}
+
+
+
+	static constexpr Vector3 Zero() { return { 0, 0, 0 }; }
 };
 
 }

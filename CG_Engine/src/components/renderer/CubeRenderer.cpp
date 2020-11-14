@@ -27,14 +27,14 @@ CG::CubeRenderer::CubeRenderer(const std::array<Color, 8> &colors)
 	glBindVertexArray(m_drawable.vao);
 	glVertexAttribPointer(0,
 		3,
-		GL_DOUBLE,
+		GL_FLOAT,
 		GL_FALSE,
 		sizeof(ColorVertex),
 		(void *)offsetof(ColorVertex, position));
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1,
 		4,
-		GL_DOUBLE,
+		GL_FLOAT,
 		GL_FALSE,
 		sizeof(ColorVertex),
 		(void *)offsetof(ColorVertex, color));

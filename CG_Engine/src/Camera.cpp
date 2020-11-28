@@ -7,29 +7,29 @@
 
 #include "CG/Camera.hpp"
 
-void CG::Camera::setPosition(const glm::vec3& pos)
+void CG::Camera::setPosition(const glm::vec3 &pos)
 {
 	m_pos = pos;
 }
 
-void CG::Camera::moveRelative(const glm::vec3& pos)
+void CG::Camera::moveRelative(const glm::vec3 &pos)
 {
 	auto abs = glm::vec4(pos.x, pos.y, pos.z, 1.f) * glm::lookAt(m_pos, m_pos + m_facing, m_up);
 
 	moveAbs(static_cast<glm::vec3>(abs));
 }
 
-void CG::Camera::moveAbs(const glm::vec3& pos)
+void CG::Camera::moveAbs(const glm::vec3 &pos)
 {
 	m_pos += pos;
 }
 
-void CG::Camera::setUpDirection(const glm::vec3& vec)
+void CG::Camera::setUpDirection(const glm::vec3 &vec)
 {
 	m_up = glm::normalize(vec);
 }
 
-void CG::Camera::setFacingDirection(const glm::vec3& facing)
+void CG::Camera::setFacingDirection(const glm::vec3 &facing)
 {
 	m_facing = glm::normalize(facing);
 }
@@ -49,8 +49,12 @@ void CG::Camera::setRenderDistance(float distance)
 	m_renderDistance = distance;
 }
 
+auto CG::Camera::getViewMatrix() const noexcept -> glm::mat4x4
+{
+	return glm::lookAt(m_pos, m_pos + m_facing, m_up);
+}
 
-auto CG::Camera::getViewProjMatrix() -> glm::mat4x4
+auto CG::Camera::getViewProjMatrix() const noexcept -> glm::mat4x4
 {
 	auto proj = glm::perspective(glm::radians(m_fov), m_aspectRatio, 0.1f, m_renderDistance);
 
@@ -68,9 +72,4 @@ void CG::Camera::applyMouseMovement(float deltaYaw, float deltaPitch)
 	glm::quat totalRot = horizRot * vertRot;
 
 	m_facing = m_facing * totalRot;
-}
-
-auto CG::Camera::getViewMatrix() -> glm::mat4x4
-{
-	return glm::lookAt(m_pos, m_pos + m_facing, m_up);
 }

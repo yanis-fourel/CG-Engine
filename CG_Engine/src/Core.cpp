@@ -71,11 +71,12 @@ void CG::Core::displayGame()
 	m_onlyShader.use();
 
 	m_onlyShader.uploadUniformMat4("viewProj", m_game->getCamera().getViewProjMatrix());
+	// normal matrix
 
 
 #define ADD_RENDERER(type) \
 	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
-		render(r, t, m_onlyShader); \
+		render(r, t, m_onlyShader, m_game->getCamera()); \
 		});
 
 	ADD_RENDERER(CG::CubeRenderer);

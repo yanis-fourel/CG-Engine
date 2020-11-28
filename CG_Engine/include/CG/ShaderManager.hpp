@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <optional>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -17,7 +18,14 @@ public:
     void validate();
     
     void use();
-    void uploadUniformMat4(const std::string &name, const glm::mat4 &mat);
+
+    // TODO: template
+    void uploadUniformMat4(std::string_view name, const glm::mat4 &mat);
+    void uploadUniformMat3(std::string_view name, const glm::mat3 &mat);
+
+private:
+    std::optional<GLint> getUniformLocation(std::string_view name) const noexcept;
+
 private:
     static const char *kShaderDir;
 

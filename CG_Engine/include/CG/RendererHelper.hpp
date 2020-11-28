@@ -17,7 +17,9 @@ inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm,
 	// TODO: rotation
 	//		model = glm::rotate(model, );
 	model = glm::scale(model, static_cast<glm::vec3>(t.scale));
-	sm.uploadUniformMat4("model", model);
+
+	sm.uploadUniformMat4("u_model", model);
+	sm.uploadUniformMat4("u_modelViewMatrix", c.getViewMatrix() * model);
 	sm.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(c.getViewMatrix()))));
 
 	r.draw();

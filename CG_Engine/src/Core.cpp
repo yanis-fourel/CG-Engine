@@ -70,9 +70,7 @@ void CG::Core::displayGame()
 	// TODO: multiple shader management
 	m_onlyShader.use();
 
-	m_onlyShader.uploadUniformMat4("viewProj", m_game->getCamera().getViewProjMatrix());
-	// normal matrix
-
+	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
 
 #define ADD_RENDERER(type) \
 	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \

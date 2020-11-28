@@ -1,22 +1,71 @@
 #include "CG/components/renderer/CubeRenderer.hpp"
-#include "CG/internal/ColorVertex.hpp"
+#include "CG/internal/Vertex.hpp"
 
-CG::CubeRenderer::CubeRenderer(const std::array<Color, 8> &colors)
+CG::CubeRenderer::CubeRenderer(const Color &color)
 {
-#define P +0.5
-#define N -0.5
-	ColorVertex vertices[8]{
-		{{N, N, N}, colors[0]},
-		{{P, N, N}, colors[1]},
-		{{P, P, N}, colors[2]},
-		{{N, P, N}, colors[3]},
-		{{N, N, P}, colors[4]},
-		{{P, N, P}, colors[5]},
-		{{P, P, P}, colors[6]},
-		{{N, P, P}, colors[7]},
+	Vertex vertices[24]{
+		//bottom
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Down(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Down(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Down(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Down(), color},
+
+		//front
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Backward(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
+
+		//left
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Right(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Right(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Right(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Right(), color},
+
+		//back
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Forward(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Forward(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Forward(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Forward(), color},
+
+		//right
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Left(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Left(), color},
+
+		//up
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Up(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Up(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Up(), color},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Up(), color},
 	};
-#undef P
-#undef N
+
+	m_drawable.indices = {
+		//bottom
+		0, 1, 2,
+		0, 2, 3,
+
+		//front
+		4, 5, 6,
+		4, 6, 7,
+
+		//left
+		8, 9, 10,
+		8, 10, 11,
+
+		//back
+		12, 13, 14,
+		12, 14, 15,
+
+		//right
+		16, 17, 18,
+		16, 18, 19,
+
+		// top
+		20, 21, 22,
+		20, 22, 23
+	};
 
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
@@ -30,41 +79,21 @@ CG::CubeRenderer::CubeRenderer(const std::array<Color, 8> &colors)
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(ColorVertex),
-		(void *)offsetof(ColorVertex, position));
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, normal));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2,
 		4,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(ColorVertex),
-		(void *)offsetof(ColorVertex, color));
-	glEnableVertexAttribArray(1);
-
-
-	m_drawable.indices = {
-		// BOTTOM
-		0, 1, 2,
-		0, 2, 3,
-
-		// FRONT
-		0, 7, 3,
-		0, 4, 7,
-
-		// LEFT
-		0, 1, 5,
-		0, 5, 4,
-
-		// BACK
-		1, 2, 6,
-		1, 6, 5,
-
-		// RIGHT
-		2, 3, 7,
-		2, 7, 6,
-
-		// UP
-		4, 5, 6,
-		4, 6, 7,
-	};
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, color));
+	glEnableVertexAttribArray(2);
 }

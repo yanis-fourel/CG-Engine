@@ -1,15 +1,15 @@
 #include "CG/components/renderer/PlaneRenderer.hpp"
-#include "CG/internal/ColorVertex.hpp"
+#include "CG/internal/Vertex.hpp"
 
 CG::PlaneRenderer::PlaneRenderer(const Color &colors)
 {
 #define P +0.5
 #define N -0.5
-	ColorVertex vertices[8]{
-		{{N, 0, N}, colors},
-		{{P, 0, N}, colors},
-		{{P, 0, P}, colors},
-		{{N, 0, P}, colors},
+	Vertex vertices[8]{
+		{{N, 0, N}, Vector3::Up(), colors},
+		{{P, 0, N}, Vector3::Up(), colors},
+		{{P, 0, P}, Vector3::Up(), colors},
+		{{N, 0, P}, Vector3::Up(), colors},
 	};
 #undef P
 #undef N
@@ -26,16 +26,23 @@ CG::PlaneRenderer::PlaneRenderer(const Color &colors)
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(ColorVertex),
-		(void *)offsetof(ColorVertex, position));
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, normal));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2,
 		4,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(ColorVertex),
-		(void *)offsetof(ColorVertex, color));
-	glEnableVertexAttribArray(1);
+		sizeof(Vertex),
+		(void *)offsetof(Vertex, color));
+	glEnableVertexAttribArray(2);
 
 
 	m_drawable.indices = {

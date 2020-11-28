@@ -11,7 +11,7 @@ class CubeRenderer {
 public:
 	// TODO: static shader
 
-	CubeRenderer(const std::array<Color, 8> &colors);
+	CubeRenderer(const Color &colors);
 
 	inline void draw() const noexcept { m_drawable.draw(); }
 private:

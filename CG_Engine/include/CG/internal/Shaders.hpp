@@ -7,7 +7,7 @@ namespace CG::shaders {
 	constexpr std::string_view simple_frag = R"(
 #version 450 core
 
-in vec4 f_surfaceColor;
+in vec4 f_outColor;
 in vec3 f_surfaceNormal;
 
 out vec4 color;
@@ -16,7 +16,7 @@ void main()
 {
     f_surfaceNormal;
 
-    color = f_surfaceColor;
+    color = f_outColor;
 }
 )";
 
@@ -36,20 +36,31 @@ uniform vec4 u_lightPosition;
 uniform vec3 u_pointLightColor;
 uniform vec3 u_ambiantLightColor;
 
-out vec4 f_surfaceColor;
+out vec4 f_outColor;
 out vec3 f_surfaceNormal;
 
 void main()
 {
+    const float shininess = 0.8;
+
     gl_Position = u_viewProj * u_model * vec4(v_position.x, v_position.y, v_position.z, 1.0);
 
     f_surfaceNormal = normalize(u_normalMatrix * v_normal);
-    f_surfaceColor = v_color;
 
-    u_modelViewMatrix;
-    u_lightPosition;
-    u_pointLightColor;
-    u_ambiantLightColor;
+    vec3 vertexPosition = vec3(u_modelViewMatrix * vec4(v_position, 1.0));
+
+    vec3 normal = f_surfaceNormal;
+    vec3 L = normalize(vec3(u_lightPosition) - vertexPosition);
+    vec3 R = reflect(-L, normal);
+    
+
+    float dotLN = max(0, dot(normal, L));
+    float dotRPos = max(0, dot(R, -vertexPosition));
+    
+    vec3 diffuseLightColor = u_pointLightColor * dotLN;
+    vec3 specularLightColor = u_pointLightColor * pow(dotRPos, shininess);
+
+    f_outColor = v_color * vec4(u_ambiantLightColor + diffuseLightColor + specularLightColor, 1.0);
 }
 
 )";

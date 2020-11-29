@@ -18,9 +18,10 @@ public:
 	inline void draw() const noexcept { m_drawable.draw(); }
 
 private:
-	std::vector<Vertex> generateVertices(const Color &color);
+	void generateVertices(const Color &color);
 	void _generateVertices(float *, float *, float *, GLuint *);
 
+	void registerVertices(const std::vector<Vertex> &vertices, const std::vector<std::uint32_t> &indices);
 private:
 	static constexpr float kRadius = 0.5f; // Real diameter will be the scale of the sphere
 

@@ -7,7 +7,7 @@
 TestCube::TestCube()
 {
 	addComponent<CG::CubeRenderer>(CG::Color::Cyan());
-	addComponent<CG::Transform>();
+	addComponent<CG::Transform>().scale = CG::Vector3{10, 1, 10};
 	addComponent<CG::Updateable>([this](double d) { update(d); });
 }
 

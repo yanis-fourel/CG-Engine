@@ -6,3 +6,5 @@ exec
 /.vs
 
 /out/
+
+/fool.glsl

@@ -7,16 +7,33 @@ namespace CG::shaders {
 	constexpr std::string_view simple_frag = R"(
 #version 450 core
 
-in vec4 f_outColor;
+in vec4 f_surfaceColor;
 in vec3 f_surfaceNormal;
+in vec3 f_surfacePosition;
+
+flat in vec3 f_ambiantLightColor;
+
+flat in vec3 f_pointLightPosition;
+flat in vec3 f_pointLightColor;
 
 out vec4 color;
 
 void main()
 {
-    f_surfaceNormal;
+    const float shininess = 0.8;
 
-    color = f_outColor;
+
+    const vec3 L = normalize(vec3(f_pointLightPosition) - f_surfacePosition);
+    const vec3 R = reflect(-L, f_surfaceNormal);
+    
+
+    const float dotLN = max(0, dot(f_surfaceNormal, L));
+    const float dotRPos = max(0, dot(R, -f_surfacePosition));
+    
+    const vec3 diffuseLightColor = f_pointLightColor * dotLN;
+    const vec3 specularLightColor = f_pointLightColor * pow(dotRPos, shininess);
+
+    color = f_surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor + specularLightColor, 1.0);
 }
 )";
 
@@ -32,35 +49,30 @@ uniform mat4 u_viewProj;
 uniform mat4 u_modelViewMatrix;
 uniform mat3 u_normalMatrix;
 
-uniform vec4 u_lightPosition;
+uniform vec4 u_pointLightPosition;
 uniform vec3 u_pointLightColor;
 uniform vec3 u_ambiantLightColor;
 
-out vec4 f_outColor;
+out vec4 f_surfaceColor;
 out vec3 f_surfaceNormal;
+out vec3 f_surfacePosition;
+
+out vec3 f_ambiantLightColor;
+out vec3 f_pointLightPosition;
+out vec3 f_pointLightColor;
+
 
 void main()
 {
-    const float shininess = 0.8;
+    gl_Position = u_viewProj * u_model * vec4(v_position, 1.0);
 
-    gl_Position = u_viewProj * u_model * vec4(v_position.x, v_position.y, v_position.z, 1.0);
-
+    f_surfaceColor = v_color;
+    f_surfacePosition = vec3(u_modelViewMatrix * vec4(v_position, 1.0));
     f_surfaceNormal = normalize(u_normalMatrix * v_normal);
 
-    vec3 vertexPosition = vec3(u_modelViewMatrix * vec4(v_position, 1.0));
-
-    vec3 normal = f_surfaceNormal;
-    vec3 L = normalize(vec3(u_lightPosition) - vertexPosition);
-    vec3 R = reflect(-L, normal);
-    
-
-    float dotLN = max(0, dot(normal, L));
-    float dotRPos = max(0, dot(R, -vertexPosition));
-    
-    vec3 diffuseLightColor = u_pointLightColor * dotLN;
-    vec3 specularLightColor = u_pointLightColor * pow(dotRPos, shininess);
-
-    f_outColor = v_color * vec4(u_ambiantLightColor + diffuseLightColor + specularLightColor, 1.0);
+    f_ambiantLightColor = u_ambiantLightColor;
+    f_pointLightPosition = vec3(u_pointLightPosition);
+    f_pointLightColor = u_pointLightColor;
 }
 
 )";

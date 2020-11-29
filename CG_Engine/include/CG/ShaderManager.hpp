@@ -24,6 +24,7 @@ public:
     void uploadUniformMat3(std::string_view name, const glm::mat3 &mat);
     void uploadUniformVec4(std::string_view name, const glm::vec4 &vec);
     void uploadUniformVec3(std::string_view name, const glm::vec3 &vec);
+    void uploadUniform1f(std::string_view name, float f);
 
 private:
     std::optional<GLint> getUniformLocation(std::string_view name) const noexcept;

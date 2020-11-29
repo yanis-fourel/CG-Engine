@@ -4,7 +4,7 @@
 
 namespace CG::shaders {
 
-	constexpr std::string_view simple_frag = R"(
+constexpr std::string_view simple_frag = R"(
 #version 450 core
 
 in vec4 f_surfaceColor;
@@ -16,6 +16,8 @@ flat in vec3 f_ambiantLightColor;
 flat in vec3 f_pointLightPosition;
 flat in vec3 f_pointLightColor;
 
+flat in float f_materialShininess;
+
 out vec4 color;
 
 float lightAttenuationFactor(float dist)
@@ -25,9 +27,6 @@ float lightAttenuationFactor(float dist)
 
 void main()
 {
-    const float shininess = 2;
-
-
     const vec3 L = normalize(vec3(f_pointLightPosition) - f_surfacePosition);
     const vec3 R = reflect(-L, f_surfaceNormal);
 
@@ -41,13 +40,13 @@ void main()
     const float dotRPos = max(0, dot(R, -f_surfacePosition));
     
     const vec3 diffuseLightColor =  diffuseLightColorAttenuation * f_pointLightColor * dotLN;
-    const vec3 specularLightColor = specularLightColorAttenuation * f_pointLightColor * pow(dotRPos, shininess);
+    const vec3 specularLightColor = specularLightColorAttenuation * f_pointLightColor * pow(dotRPos, f_materialShininess);
 
     color = f_surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor + specularLightColor, 1.0);
 }
 )";
 
-	constexpr std::string_view simple_vert = R"(
+constexpr std::string_view simple_vert = R"(
 #version 450 core
 
 layout(location = 0) in vec3 v_position;
@@ -63,6 +62,8 @@ uniform vec4 u_pointLightPosition;
 uniform vec3 u_pointLightColor;
 uniform vec3 u_ambiantLightColor;
 
+uniform float u_materialShininess;
+
 out vec4 f_surfaceColor;
 out vec3 f_surfaceNormal;
 out vec3 f_surfacePosition;
@@ -70,6 +71,8 @@ out vec3 f_surfacePosition;
 out vec3 f_ambiantLightColor;
 out vec3 f_pointLightPosition;
 out vec3 f_pointLightColor;
+
+out float f_materialShininess;
 
 
 void main()
@@ -83,6 +86,8 @@ void main()
     f_ambiantLightColor = u_ambiantLightColor;
     f_pointLightPosition = vec3(u_pointLightPosition);
     f_pointLightColor = u_pointLightColor;
+
+    f_materialShininess = u_materialShininess;
 }
 
 )";

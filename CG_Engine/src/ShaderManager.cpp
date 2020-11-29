@@ -99,3 +99,11 @@ void CG::ShaderManager::uploadUniformVec3(std::string_view name, const glm::vec3
 	if (position)
 		glUniform3f(position.value(), vec.x, vec.y, vec.z);
 }
+
+void CG::ShaderManager::uploadUniform1f(std::string_view name, float f)
+{
+	auto position = getUniformLocation(name);
+
+	if (position)
+		glUniform1f(position.value(), f);
+}

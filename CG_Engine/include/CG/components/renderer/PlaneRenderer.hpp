@@ -9,7 +9,7 @@ class PlaneRenderer {
 public:
 	// TODO: static shader
 
-	PlaneRenderer(const Color &colors);
+	PlaneRenderer(const Color &color);
 
 	inline void draw() const noexcept { m_drawable.draw(); }
 private:

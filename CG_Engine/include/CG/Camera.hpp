@@ -31,7 +31,7 @@ private:
 	glm::vec3 m_up = { 0, 1, 0 };
 
 	float m_fov = 45; // Degree
-	float m_aspectRatio = 16 / 9; // Horizontal
+	float m_aspectRatio = 16.f / 9.f; // Horizontal
 	float m_renderDistance = 1;
 };
 }

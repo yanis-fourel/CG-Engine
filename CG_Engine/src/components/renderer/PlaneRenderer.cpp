@@ -1,15 +1,15 @@
 #include "CG/components/renderer/PlaneRenderer.hpp"
 #include "CG/internal/Vertex.hpp"
 
-CG::PlaneRenderer::PlaneRenderer(const Color &colors)
+CG::PlaneRenderer::PlaneRenderer(const Color &color)
 {
 #define P +0.5
 #define N -0.5
 	Vertex vertices[8]{
-		{{N, 0, N}, Vector3::Up(), colors},
-		{{P, 0, N}, Vector3::Up(), colors},
-		{{P, 0, P}, Vector3::Up(), colors},
-		{{N, 0, P}, Vector3::Up(), colors},
+		{{N, 0, N}, Vector3::Up(), color},
+		{{P, 0, N}, Vector3::Up(), color},
+		{{P, 0, P}, Vector3::Up(), color},
+		{{N, 0, P}, Vector3::Up(), color},
 	};
 #undef P
 #undef N

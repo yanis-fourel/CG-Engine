@@ -16,6 +16,7 @@
 
 #include "CG/components/renderer/CubeRenderer.hpp"
 #include "CG/components/renderer/PlaneRenderer.hpp"
+#include "CG/components/renderer/SphereRenderer.hpp"
 
 #include "CG/RendererHelper.hpp"
 
@@ -99,6 +100,7 @@ void CG::Core::displayGame()
 
 	ADD_RENDERER(CG::CubeRenderer);
 	ADD_RENDERER(CG::PlaneRenderer);
+	ADD_RENDERER(CG::SphereRenderer);
 
 #undef ADD_RENDERER
 }

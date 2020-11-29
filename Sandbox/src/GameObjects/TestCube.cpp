@@ -1,4 +1,5 @@
 #include <CG/components/renderer/CubeRenderer.hpp>
+#include <CG/components/renderer/SphereRenderer.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Updateable.hpp>
 
@@ -6,8 +7,9 @@
 
 TestCube::TestCube()
 {
-	addComponent<CG::CubeRenderer>(CG::Color::Cyan());
-	addComponent<CG::Transform>().scale = CG::Vector3{10, 1, 10};
+	//addComponent<CG::CubeRenderer>(CG::Color{1, 1, 1, 0.5});
+	addComponent<CG::SphereRenderer>(CG::Color::Cyan());
+	addComponent<CG::Transform>().scale = CG::Vector3{3, 3, 3};
 	addComponent<CG::Updateable>([this](double d) { update(d); });
 }
 

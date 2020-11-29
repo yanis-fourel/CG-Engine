@@ -15,7 +15,7 @@ void FreeCameraManager::start()
 	GameCamera->setFacingDirection(glm::vec3(0.5, -0.707, 0.5));
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);
-	GameCamera->setAspectRatio(16 / 9);
+	GameCamera->setAspectRatio(16.f / 9);
 	GameCamera->setRenderDistance(200);
 	InputManager->setMouseCapture(false);
 }
@@ -23,6 +23,7 @@ void FreeCameraManager::start()
 void FreeCameraManager::update(double deltatime)
 {
 	glm::vec3 move(0);
+	float verticalMove = 0;
 
 	if (InputManager->isKeyDown(GLFW_KEY_W))
 		move.z -= 1;
@@ -33,11 +34,12 @@ void FreeCameraManager::update(double deltatime)
 	if (InputManager->isKeyDown(GLFW_KEY_D))
 		move.x += 1;
 	if (InputManager->isKeyDown(GLFW_KEY_Q))
-		move.y -= 1;
+		verticalMove -= 1;
 	if (InputManager->isKeyDown(GLFW_KEY_E))
-		move.y += 1;
+		verticalMove += 1;
 
 	GameCamera->moveRelative(move * static_cast<float>(m_speed * deltatime));
+	GameCamera->moveAbs(CG::Vector3::Up() * verticalMove * static_cast<float>(m_speed * deltatime));
 
 
 	if (InputManager->isKeyPressed(GLFW_KEY_F1))

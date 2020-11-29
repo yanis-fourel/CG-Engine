@@ -9,7 +9,14 @@ TestCube::TestCube()
 {
 	//addComponent<CG::CubeRenderer>(CG::Color{1, 1, 1, 0.5});
 	addComponent<CG::SphereRenderer>(CG::Color::Cyan());
-	addComponent<CG::Transform>().scale = CG::Vector3{3, 3, 3};
+
+	{
+		auto &transform = addComponent<CG::Transform>();
+
+		transform.scale = CG::Vector3{ 3, 3, 3 };
+		transform.position = CG::Vector3::Up() * 2;
+	}
+
 	addComponent<CG::Updateable>([this](double d) { update(d); });
 }
 

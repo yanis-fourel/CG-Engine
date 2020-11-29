@@ -83,3 +83,19 @@ void CG::ShaderManager::uploadUniformMat3(std::string_view name, const glm::mat3
 	if (position)
 		glUniformMatrix3fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat));
 }
+
+void CG::ShaderManager::uploadUniformVec4(std::string_view name, const glm::vec4 &vec)
+{
+	auto position = getUniformLocation(name);
+
+	if (position)
+		glUniform4f(position.value(), vec.x, vec.y, vec.z, vec.w);
+}
+
+void CG::ShaderManager::uploadUniformVec3(std::string_view name, const glm::vec3 &vec)
+{
+	auto position = getUniformLocation(name);
+
+	if (position)
+		glUniform3f(position.value(), vec.x, vec.y, vec.z);
+}

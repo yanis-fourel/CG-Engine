@@ -4,6 +4,7 @@
 
 #include <CG/Color.hpp>
 #include <CG/Vector3.hpp>
+#include <CG/prefabs/PointLight.hpp>
 
 #include "Sandbox.hpp"
 
@@ -16,6 +17,7 @@ void Sandbox::start()
 {
 	instanciate<FreeCameraManager>();
 	instanciate<TestCube>();
+	instanciate<CG::prefabs::PointLight>(CG::Vector3{1, 5, 2}, CG::Color::White());
 }
 
 void Sandbox::update(double deltatime)

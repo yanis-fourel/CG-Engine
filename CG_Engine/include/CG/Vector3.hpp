@@ -12,12 +12,12 @@ struct Vector3
 
 	constexpr operator glm::vec3() const noexcept
 	{
-		return glm::vec3(x, y, z);
+		return glm::vec3{ x, y, z };
 	}
 
 	constexpr Vector3 operator -() const noexcept
 	{
-		return Vector3{-x, -y, -z};
+		return Vector3{ -x, -y, -z };
 	}
 
 	template <typename T>

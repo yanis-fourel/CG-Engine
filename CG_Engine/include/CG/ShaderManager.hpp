@@ -22,6 +22,8 @@ public:
     // TODO: template
     void uploadUniformMat4(std::string_view name, const glm::mat4 &mat);
     void uploadUniformMat3(std::string_view name, const glm::mat3 &mat);
+    void uploadUniformVec4(std::string_view name, const glm::vec4 &vec);
+    void uploadUniformVec3(std::string_view name, const glm::vec3 &vec);
 
 private:
     std::optional<GLint> getUniformLocation(std::string_view name) const noexcept;

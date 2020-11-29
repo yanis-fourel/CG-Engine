@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector3.hpp"
+
 namespace CG {
 
 struct Color
@@ -8,6 +10,7 @@ struct Color
 
 	value_type r, g, b, a;
 
+	constexpr Vector3 toVec3() const noexcept { return { r, g, b }; }
 
 	static constexpr Color Transparent() { return { 1, 1, 1, 0 }; }
 	static constexpr Color White() { return { 1, 1, 1, 1 }; }

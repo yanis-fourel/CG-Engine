@@ -12,6 +12,8 @@
 #include "CG/internal/ToDelete.hpp"
 #include "CG/components/Updateable.hpp"
 #include "CG/components/Transform.hpp"
+#include "CG/components/PointLight.hpp"
+
 #include "CG/components/renderer/CubeRenderer.hpp"
 #include "CG/components/renderer/PlaneRenderer.hpp"
 
@@ -71,6 +73,19 @@ void CG::Core::displayGame()
 	m_onlyShader.use();
 
 	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
+
+	// TODO: Support multiple lights and multiple light types
+	glm::vec4 lightPos;
+	CG::Color lightColor;
+
+	m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
+		lightColor = light.color;
+		lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
+		});
+
+	m_onlyShader.uploadUniformVec4("u_lightPosition", m_game->getCamera().getViewMatrix() * lightPos);
+	m_onlyShader.uploadUniformVec3("u_lightColor", lightColor.toVec3());
+
 
 #define ADD_RENDERER(type) \
 	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \

@@ -37,7 +37,7 @@ add_library(CG_Engine STATIC
     "src/InputManager.cpp"
     "src/internal/Drawable.cpp"
     "src/components/renderer/CubeRenderer.cpp"
- "src/components/renderer/PlaneRenderer.cpp")
+ "src/components/renderer/PlaneRenderer.cpp" "src/prefabs/PointLight.cpp" "include/CG/components/PointLight.hpp")
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

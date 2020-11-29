@@ -32,6 +32,10 @@ uniform mat4 u_viewProj;
 uniform mat4 u_modelViewMatrix;
 uniform mat3 u_normalMatrix;
 
+uniform vec4 u_lightPosition;
+uniform vec3 u_lightColor;
+
+
 out vec4 f_surfaceColor;
 out vec3 f_surfaceNormal;
 
@@ -43,6 +47,8 @@ void main()
     f_surfaceColor = v_color;
 
     u_modelViewMatrix;
+    u_lightPosition;
+    u_lightColor;
 }
 
 )";

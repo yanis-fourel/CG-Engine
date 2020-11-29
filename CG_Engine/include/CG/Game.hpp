@@ -9,11 +9,13 @@
 #include "CG/Camera.hpp"
 #include "CG/InputManager.hpp"
 
+#include "CG/Color.hpp"
+
 namespace CG {
 
 class AGame {
 public:
-	AGame(const CG::Vector2 windowSize = {640, 480},const std::string &windowName = "CG Application");
+	AGame(const CG::Vector2 windowSize = { 640, 480 }, const std::string &windowName = "CG Application");
 
 	[[nodiscard]] static inline AGame *getGame() noexcept { return instance; }
 
@@ -24,6 +26,9 @@ public:
 	[[nodiscard]] auto getInputManager()noexcept -> InputManager &{ return m_inputManager; }
 	[[nodiscard]] auto getCamera() noexcept -> Camera &{ return m_camera; }
 	[[nodiscard]] auto getWorld() noexcept -> entt::registry &{ return m_world; }
+
+	[[nodiscard]] auto getAmbiantLight() noexcept -> const Color & { return m_ambiantLight; }
+	void setAmbiantLight(const Color &val) noexcept { m_ambiantLight = val; }
 
 	template <typename T, typename... TArgs>
 	T &instanciate(TArgs &&... args);
@@ -44,6 +49,9 @@ private:
 
 	entt::registry m_world;
 	std::unordered_map<AGameObject::id_type, std::unique_ptr<AGameObject>> m_objects;
+
+	// TODO: move to a component or something
+	Color m_ambiantLight { 0.2f, 0.2f, 0.2f };
 };
 
 }
@@ -61,7 +69,7 @@ T &CG::AGame::instanciate(TArgs &&... args)
 }
 
 template<std::uint32_t Tag>
-void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject&)> func) 
+void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject &)> func)
 {
 	for (auto id : m_world.view<entt::tag<Tag>>())
 		func(*m_objects.at(id));

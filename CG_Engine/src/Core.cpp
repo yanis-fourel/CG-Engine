@@ -73,18 +73,22 @@ void CG::Core::displayGame()
 	m_onlyShader.use();
 
 	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
+	m_onlyShader.uploadUniformVec3("u_ambiantLightColor", m_game->getAmbiantLight().toVec3());
 
-	// TODO: Support multiple lights and multiple light types
-	glm::vec4 lightPos;
-	CG::Color lightColor;
+	{ // Point light
 
-	m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
-		lightColor = light.color;
-		lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
-		});
+		// TODO: Support multiple lights and multiple light types
+		glm::vec4 lightPos;
+		CG::Color lightColor;
 
-	m_onlyShader.uploadUniformVec4("u_lightPosition", m_game->getCamera().getViewMatrix() * lightPos);
-	m_onlyShader.uploadUniformVec3("u_lightColor", lightColor.toVec3());
+		m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
+			lightColor = light.color;
+			lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
+			});
+
+		m_onlyShader.uploadUniformVec4("u_lightPosition", m_game->getCamera().getViewMatrix() * lightPos);
+		m_onlyShader.uploadUniformVec3("u_pointLightColor", lightColor.toVec3());
+	}
 
 
 #define ADD_RENDERER(type) \

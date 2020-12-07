@@ -14,7 +14,7 @@ class ShaderManager
 {
 public:
     ~ShaderManager();
-    void addShader(GLenum type, const std::string_view content);
+    void addShader(GLenum type, const std::string_view relpath);
     void validate();
     
     void use();

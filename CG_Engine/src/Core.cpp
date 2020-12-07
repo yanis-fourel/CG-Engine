@@ -7,8 +7,6 @@
 #include "CG/Camera.hpp"
 #include "CG/Window.hpp"
 
-#include "CG/internal/Shaders.hpp"
-
 #include "CG/internal/ToDelete.hpp"
 #include "CG/components/Updateable.hpp"
 #include "CG/components/Transform.hpp"
@@ -22,8 +20,8 @@
 
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 {
-	m_onlyShader.addShader(GL_VERTEX_SHADER, CG::shaders::simple_vert);
-	m_onlyShader.addShader(GL_FRAGMENT_SHADER, CG::shaders::simple_frag);
+	m_onlyShader.addShader(GL_VERTEX_SHADER, "vert.glsl");
+	m_onlyShader.addShader(GL_FRAGMENT_SHADER, "frag.glsl");
 	m_onlyShader.validate();
 }
 

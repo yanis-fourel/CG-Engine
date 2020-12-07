@@ -30,7 +30,7 @@ target_compile_definitions(glfw_imgui_impl PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLEW)
 add_library(CG_Engine STATIC
     "src/Window.cpp"
     "src/Camera.cpp"
-    "src/ShaderManager.cpp"
+    "src/internal/ShaderManager.cpp"
     "src/Core.cpp"
     "src/GameObject.cpp"
     "src/Game.cpp"
@@ -54,3 +54,5 @@ target_link_libraries(CG_Engine PUBLIC
 )
 
 target_compile_features(CG_Engine PUBLIC cxx_std_17)
+
+target_compile_definitions(CG_Engine PRIVATE CG_SHADER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/shaders/")

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "CG/ShaderManager.hpp"
+#include "CG/internal/ShaderManager.hpp"
 
 CG::ShaderManager::~ShaderManager()
 {
@@ -12,8 +12,15 @@ CG::ShaderManager::~ShaderManager()
 		glDeleteShader(s);
 }
 
-void CG::ShaderManager::addShader(GLenum type, const std::string_view content)
+void CG::ShaderManager::addShader(GLenum type, const std::string_view relpath)
 {
+	std::ifstream ifs(std::string(CG_SHADER_DIR) + relpath.data());
+
+	if (!ifs)
+		throw std::runtime_error(std::string("Could not open shader ") + relpath.data());
+
+	std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+
 	if (_validated)
 		throw std::logic_error("Program already validated");
 
@@ -30,7 +37,7 @@ void CG::ShaderManager::addShader(GLenum type, const std::string_view content)
 	if (status == GL_FALSE) {
 		char log[512];
 		glGetShaderInfoLog(shader, 512, nullptr, log);
-		std::cerr << "Error compiling shader '" << content << "' : " << log << std::endl;
+		std::cerr << "Error compiling shader '" << relpath << "' : " << log << std::endl;
 	}
 	else
 		_shaders.push_back(shader);

@@ -3,7 +3,7 @@
 #include <glm/gtx/transform.hpp>
 
 #include "CG/components/Transform.hpp"
-#include "CG/ShaderManager.hpp"
+#include "CG/internal/ShaderManager.hpp"
 #include "CG/Camera.hpp"
 
 namespace CG

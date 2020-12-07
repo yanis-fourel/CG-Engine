@@ -19,6 +19,8 @@ void Sandbox::start()
 	instanciate<TestCube>();
 	instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
 
+	getGame()->setAmbiantLight(CG::Color(0.3, 0.3, 0.3, 0.1));
+
 	CG::Vector2 gridSize{20, 20};
 	for (int x = static_cast<int>(gridSize.x * -.5); x < gridSize.x * 0.5; ++x)
 		for (int y = static_cast<int>(gridSize.y * -.5); y < gridSize.y * 0.5; ++y)

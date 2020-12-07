@@ -8,7 +8,7 @@
 TestCube::TestCube()
 {
 	//addComponent<CG::CubeRenderer>(CG::Color{1, 1, 1, 0.5});
-	addComponent<CG::SphereRenderer>(CG::Color::Cyan());
+	addComponent<CG::SphereRenderer>(CG::Color(1, 0, 0.5, 1));
 
 	{
 		auto &transform = addComponent<CG::Transform>();

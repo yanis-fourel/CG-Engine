@@ -6,7 +6,7 @@ add_executable(Sandbox
 	"src/GameObjects/TestCube.cpp"
 	"src/Sandbox.cpp" 
 	"src/GameObjects/FreeCameraManager.cpp"
-	"src/GameObjects/Tile.cpp")
+	"src/GameObjects/Tile.cpp" "src/GameObjects/Mesh.cpp" "include/GameObjects/Mesh.hpp" "include/AssetDir.hpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

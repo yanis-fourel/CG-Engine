@@ -10,6 +10,10 @@ struct Vector3
 
 	value_type x, y, z;
 
+	Vector3() = default;
+	constexpr Vector3(value_type x, value_type y, value_type z) noexcept : x(x), y(y), z(z)
+	{}
+
 	constexpr operator glm::vec3() const noexcept
 	{
 		return glm::vec3{ x, y, z };

@@ -20,11 +20,15 @@ spdlog/1.6.0
 # ECS / cache manager
 entt/3.5.2
 
+# Asset loading
+assimp/5.0.1
+
 [options]
 # lib shared required to set the path of the .dll for app.exe
 glew:shared=False
 glfw:shared=False
 imgui:shared=False
+assimg:shared=False
 spdlog:header_only=True
 fmt:header_only=True
 

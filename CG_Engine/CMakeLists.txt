@@ -37,7 +37,9 @@ add_library(CG_Engine STATIC
     "src/InputManager.cpp"
     "src/internal/Drawable.cpp"
     "src/components/renderer/CubeRenderer.cpp"
- "src/components/renderer/PlaneRenderer.cpp" "src/prefabs/PointLight.cpp" "include/CG/components/PointLight.hpp" "src/components/renderer/SphereRenderer.cpp")
+    "src/components/renderer/PlaneRenderer.cpp"
+    "src/prefabs/PointLight.cpp"
+    "src/components/renderer/SphereRenderer.cpp" "src/components/renderer/MeshRenderer.cpp" "src/internal/DrawableBuilder.cpp")
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}
@@ -51,6 +53,7 @@ target_link_libraries(CG_Engine PUBLIC
     CONAN_PKG::fmt
     CONAN_PKG::spdlog
     CONAN_PKG::entt
+    CONAN_PKG::assimp
 )
 
 target_compile_features(CG_Engine PUBLIC cxx_std_17)

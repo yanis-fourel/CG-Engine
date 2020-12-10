@@ -35,5 +35,5 @@ void main()
     const vec3 diffuseLightColor =  diffuseLightColorAttenuation * f_pointLightColor * dotLN;
     const vec3 specularLightColor = specularLightColorAttenuation * f_pointLightColor * pow(dotRPos, f_materialShininess);
 
-    color = f_surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor + specularLightColor, 1.0);
+    color = vec4(specularLightColor, 1.0) + f_surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor, 1.0);
 }

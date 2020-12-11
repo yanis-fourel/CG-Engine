@@ -16,30 +16,38 @@ void FreeCameraManager::start()
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);
 	GameCamera->setAspectRatio(16.f / 9);
-	GameCamera->setRenderDistance(200);
+	GameCamera->setRenderDistance(99999);
 	InputManager->setMouseCapture(false);
 }
 
 void FreeCameraManager::update(double deltatime)
 {
-	glm::vec3 move(0);
+	glm::vec3 moveDirection(0);
 	float verticalMove = 0;
 
 	if (InputManager->isKeyDown(GLFW_KEY_W))
-		move.z -= 1;
+		moveDirection.z -= 1;
 	if (InputManager->isKeyDown(GLFW_KEY_S))
-		move.z += 1;
+		moveDirection.z += 1;
 	if (InputManager->isKeyDown(GLFW_KEY_A))
-		move.x -= 1;
+		moveDirection.x -= 1;
 	if (InputManager->isKeyDown(GLFW_KEY_D))
-		move.x += 1;
+		moveDirection.x += 1;
 	if (InputManager->isKeyDown(GLFW_KEY_Q))
 		verticalMove -= 1;
 	if (InputManager->isKeyDown(GLFW_KEY_E))
 		verticalMove += 1;
 
-	GameCamera->moveRelative(move * static_cast<float>(m_speed * deltatime));
-	GameCamera->moveAbs(CG::Vector3::Up() * verticalMove * static_cast<float>(m_speed * deltatime));
+	if (InputManager->isKeyDown(GLFW_KEY_LEFT_SHIFT) && glm::length(moveDirection) + std::abs(verticalMove) > 0)
+		m_speedMul += deltatime * 10;
+	else
+		m_speedMul = 1;
+
+	spdlog::info("speed mult {}", m_speedMul);
+
+	const float distanceMoved = static_cast<float>(m_speed * m_speedMul * deltatime);
+	GameCamera->moveRelative(moveDirection * distanceMoved);
+	GameCamera->moveAbs(CG::Vector3::Up() * verticalMove * distanceMoved);
 
 
 	if (InputManager->isKeyPressed(GLFW_KEY_F1))

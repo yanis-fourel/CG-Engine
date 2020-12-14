@@ -48,5 +48,4 @@ void main()
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
     color = vec4(specularLightColor, 1.0) + surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor, 1.0);
-//    color = surfaceColor;
 }

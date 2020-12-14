@@ -9,13 +9,15 @@
 
 namespace CG {
 
+class ShaderManager;
+
 class SphereRenderer {
 public:
 	// TODO: static shader
 
 	SphereRenderer(const Color &color, std::uint32_t slices = 50, std::uint32_t stacks = 50) noexcept;
 
-	inline void draw() const noexcept { m_drawable.draw(); }
+	inline void draw(ShaderManager &) const noexcept { m_drawable.draw(); }
 
 private:
 	void generateVertices(const Color &color);

@@ -5,13 +5,15 @@
 
 namespace CG {
 
+class ShaderManager;
+
 class PlaneRenderer {
 public:
 	// TODO: static shader
 
 	PlaneRenderer(const Color &color);
 
-	inline void draw() const noexcept { m_drawable.draw(); }
+	inline void draw(ShaderManager &) const noexcept { m_drawable.draw(); }
 private:
 	Drawable m_drawable;
 };

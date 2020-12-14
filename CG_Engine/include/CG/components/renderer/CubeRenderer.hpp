@@ -7,13 +7,15 @@
 
 namespace CG {
 
+class ShaderManager;
+
 class CubeRenderer {
 public:
 	// TODO: static shader
 
 	CubeRenderer(const Color &colors);
 
-	inline void draw() const noexcept { m_drawable.draw(); }
+	inline void draw(ShaderManager &) const noexcept { m_drawable.draw(); }
 private:
 	Drawable m_drawable;
 };

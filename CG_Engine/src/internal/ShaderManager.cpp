@@ -114,3 +114,11 @@ void CG::ShaderManager::uploadUniform1f(std::string_view name, float f)
 	if (position)
 		glUniform1f(position.value(), f);
 }
+
+void CG::ShaderManager::uploadUniform1b(std::string_view name, bool b)
+{
+	auto position = getUniformLocation(name);
+
+	if (position)
+		glUniform1i(position.value(), b ? GL_TRUE : GL_FALSE);
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 #include "CG/internal/DrawableBuilder.hpp"
 
@@ -15,19 +16,23 @@ typedef aiMatrix4x4t<ai_real> aiMatrix4x4;
 
 namespace CG {
 
+class ShaderManager;
+
 class MeshRenderer {
 public:
 	// TODO: static shader
 
 	MeshRenderer(const std::string &path);
 
-	void draw() const noexcept;
+	void draw(ShaderManager &) const noexcept;
 
 private:
+	static std::string getDirectoryOfFile(const std::string &file) noexcept;
 	void processAssimpNode(const aiScene *scene, const aiNode *node, aiMatrix4x4 parentTransform) noexcept;
 	void processAssimpMesh(const aiScene *scene, const aiMesh *mesh, aiMatrix4x4 origin) noexcept;
 
 private:
+	std::string m_fileDir;
 	std::vector<Drawable> m_meshesDrawable;
 };
 

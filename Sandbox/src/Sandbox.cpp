@@ -22,7 +22,7 @@ void Sandbox::start()
 	instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
 
 	instanciate<Mesh>("CrytekSponza/sponza.obj");
-	instanciate<Mesh>("bunny.obj");
+	//instanciate<Mesh>("bunny.obj");
 
 
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));

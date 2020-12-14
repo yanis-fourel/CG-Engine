@@ -43,8 +43,6 @@ void FreeCameraManager::update(double deltatime)
 	else
 		m_speedMul = 1;
 
-	spdlog::info("speed mult {}", m_speedMul);
-
 	const float distanceMoved = static_cast<float>(m_speed * m_speedMul * deltatime);
 	GameCamera->moveRelative(moveDirection * distanceMoved);
 	GameCamera->moveAbs(CG::Vector3::Up() * verticalMove * distanceMoved);

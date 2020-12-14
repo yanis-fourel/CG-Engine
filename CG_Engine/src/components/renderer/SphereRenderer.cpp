@@ -136,7 +136,7 @@ void CG::SphereRenderer::registerVertices(const std::vector<Vertex> &vertices, c
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, color));
+		(void *)offsetof(Vertex, tint));
 	glEnableVertexAttribArray(2);
 
 	m_drawable.indices = indices;

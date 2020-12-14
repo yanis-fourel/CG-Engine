@@ -94,6 +94,6 @@ CG::CubeRenderer::CubeRenderer(const Color &color)
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, color));
+		(void *)offsetof(Vertex, tint));
 	glEnableVertexAttribArray(2);
 }

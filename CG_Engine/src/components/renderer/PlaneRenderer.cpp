@@ -1,5 +1,7 @@
 #include "CG/components/renderer/PlaneRenderer.hpp"
 #include "CG/internal/Vertex.hpp"
+#include "CG/internal/ShaderManager.hpp"
+
 
 CG::PlaneRenderer::PlaneRenderer(const Color &color)
 {
@@ -49,4 +51,9 @@ CG::PlaneRenderer::PlaneRenderer(const Color &color)
 		0, 1, 2,
 		0, 2, 3,
 	};
+}
+
+void CG::PlaneRenderer::draw(ShaderManager &sm) const noexcept
+{
+	m_drawable.draw(sm);
 }

@@ -28,8 +28,7 @@ CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectory
 void CG::MeshRenderer::draw(ShaderManager &sm) const noexcept
 {
 	for (const auto &d : m_meshesDrawable) {
-		sm.uploadUniform1b("u_hasTexture", d.hasTexture);
-		d.draw();
+		d.draw(sm);
 	}
 }
 
@@ -67,7 +66,7 @@ void CG::MeshRenderer::processTextures(const aiScene *scene) noexcept
 
 		// note : does not handle embeeded textures
 		if (ret != AI_SUCCESS) {
-			spdlog::error("Failed to query aiTextureType_DIFFUSE on '{}'", scene->mMaterials[i]->GetName().C_Str());
+			spdlog::info("'{}' has no texture", scene->mMaterials[i]->GetName().C_Str());
 			m_textures.push_back(nullptr);
 		}
 		else
@@ -102,16 +101,23 @@ void CG::MeshRenderer::processAssimpMesh(const aiScene *scene, const aiMesh *mes
 
 		const auto &v = origin * mesh->mVertices[i];
 		const auto &n = origin * mesh->mNormals[i];
-		CG::Vector2 texCoord;
+		CG::Vector2 texCoord(0, 0);
 		if (mesh->HasTextureCoords(0)) {
 			texCoord.x = mesh->mTextureCoords[0][i].x;
 			texCoord.y = mesh->mTextureCoords[0][i].y;
+		}
+		CG::Color color = CG::Color::White();
+		if (mesh->HasVertexColors(0)) {
+			color.r = mesh->mColors[0][i].r;
+			color.g = mesh->mColors[0][i].g;
+			color.b = mesh->mColors[0][i].b;
+			color.a = mesh->mColors[0][i].a;
 		}
 
 		builder.vertices.push_back(CG::Vertex{
 			   CG::Vector3(v.x, v.y, v.z),
 			   CG::Vector3(n.x, n.y, n.z),
-			   CG::Color::White(), // TODO: color ?
+			   color,
 			   texCoord
 			});
 	}

@@ -1,6 +1,7 @@
 #include <glm/gtc/constants.hpp>
 
 #include "CG/components/renderer/SphereRenderer.hpp"
+#include "CG/internal/ShaderManager.hpp"
 
 CG::SphereRenderer::SphereRenderer(const Color &color, std::uint32_t slices, std::uint32_t stacks) noexcept : m_stacks(stacks), m_slices(slices)
 {
@@ -141,3 +142,6 @@ void CG::SphereRenderer::registerVertices(const std::vector<Vertex> &vertices, c
 
 	m_drawable.indices = indices;
 }
+
+
+void CG::SphereRenderer::draw(ShaderManager &sm) const noexcept { m_drawable.draw(sm); }

@@ -25,7 +25,7 @@ public:
 
 	MeshRenderer(const std::string &path);
 
-	void draw(ShaderManager &) const noexcept;
+	void draw(ShaderManager &sm) const noexcept;
 
 private:
 	static std::string getDirectoryOfFile(const std::string &file) noexcept;

@@ -10,6 +10,10 @@ struct Vector2
 
 	value_type x, y;
 
+	Vector2() = default;
+	constexpr Vector2(value_type x, value_type y) noexcept : x(x), y(y)
+	{}
+
 	constexpr operator glm::vec2() const noexcept
 	{
 		return glm::vec2(x, y);

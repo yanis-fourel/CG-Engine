@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <vector>
 
+#include "ShaderManager.hpp"
+
 namespace CG {
 
 struct Drawable {
@@ -10,15 +12,17 @@ struct Drawable {
 	std::vector<unsigned int> indices;
 
 	GLuint texture;
-	bool hasTexture;
+	bool hasTexture = false;
 
 	// Shader ref ? or in renderer
 
-	inline void draw() const noexcept
+	inline void draw(ShaderManager &sm) const noexcept
 	{
 		glBindVertexArray(vao);
 
-		if (hasTexture)
+		sm.uploadUniform1b("u_hasTexture", hasTexture);
+
+		if (hasTexture) 
 			glBindTexture(GL_TEXTURE_2D, texture);
 
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, indices.data());

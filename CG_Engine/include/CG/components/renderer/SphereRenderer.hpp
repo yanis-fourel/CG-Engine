@@ -17,7 +17,7 @@ public:
 
 	SphereRenderer(const Color &color, std::uint32_t slices = 50, std::uint32_t stacks = 50) noexcept;
 
-	inline void draw(ShaderManager &) const noexcept { m_drawable.draw(); }
+	void draw(ShaderManager &sm) const noexcept;
 
 private:
 	void generateVertices(const Color &color);

@@ -37,6 +37,8 @@ CG::Drawable CG::DrawableBuilder::build() const noexcept
 	glEnableVertexAttribArray(2);
 
 	if (texture) {
+		result.hasTexture = true;
+
 		glGenTextures(1, &result.texture);
 		glBindTexture(GL_TEXTURE_2D, result.texture);
 

@@ -13,7 +13,7 @@ public:
 
 	PlaneRenderer(const Color &color);
 
-	inline void draw(ShaderManager &) const noexcept { m_drawable.draw(); }
+	void draw(ShaderManager &sm) const noexcept;
 private:
 	Drawable m_drawable;
 };

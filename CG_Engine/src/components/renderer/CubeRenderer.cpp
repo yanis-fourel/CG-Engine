@@ -1,5 +1,6 @@
 #include "CG/components/renderer/CubeRenderer.hpp"
 #include "CG/internal/Vertex.hpp"
+#include "CG/internal/ShaderManager.hpp"
 
 CG::CubeRenderer::CubeRenderer(const Color &color)
 {
@@ -96,4 +97,9 @@ CG::CubeRenderer::CubeRenderer(const Color &color)
 		sizeof(Vertex),
 		(void *)offsetof(Vertex, tint));
 	glEnableVertexAttribArray(2);
+}
+
+void CG::CubeRenderer::draw(ShaderManager &sm) const noexcept
+{
+	m_drawable.draw(sm);
 }

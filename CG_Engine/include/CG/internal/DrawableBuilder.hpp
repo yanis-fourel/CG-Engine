@@ -12,7 +12,7 @@ struct DrawableBuilder {
 	std::vector<unsigned int> indices;
 	std::vector<Vertex> vertices;
 
-	std::unique_ptr<Texture> texture; // null if no texture
+	std::shared_ptr<Texture> texture = nullptr; // null if no texture
 
 	Drawable build() const noexcept;
 };

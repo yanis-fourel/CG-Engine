@@ -21,6 +21,7 @@ CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectory
 
 	spdlog::info("Processing asset '{}'", path);
 
+	processTextures(scene);
 	processAssimpNode(scene, scene->mRootNode, {});
 }
 
@@ -55,6 +56,25 @@ std::string CG::MeshRenderer::getDirectoryOfFile(const std::string &file) noexce
 	return directory;
 }
 
+void CG::MeshRenderer::processTextures(const aiScene *scene) noexcept
+{
+	m_textures.reserve(scene->mNumMaterials);
+
+	for (unsigned i = 0; i < scene->mNumMaterials; ++i) {
+		aiString path;
+
+		const auto ret = scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+
+		// note : does not handle embeeded textures
+		if (ret != AI_SUCCESS) {
+			spdlog::error("Failed to query aiTextureType_DIFFUSE on '{}'", scene->mMaterials[i]->GetName().C_Str());
+			m_textures.push_back(nullptr);
+		}
+		else
+			m_textures.push_back(std::make_shared<Texture>(m_fileDir + "/" + path.C_Str()));
+	}
+}
+
 void CG::MeshRenderer::processAssimpNode(const aiScene *scene, const aiNode *node, aiMatrix4x4 parentTransform) noexcept
 {
 	aiMatrix4x4 transform = node->mTransformation * parentTransform;
@@ -74,21 +94,8 @@ void CG::MeshRenderer::processAssimpMesh(const aiScene *scene, const aiMesh *mes
 	builder.vertices.reserve(mesh->mNumVertices);
 	builder.indices.reserve(static_cast<std::size_t>(mesh->mNumFaces) * 3);
 
-	//mesh->mMaterialIndex;
-	//mesh->mTextureCoords[0]->x ; mesh->mTextureCoords[0]->y ; 
-	//scene->mTextures[0]->pcData
-
-	if (mesh->mTextureCoords) {
-		aiString path;
-
-		const auto ret = scene->mMaterials[mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-
-		// note : does not handle embeeded textures
-		if (ret != AI_SUCCESS)
-			spdlog::error("Failed to query aiTextureType_DIFFUSE on '{}'", mesh->mName.C_Str());
-		else
-			builder.texture = std::make_unique<Texture>(m_fileDir + "/" + path.C_Str());
-	}
+	if (mesh->mTextureCoords)
+		builder.texture = m_textures[mesh->mMaterialIndex];
 
 	for (unsigned i = 0; i < mesh->mNumVertices; ++i) {
 		assert(mesh->mNormals && "Currently requires normals");

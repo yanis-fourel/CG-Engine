@@ -21,7 +21,7 @@ download_imgui(imgui_impl_opengl3.cpp)
 download_imgui(imgui_impl_opengl3.h)
 
 add_library(glfw_imgui_impl STATIC ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}/imgui_impl_glfw.cpp
-                                   ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}/imgui_impl_opengl3.cpp)
+                                   ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}/imgui_impl_opengl3.cpp "include/CG/ui/imfilebrowser.h")
 
 target_link_libraries(glfw_imgui_impl PUBLIC CONAN_PKG::glew CONAN_PKG::glfw CONAN_PKG::imgui)
 target_compile_definitions(glfw_imgui_impl PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLEW)
@@ -39,7 +39,7 @@ add_library(CG_Engine STATIC
     "src/components/renderer/CubeRenderer.cpp"
     "src/components/renderer/PlaneRenderer.cpp"
     "src/prefabs/PointLight.cpp"
-    "src/components/renderer/SphereRenderer.cpp" "src/components/renderer/MeshRenderer.cpp" "src/internal/DrawableBuilder.cpp" "src/internal/Texture.cpp")
+    "src/components/renderer/SphereRenderer.cpp" "src/components/renderer/MeshRenderer.cpp" "src/internal/DrawableBuilder.cpp" "src/internal/Texture.cpp" "include/CG/ui/imfilebrowser.h")
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

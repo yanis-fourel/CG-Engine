@@ -52,8 +52,9 @@ void Sandbox::update(double deltatime)
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(std::max(getWindow().getSize().x * 0.5f, 400.0f), getWindow().getSize().y));
+	ImGui::SetNextWindowBgAlpha(0);
 
-	ImGui::Begin("Config");
+	ImGui::Begin("Config", nullptr, ImGuiWindowFlags_NoDecoration);
 
 	ImGui::Text(fmt::format("{:.1f} fps", 1 / deltatime).c_str());
 
@@ -62,6 +63,7 @@ void Sandbox::update(double deltatime)
 		ImGui::Text("Camera movement is with WASD, plus E/Q for up/down");
 		ImGui::Text("Camera rotation is like a First person shooter game, with the mouse");
 		ImGui::Text("Camera rotation is paused while this screen is up");
+		ImGui::Text("Press left shift to fo faster");
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Press F1 to switch between scene config and FPS mode");
 	}
 
@@ -80,7 +82,7 @@ void Sandbox::update(double deltatime)
 
 			ImGui::ColorEdit4("Point light color", reinterpret_cast<float *>(&color));
 
-			ImGui::DragFloat3("Point light position", reinterpret_cast<float *>(&transform.position));
+			ImGui::DragFloat3("Point light position", reinterpret_cast<float *>(&transform.position), 0.1);
 			if (ImGui::Button("Set to camera position"))
 				transform.position = getCamera().getPosition();
 		}
@@ -97,8 +99,8 @@ void Sandbox::update(double deltatime)
 
 			auto &transform = m_meshes[i]->getComponent<CG::Transform>();
 
-			ImGui::DragFloat3("Scale", reinterpret_cast<float *>(&transform.scale), 0.1f);
-			ImGui::DragFloat3("Position", reinterpret_cast<float *>(&transform.position), 0.1f);
+			ImGui::DragFloat3("Scale", reinterpret_cast<float *>(&transform.scale), 0.01f);
+			ImGui::DragFloat3("Position", reinterpret_cast<float *>(&transform.position), 0.01f);
 			if (ImGui::Button("Set to camera position"))
 				transform.position = getCamera().getPosition();
 

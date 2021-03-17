@@ -25,7 +25,7 @@ private:
 
 	void registerVertices(const std::vector<Vertex> &vertices, const std::vector<std::uint32_t> &indices);
 private:
-	static constexpr float kRadius = 0.5f; // Real diameter will be the scale of the sphere
+	static constexpr float kRadius = 1.0f;
 
 	Drawable m_drawable;
 	GLuint m_slices, m_stacks;

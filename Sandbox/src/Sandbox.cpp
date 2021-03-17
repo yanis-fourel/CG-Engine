@@ -17,7 +17,6 @@
 
 #include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/Tile.hpp"
-#include "GameObjects/TestCube.hpp"
 #include "GameObjects/Mesh.hpp"
 #include "GameObjects/Grid.hpp"
 #include "AssetDir.hpp"

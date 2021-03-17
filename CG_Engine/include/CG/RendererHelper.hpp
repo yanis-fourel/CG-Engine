@@ -20,7 +20,8 @@ inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm,
 
 	sm.uploadUniformMat4("u_model", model);
 	sm.uploadUniformMat4("u_modelViewMatrix", c.getViewMatrix() * model);
-	sm.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(c.getViewMatrix()))));
+	// Do we still need that if we compute lightnings in world coordinate ?
+	//sm.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(c.getViewMatrix()))));
 
 	r.draw(sm);
 }

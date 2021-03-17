@@ -24,7 +24,7 @@
 
 void Sandbox::start()
 {
-	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
+	getGame()->setAmbiantLight(CG::Color(0.2f, 0.2f, 0.2f, 1.f));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
 
 	instanciate<FreeCameraManager>();

@@ -85,9 +85,9 @@ void CG::Core::displayGame()
 		m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
 			lightColor = light.color;
 			lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
-			});
+		});
 
-		m_onlyShader.uploadUniformVec4("u_pointLightPosition", m_game->getCamera().getViewMatrix() * lightPos);
+		m_onlyShader.uploadUniformVec4("u_pointLightPosition", lightPos);
 		m_onlyShader.uploadUniformVec3("u_pointLightColor", lightColor.toVec3());
 	}
 

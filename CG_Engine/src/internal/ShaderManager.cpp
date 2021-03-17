@@ -41,7 +41,7 @@ void CG::ShaderManager::addShader(GLenum type, const std::string_view relpath)
 		spdlog::error("Error compiling shader '{}' : {}", relpath.data(), log);
 	}
 	else {
-		spdlog::trace("Successfully compiled shader '{}'", relpath.data());
+		spdlog::info("Successfully compiled shader '{}'", relpath.data());
 		_shaders.push_back(shader);
 	}
 }
@@ -58,6 +58,8 @@ void CG::ShaderManager::validate()
 	GLCall(glValidateProgram(_program));
 
 	GLCall(glUseProgram(_program));
+
+	spdlog::info("Successfully validated shader");
 }
 
 void CG::ShaderManager::use()

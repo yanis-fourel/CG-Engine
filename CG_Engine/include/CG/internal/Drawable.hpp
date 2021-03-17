@@ -22,7 +22,7 @@ struct Drawable {
 
 		sm.uploadUniform1b("u_hasTexture", hasTexture);
 
-		if (hasTexture) 
+		if (hasTexture) // TODO: avoid branching here
 			glBindTexture(GL_TEXTURE_2D, texture);
 
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, indices.data());

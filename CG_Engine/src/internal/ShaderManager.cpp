@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "CG/internal/ShaderManager.hpp"
@@ -38,10 +38,10 @@ void CG::ShaderManager::addShader(GLenum type, const std::string_view relpath)
 	if (status == GL_FALSE) {
 		char log[512];
 		GLCall(glGetShaderInfoLog(shader, 512, nullptr, log));
-		std::cerr << "Error compiling shader '" << relpath << "' : " << log << std::endl;
+		spdlog::error("Error compiling shader '{}' : {}", relpath.data(), log);
 	}
 	else {
-		std::cout << "Successfully compiled shader '" << relpath << "'" << std::endl;
+		spdlog::trace("Successfully compiled shader '{}'", relpath.data());
 		_shaders.push_back(shader);
 	}
 }
@@ -72,7 +72,8 @@ std::optional<GLint> CG::ShaderManager::getUniformLocation(std::string_view name
 	if (position != -1)
 		return position;
 	else {
-		//std::cerr << "Unknown uniform name '" << name << "'" << std::endl;
+		// Commented because it was causing lags during Lightning and Material rework
+		//spdlog::error("Unknown uniform name '{}'", name.data());
 		return {};
 	}
 }

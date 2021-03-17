@@ -72,7 +72,7 @@ void CG::InputManager::setMouseCapture(bool enabled) noexcept
 void CG::InputManager::toggleMouseCapture() noexcept
 {
 	setMouseCapture(!m_captureMouse);
-	spdlog::info("mouse capture toggle");
+	spdlog::trace("mouse capture toggle");
 }
 
 void CG::InputManager::resetCursorPos() const noexcept

@@ -21,7 +21,6 @@ public:
 	void update(double deltatime) override;
 
 private:
-	ImGui::FileBrowser m_fileBrowser {ImGuiFileBrowserFlags_CloseOnEsc};
 
 	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;

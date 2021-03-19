@@ -2,15 +2,30 @@
 
 in vec3 f_normal;
 in vec3 f_pos;
-flat in vec3 f_eyePos;
+uniform vec3 u_eyePos;
 
-// Material
-in vec4 f_surfaceColor;
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+};
+
+uniform Material u_material;
 
 // Light
-flat in vec3 f_ambiantLightColor;
-flat in vec4 f_pointLightPosition;
-flat in vec3 f_pointLightColor;
+
+struct PointLight {
+    vec3 position;
+
+    vec3 color;
+    float diffuseIntensity;
+    float specularIntensity;
+};
+
+uniform PointLight u_pointLight;
+uniform vec3 u_ambiantLightColor;
+
 
 // Texture
 flat in int f_hasTexture;
@@ -23,34 +38,31 @@ out vec4 out_color;
 
 vec3 get_diffuse()
 {
-    vec3 lightDir = normalize(vec3(f_pointLightPosition) - f_pos);  
-    float diffuseIntensity = max(dot(f_normal, lightDir), 0.0);
+    vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
+    float intensity = max(dot(f_normal, lightDir), 0.0);
 
-    return f_pointLightColor * diffuseIntensity;
+    return  intensity * u_pointLight.diffuseIntensity * u_pointLight.color * u_pointLight.diffuseIntensity * u_material.diffuse;
 }
 
 vec3 get_specular()
 {
-    // TODO: in material
-    float strength = 0.5;
-    float shininess = 32;
-
-    vec3 lightDir = normalize(vec3(f_pointLightPosition) - f_pos);  
-    vec3 viewDir = normalize(f_eyePos - f_pos);
+    vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
+    vec3 viewDir = normalize(u_eyePos - f_pos);
     vec3 reflectDir = reflect(-lightDir, f_normal);  
 
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
-    return strength * spec * f_pointLightColor;  
+    float intensity = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
+    return intensity * u_pointLight.specularIntensity * u_pointLight.color * u_pointLight.specularIntensity * u_material.specular;  
 }
 
 void main()
 {
-    vec4 surfaceColor = f_surfaceColor;
+    vec3 surfaceColor = u_material.ambient;
 
     // branch :( outrageously performant costy
     if (bool(f_hasTexture)) 
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
 
-    out_color = vec4(f_ambiantLightColor + get_diffuse() + get_specular(), 1) * surfaceColor;
+    vec3 result = u_ambiantLightColor + get_diffuse() + get_specular() * surfaceColor;
+    out_color = vec4(result, 1);
 }

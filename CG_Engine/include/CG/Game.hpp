@@ -30,10 +30,6 @@ public:
 	[[nodiscard]] auto getAmbiantLight() noexcept -> const Color & { return m_ambiantLight; }
 	void setAmbiantLight(const Color &val) noexcept { m_ambiantLight = val; }
 
-	[[nodiscard]] auto getMaterialShininess() noexcept { return m_allMaterialShininess; }
-	void setMaterialShininess(float val) noexcept { m_allMaterialShininess = val; }
-
-
 	template <typename T, typename... TArgs>
 	T &instanciate(TArgs &&... args);
 
@@ -56,7 +52,6 @@ private:
 
 	// TODO: move to a component or something
 	Color m_ambiantLight { 0.2f, 0.2f, 0.2f };
-	float m_allMaterialShininess = 2.f;
 };
 
 }

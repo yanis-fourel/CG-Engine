@@ -74,7 +74,7 @@ void CG::Core::displayGame()
 
 	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
 	m_onlyShader.uploadUniformVec3("u_ambiantLightColor", m_game->getAmbiantLight().toVec3());
-	m_onlyShader.uploadUniform1f("u_materialShininess", m_game->getMaterialShininess());
+	m_onlyShader.uploadUniformVec3("u_eyePos", m_game->getCamera().getPosition());
 
 	{ // Point light
 

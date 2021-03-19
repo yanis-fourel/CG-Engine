@@ -10,6 +10,7 @@ uniform mat4 u_viewProj;
 uniform mat4 u_modelViewMatrix;
 uniform mat3 u_normalMatrix;
 
+uniform vec3 u_eyePos;
 uniform vec3 u_ambiantLightColor;
 uniform vec4 u_pointLightPosition;
 uniform vec3 u_pointLightColor;
@@ -18,6 +19,7 @@ uniform vec3 u_pointLightColor;
 
 out vec3 f_normal;
 out vec3 f_pos;
+out vec3 f_eyePos;
 
 // Material
 out vec4 f_surfaceColor;
@@ -39,6 +41,7 @@ void main()
     gl_Position = u_viewProj * u_model * vec4(v_position, 1.0);
 
     f_pos = vec3(u_model * vec4(v_position, 1.0));
+    f_eyePos = u_eyePos;
 
     f_normal = normalize(u_normalMatrix * v_normal);
 

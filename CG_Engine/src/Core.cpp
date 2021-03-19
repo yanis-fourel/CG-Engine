@@ -76,11 +76,6 @@ void CG::Core::displayGame()
 	m_onlyShader.uploadUniformVec3("u_ambiantLightColor", m_game->getAmbiantLight().toVec3());
 	m_onlyShader.uploadUniformVec3("u_eyePos", m_game->getCamera().getPosition());
 
-	m_onlyShader.uploadUniformVec3("u_material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
-	m_onlyShader.uploadUniformVec3("u_material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-	m_onlyShader.uploadUniformVec3("u_material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-	m_onlyShader.uploadUniform1f("u_material.shininess", 32.0f);
-
 
 	{ // Point light
 
@@ -94,7 +89,7 @@ void CG::Core::displayGame()
 		});
 
 		m_onlyShader.uploadUniformVec3("u_pointLight.position", lightPos);
-		m_onlyShader.uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3());
+		m_onlyShader.uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3() * pointLight.intensity);
 		m_onlyShader.uploadUniform1f("u_pointLight.diffuseIntensity", pointLight.diffuseIntensity);
 		m_onlyShader.uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
 	}

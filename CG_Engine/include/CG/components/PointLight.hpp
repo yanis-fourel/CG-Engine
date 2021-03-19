@@ -8,9 +8,9 @@ struct PointLight
 {
 	Color color;
 
-	float intensity;
+	float intensity = 1.f;
 
-	float diffuseIntensity = 0.5f;
+	float diffuseIntensity = 1.0f;
 	float specularIntensity = 1.0f;
 
 	// TODO: range or something

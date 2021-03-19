@@ -63,6 +63,6 @@ void main()
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
 
-    vec3 result = u_ambiantLightColor + get_diffuse() + get_specular() * surfaceColor;
+    vec3 result = (u_ambiantLightColor + get_diffuse() + get_specular()) * surfaceColor;
     out_color = vec4(result, 1);
 }

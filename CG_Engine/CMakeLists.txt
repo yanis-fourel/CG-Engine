@@ -44,7 +44,7 @@ add_library(CG_Engine STATIC
     "src/internal/DrawableBuilder.cpp"
     "src/internal/Texture.cpp"
     "src/internal/GlError.cpp"
-    "src/prefabs/Sphere.cpp")
+    "src/prefabs/Sphere.cpp" )
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

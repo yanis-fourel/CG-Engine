@@ -3,17 +3,9 @@
 
 #include "GameObjects/Tile.hpp"
 
-Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Color &color)
+Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Material &material)
 {
 	addComponent<CG::Transform>(pos, scale);
-	addComponent<CG::PlaneRenderer>(color); // TODO: remove that useless parameter
+	addComponent<CG::PlaneRenderer>().setMaterial(material);
 	setTag<"tile"_hs>();
-
-
-	auto &r = getComponent<CG::PlaneRenderer>();
-
-	auto m = r.getMaterial();
-	
-	m.ambiant = color;
-	r.setMaterial(m);
 }

@@ -2,6 +2,8 @@
 
 in vec3 f_normal;
 in vec3 f_pos;
+in vec3 f_color;
+
 uniform vec3 u_eyePos;
 
 struct Material {
@@ -36,6 +38,11 @@ uniform sampler2D f_texture;
 out vec4 out_color;
 
 
+vec3 get_ambiant()
+{
+    return u_ambiantLightColor * u_material.ambient;
+}
+
 vec3 get_diffuse()
 {
     vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
@@ -56,13 +63,13 @@ vec3 get_specular()
 
 void main()
 {
-    vec3 surfaceColor = u_material.ambient;
+    vec3 surfaceColor = f_color;
 
     // branch :( outrageously performant costy
     if (bool(f_hasTexture)) 
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
 
-    vec3 result = (u_ambiantLightColor + get_diffuse() + get_specular()) * surfaceColor;
+    vec3 result = (get_ambiant() + get_diffuse() + get_specular()) * surfaceColor;
     out_color = vec4(result, 1);
 }

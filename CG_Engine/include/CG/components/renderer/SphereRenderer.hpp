@@ -16,7 +16,7 @@ class SphereRenderer {
 public:
 	// TODO: static shader
 
-	SphereRenderer(const Color &color, std::uint32_t slices = 50, std::uint32_t stacks = 50) noexcept;
+	SphereRenderer(std::uint32_t slices = 50, std::uint32_t stacks = 50) noexcept;
 
 	void draw(ShaderManager &sm) const noexcept;
 
@@ -24,7 +24,7 @@ public:
 	void setMaterial(const Material &mat) noexcept { m_drawable.material = mat; }
 
 private:
-	void generateVertices(const Color &color);
+	void generateVertices();
 	void _generateVertices(float *, float *, float *, GLuint *);
 
 	void registerVertices(const std::vector<Vertex> &vertices, const std::vector<std::uint32_t> &indices);

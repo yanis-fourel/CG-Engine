@@ -12,7 +12,7 @@ class PlaneRenderer {
 public:
 	// TODO: static shader
 
-	PlaneRenderer(const Color &color);
+	PlaneRenderer();
 
 	void draw(ShaderManager &sm) const noexcept;
 

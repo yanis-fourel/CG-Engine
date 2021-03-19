@@ -4,12 +4,12 @@
 #include "CG/internal/ShaderManager.hpp"
 #include "CG/internal/GlError.hpp"
 
-CG::SphereRenderer::SphereRenderer(const Color &color, std::uint32_t slices, std::uint32_t stacks) noexcept : m_stacks(stacks), m_slices(slices)
+CG::SphereRenderer::SphereRenderer(std::uint32_t slices, std::uint32_t stacks) noexcept : m_stacks(stacks), m_slices(slices)
 {
-	generateVertices(color);
+	generateVertices();
 }
 
-void CG::SphereRenderer::generateVertices(const Color &color)
+void CG::SphereRenderer::generateVertices()
 {
 	std::uint32_t nVerts = (m_slices + 1) * (m_stacks + 1);
 	std::uint32_t elements = (m_slices * 2 * (m_stacks - 1)) * 3;
@@ -32,7 +32,7 @@ void CG::SphereRenderer::generateVertices(const Color &color)
 		vertices.push_back(Vertex{
 			CG::Vector3{v[i], v[i + 1], v[i + 2]},
 			CG::Vector3{n[i], n[i + 1], n[i + 2]},
-			color
+			Color::White()
 			});
 	}
 

@@ -14,7 +14,7 @@ class CubeRenderer {
 public:
 	// TODO: static shader
 
-	CubeRenderer(const Color &colors);
+	CubeRenderer();
 
 	void draw(ShaderManager &sm) const noexcept;
 

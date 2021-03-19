@@ -4,15 +4,15 @@
 #include "CG/internal/GlError.hpp"
 
 
-CG::PlaneRenderer::PlaneRenderer(const Color &color)
+CG::PlaneRenderer::PlaneRenderer()
 {
 #define P +0.5
 #define N -0.5
 	Vertex vertices[8]{
-		{{N, 0, N}, Vector3::Up(), color},
-		{{P, 0, N}, Vector3::Up(), color},
-		{{P, 0, P}, Vector3::Up(), color},
-		{{N, 0, P}, Vector3::Up(), color},
+		{{N, 0, N}, Vector3::Up(), Color::White()},
+		{{P, 0, N}, Vector3::Up(), Color::White()},
+		{{P, 0, P}, Vector3::Up(), Color::White()},
+		{{N, 0, P}, Vector3::Up(), Color::White()},
 	};
 #undef P
 #undef N

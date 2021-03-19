@@ -3,44 +3,44 @@
 #include "CG/internal/ShaderManager.hpp"
 #include "CG/internal/GlError.hpp"
 
-CG::CubeRenderer::CubeRenderer(const Color &color)
+CG::CubeRenderer::CubeRenderer()
 {
 	Vertex vertices[24]{
 		//bottom
-		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Down(), color},
-		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Down(), color},
-		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Down(), color},
-		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Down(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Down(), Color::White()},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Down(), Color::White()},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Down(), Color::White()},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Down(), Color::White()},
 
 		//front
-		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
-		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Backward(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
-		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Backward(), Color::White()},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Backward(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), Color::White()},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Backward(), Color::White()},
 
 		//left
-		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Right(), color},
-		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Right(), color},
-		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Right(), color},
-		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Right(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Right(), Color::White()},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Right(), Color::White()},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Right(), Color::White()},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Right(), Color::White()},
 
 		//back
-		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Forward(), color},
-		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Forward(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Forward(), color},
-		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Forward(), color},
+		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Forward(), Color::White()},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Forward(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Forward(), Color::White()},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Forward(), Color::White()},
 
 		//right
-		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Left(), color},
-		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Left(), color},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Forward()) * 0.5,	Vector3::Left(), Color::White()},
+		{(Vector3::Down() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Left(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Left(), Color::White()},
 
 		//up
-		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Up(), color},
-		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Up(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Up(), color},
-		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Up(), color},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Backward()) * 0.5,		Vector3::Up(), Color::White()},
+		{(Vector3::Up() + Vector3::Left() + Vector3::Forward()) * 0.5,		Vector3::Up(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Forward()) * 0.5,		Vector3::Up(), Color::White()},
+		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Up(), Color::White()},
 	};
 
 	m_drawable.indices = {

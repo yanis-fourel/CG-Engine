@@ -15,6 +15,7 @@ uniform mat3 u_normalMatrix;
 
 out vec3 f_normal;
 out vec3 f_pos;
+out vec3 f_color;
 out vec3 f_eyePos;
 
 
@@ -33,6 +34,8 @@ void main()
 
     f_normal = normalize(u_normalMatrix * v_normal);
     
+    f_color = vec3(v_color);
+
     // Texture
     f_texCoord = v_texCoord;
     f_hasTexture = int(u_hasTexture);

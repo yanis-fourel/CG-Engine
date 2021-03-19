@@ -12,6 +12,6 @@ Grid::Grid(const CG::Vector2 &size, float height)
 				CG::Vector3::Right() * x +
 				CG::Vector3::Forward() * y +
 				CG::Vector3::Up() * height,
-				CG::Vector3{ 1.f, 0.f, 1.f },
+				CG::Vector3::One(),
 				(x + y) % 2 ? CG::Color(0.2f, 0.2f, 0.2f, 1) : CG::Color(0.7f, 0.7f, 0.7f, 1));
 }

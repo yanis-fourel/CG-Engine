@@ -40,7 +40,7 @@ void main()
 
     f_pos = vec3(u_model * vec4(v_position, 1.0));
 
-    f_normal = normalize(v_normal); // we normalize again to be certain
+    f_normal = normalize(u_normalMatrix * v_normal);
 
     // Material?
     f_surfaceColor = v_color;

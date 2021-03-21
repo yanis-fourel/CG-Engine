@@ -5,7 +5,7 @@
 
 Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Material &material)
 {
-	addComponent<CG::Transform>(pos, scale);
+	addComponent<CG::Transform>(pos, CG::Quaternion::identity(), scale);
 	addComponent<CG::PlaneRenderer>().setMaterial(material);
 	setTag<"tile"_hs>();
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "CG/components/Transform.hpp"
 #include "CG/internal/ShaderManager.hpp"
@@ -14,8 +16,7 @@ inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm,
 {
 	glm::mat4 model = glm::mat4(1);
 	model = glm::translate(model, static_cast<glm::vec3>(t.position));
-	// TODO: rotation
-	//		model = glm::rotate(model, );
+	model *= glm::toMat4(static_cast<glm::quat>(t.rotation));
 	model = glm::scale(model, static_cast<glm::vec3>(t.scale));
 
 	sm.uploadUniformMat4("u_model", model);

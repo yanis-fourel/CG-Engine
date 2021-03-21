@@ -9,6 +9,7 @@
 
 #include "CG/ui/imfilebrowser.h"
 #include <CG/prefabs/PointLight.hpp>
+#include <CG/prefabs/Cube.hpp>
 
 #include "GameObjects/Mesh.hpp"
 
@@ -24,4 +25,6 @@ private:
 
 	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;
+
+	CG::prefabs::Cube *m_rotatingCube;
 };

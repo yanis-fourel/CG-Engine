@@ -30,6 +30,21 @@ struct Vector3
 		return glm::vec3{ x, y, z };
 	}
 
+	double magnitude() const noexcept
+	{
+		return sqrt(x * x + y * y + z * z);
+	}
+
+	Vector3 normalized() const noexcept
+	{
+		double m = magnitude();
+		return {
+			static_cast<value_type>(x / m),
+			static_cast<value_type>(y / m),
+			static_cast<value_type>(z / m)
+		};
+	}
+
 	constexpr Vector3 operator -() const noexcept
 	{
 		return Vector3{ -x, -y, -z };

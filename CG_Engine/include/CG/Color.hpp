@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector3.hpp"
+#include "math/Vector3.hpp"
 
 namespace CG {
 

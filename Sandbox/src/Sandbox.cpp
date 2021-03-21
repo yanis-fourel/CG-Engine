@@ -5,7 +5,7 @@
 #include <imgui.h>
 
 #include <CG/Color.hpp>
-#include <CG/Vector3.hpp>
+#include <CG/math/Vector3.hpp>
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Sphere.hpp>
 #include <CG/ui/imfilebrowser.h>

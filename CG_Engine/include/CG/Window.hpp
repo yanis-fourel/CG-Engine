@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CG/Vector2.hpp"
+#include "CG/math/Vector2.hpp"
 
 struct GLFWwindow;
 

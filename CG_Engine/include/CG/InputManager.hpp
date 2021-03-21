@@ -4,7 +4,7 @@
 #include <GL/glew.h> // needed by Glf3w
 #include <GLFW/glfw3.h> // input keys
 
-#include <CG/Vector2.hpp>
+#include <CG/math/Vector2.hpp>
 
 struct GLFWwindow;
 

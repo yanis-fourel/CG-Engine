@@ -5,7 +5,7 @@
 
 #include "CG/Game.hpp"
 #include "CG/Color.hpp"
-#include "CG/Vector2.hpp"
+#include "CG/math/Vector2.hpp"
 
 #include "CG/ui/imfilebrowser.h"
 #include <CG/prefabs/PointLight.hpp>

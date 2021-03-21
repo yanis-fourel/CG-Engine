@@ -1,7 +1,7 @@
 #include <CG/EntryPoint.hpp>
 #include "Sandbox.hpp"
 
-#include <CG/Vector3.hpp>
+#include <CG/math/Vector3.hpp>
 
 int main(int ac, char **av)
 {

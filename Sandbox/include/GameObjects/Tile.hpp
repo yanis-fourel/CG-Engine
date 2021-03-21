@@ -1,7 +1,7 @@
 #pragma once
 
 #include <CG/GameObject.hpp>
-#include <CG/Vector3.hpp>
+#include <CG/math/Vector3.hpp>
 #include <CG/Material.hpp>
 
 class Tile : public CG::AGameObject

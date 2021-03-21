@@ -20,7 +20,7 @@ inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm,
 
 	sm.uploadUniformMat4("u_model", model);
 	sm.uploadUniformMat4("u_modelViewMatrix", c.getViewMatrix() * model);
-	sm.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(c.getViewMatrix()))));
+	sm.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(glm::mat3(model)))));
 
 	r.draw(sm);
 }

@@ -12,6 +12,7 @@
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
+#include "CG/components/renderer/SphereRenderer.hpp"
 
 #include "Sandbox.hpp"
 
@@ -24,12 +25,13 @@
 
 void Sandbox::start()
 {
-	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
+	getGame()->setAmbiantLight(CG::Color(0.4f, 0.4f, 0.4f, 1.f));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
 
 	instanciate<FreeCameraManager>();
 	instanciate<Grid>(CG::Vector2(20, 20));
-	instanciate<CG::prefabs::Sphere>(CG::Vector3::Up() * 2, 1, CG::Color::Red());
+	instanciate<CG::prefabs::Sphere>(CG::Vector3::Up() * 2, 1)
+		.getComponent<CG::SphereRenderer>().setMaterial(CG::Material::Emerald());
 }
 
 void Sandbox::update(double deltatime)

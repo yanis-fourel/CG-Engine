@@ -1,15 +1,16 @@
 #include <fstream>
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/GlError.hpp"
 
 CG::ShaderManager::~ShaderManager()
 {
 	if (_validated)
-		glDeleteProgram(_program);
+		GLCall(glDeleteProgram(_program));
 	for (const auto &s : _shaders)
-		glDeleteShader(s);
+		GLCall(glDeleteShader(s));
 }
 
 void CG::ShaderManager::addShader(GLenum type, const std::string_view relpath)
@@ -28,19 +29,21 @@ void CG::ShaderManager::addShader(GLenum type, const std::string_view relpath)
 
 	auto shader = glCreateShader(type);
 
-	glShaderSource(shader, 1, &cstr_content, nullptr);
-	glCompileShader(shader);
+	GLCall(glShaderSource(shader, 1, &cstr_content, nullptr));
+	GLCall(glCompileShader(shader));
 
 	int status;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+	GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &status));
 
 	if (status == GL_FALSE) {
 		char log[512];
-		glGetShaderInfoLog(shader, 512, nullptr, log);
-		std::cerr << "Error compiling shader '" << relpath << "' : " << log << std::endl;
+		GLCall(glGetShaderInfoLog(shader, 512, nullptr, log));
+		spdlog::error("Error compiling shader '{}' : {}", relpath.data(), log);
 	}
-	else
+	else {
+		spdlog::info("Successfully compiled shader '{}'", relpath.data());
 		_shaders.push_back(shader);
+	}
 }
 
 void CG::ShaderManager::validate()
@@ -50,16 +53,18 @@ void CG::ShaderManager::validate()
 	_program = glCreateProgram();
 
 	for (const auto &s : _shaders)
-		glAttachShader(_program, s);
-	glLinkProgram(_program);
-	glValidateProgram(_program);
+		GLCall(glAttachShader(_program, s));
+	GLCall(glLinkProgram(_program));
+	GLCall(glValidateProgram(_program));
 
-	glUseProgram(_program);
+	GLCall(glUseProgram(_program));
+
+	spdlog::info("Successfully validated shader");
 }
 
 void CG::ShaderManager::use()
 {
-	glUseProgram(_program);
+	GLCall(glUseProgram(_program));
 }
 
 std::optional<GLint> CG::ShaderManager::getUniformLocation(std::string_view name) const noexcept
@@ -69,7 +74,8 @@ std::optional<GLint> CG::ShaderManager::getUniformLocation(std::string_view name
 	if (position != -1)
 		return position;
 	else {
-		std::cerr << "Unknown uniform name '" << name << "'" << std::endl;
+		// Commented because it was causing lags during Lightning and Material rework
+		//spdlog::error("Unknown uniform name '{}'", name.data());
 		return {};
 	}
 }
@@ -79,7 +85,7 @@ void CG::ShaderManager::uploadUniformMat4(std::string_view name, const glm::mat4
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniformMatrix4fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat));
+		GLCall(glUniformMatrix4fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 
 
@@ -88,7 +94,7 @@ void CG::ShaderManager::uploadUniformMat3(std::string_view name, const glm::mat3
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniformMatrix3fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat));
+		GLCall(glUniformMatrix3fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 
 void CG::ShaderManager::uploadUniformVec4(std::string_view name, const glm::vec4 &vec)
@@ -96,7 +102,7 @@ void CG::ShaderManager::uploadUniformVec4(std::string_view name, const glm::vec4
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniform4f(position.value(), vec.x, vec.y, vec.z, vec.w);
+		GLCall(glUniform4f(position.value(), vec.x, vec.y, vec.z, vec.w));
 }
 
 void CG::ShaderManager::uploadUniformVec3(std::string_view name, const glm::vec3 &vec)
@@ -104,7 +110,7 @@ void CG::ShaderManager::uploadUniformVec3(std::string_view name, const glm::vec3
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniform3f(position.value(), vec.x, vec.y, vec.z);
+		GLCall(glUniform3f(position.value(), vec.x, vec.y, vec.z));
 }
 
 void CG::ShaderManager::uploadUniform1f(std::string_view name, float f)
@@ -112,7 +118,7 @@ void CG::ShaderManager::uploadUniform1f(std::string_view name, float f)
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniform1f(position.value(), f);
+		GLCall(glUniform1f(position.value(), f));
 }
 
 void CG::ShaderManager::uploadUniform1b(std::string_view name, bool b)
@@ -120,5 +126,5 @@ void CG::ShaderManager::uploadUniform1b(std::string_view name, bool b)
 	auto position = getUniformLocation(name);
 
 	if (position)
-		glUniform1i(position.value(), b ? GL_TRUE : GL_FALSE);
+		GLCall(glUniform1i(position.value(), b ? GL_TRUE : GL_FALSE));
 }

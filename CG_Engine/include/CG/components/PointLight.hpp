@@ -7,7 +7,13 @@ namespace CG {
 struct PointLight 
 {
 	Color color;
-	// TODO: range / intensity or something
+
+	float intensity = 1.f;
+
+	float diffuseIntensity = 1.0f;
+	float specularIntensity = 1.0f;
+
+	// TODO: range or something
 };
 
 }

@@ -12,7 +12,7 @@ struct Vertex
 	Vector3 position;
 	Vector3 normal;
 
-	Color tint;
+	Color color;
 	Vector2 textureUV; // will be ignored if no texture
 };
 

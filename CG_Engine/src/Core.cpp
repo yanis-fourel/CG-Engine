@@ -74,21 +74,24 @@ void CG::Core::displayGame()
 
 	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
 	m_onlyShader.uploadUniformVec3("u_ambiantLightColor", m_game->getAmbiantLight().toVec3());
-	m_onlyShader.uploadUniform1f("u_materialShininess", m_game->getMaterialShininess());
+	m_onlyShader.uploadUniformVec3("u_eyePos", m_game->getCamera().getPosition());
+
 
 	{ // Point light
 
 		// TODO: Support multiple lights and multiple light types
-		glm::vec4 lightPos;
-		CG::Color lightColor;
+		glm::vec3 lightPos;
+		CG::PointLight pointLight;
 
 		m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
-			lightColor = light.color;
+			pointLight = light;
 			lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
-			});
+		});
 
-		m_onlyShader.uploadUniformVec4("u_pointLightPosition", m_game->getCamera().getViewMatrix() * lightPos);
-		m_onlyShader.uploadUniformVec3("u_pointLightColor", lightColor.toVec3());
+		m_onlyShader.uploadUniformVec3("u_pointLight.position", lightPos);
+		m_onlyShader.uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3() * pointLight.intensity);
+		m_onlyShader.uploadUniform1f("u_pointLight.diffuseIntensity", pointLight.diffuseIntensity);
+		m_onlyShader.uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
 	}
 
 

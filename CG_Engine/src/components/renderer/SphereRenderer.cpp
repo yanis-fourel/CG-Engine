@@ -2,13 +2,14 @@
 
 #include "CG/components/renderer/SphereRenderer.hpp"
 #include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/GlError.hpp"
 
-CG::SphereRenderer::SphereRenderer(const Color &color, std::uint32_t slices, std::uint32_t stacks) noexcept : m_stacks(stacks), m_slices(slices)
+CG::SphereRenderer::SphereRenderer(std::uint32_t slices, std::uint32_t stacks) noexcept : m_stacks(stacks), m_slices(slices)
 {
-	generateVertices(color);
+	generateVertices();
 }
 
-void CG::SphereRenderer::generateVertices(const Color &color)
+void CG::SphereRenderer::generateVertices()
 {
 	std::uint32_t nVerts = (m_slices + 1) * (m_stacks + 1);
 	std::uint32_t elements = (m_slices * 2 * (m_stacks - 1)) * 3;
@@ -31,7 +32,7 @@ void CG::SphereRenderer::generateVertices(const Color &color)
 		vertices.push_back(Vertex{
 			CG::Vector3{v[i], v[i + 1], v[i + 2]},
 			CG::Vector3{n[i], n[i + 1], n[i + 2]},
-			color
+			Color::White()
 			});
 	}
 
@@ -111,34 +112,34 @@ void CG::SphereRenderer::_generateVertices(float *verts, float *norms, float *te
 void CG::SphereRenderer::registerVertices(const std::vector<Vertex> &vertices, const std::vector<std::uint32_t> &indices)
 {
 	GLuint vbo;
-	glGenBuffers(1, &vbo);
+	GLCall(glGenBuffers(1, &vbo));
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(std::remove_reference<decltype(vertices)>::type::value_type), vertices.data(), GL_STATIC_DRAW);
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(std::remove_reference<decltype(vertices)>::type::value_type), vertices.data(), GL_STATIC_DRAW));
 
-	glGenVertexArrays(1, &m_drawable.vao);
-	glBindVertexArray(m_drawable.vao);
-	glVertexAttribPointer(0,
+	GLCall(glGenVertexArrays(1, &m_drawable.vao));
+	GLCall(glBindVertexArray(m_drawable.vao));
+	GLCall(glVertexAttribPointer(0,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1,
+		(void *)offsetof(Vertex, position)));
+	GLCall(glEnableVertexAttribArray(0));
+	GLCall(glVertexAttribPointer(1,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, normal));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2,
+		(void *)offsetof(Vertex, normal)));
+	GLCall(glEnableVertexAttribArray(1));
+	GLCall(glVertexAttribPointer(2,
 		4,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, tint));
-	glEnableVertexAttribArray(2);
+		(void *)offsetof(Vertex, color)));
+	GLCall(glEnableVertexAttribArray(2));
 
 	m_drawable.indices = indices;
 }

@@ -1,4 +1,5 @@
 #include "CG/internal/DrawableBuilder.hpp"
+#include "CG/internal/GlError.hpp"
 
 CG::Drawable CG::DrawableBuilder::build() const noexcept
 {
@@ -7,34 +8,34 @@ CG::Drawable CG::DrawableBuilder::build() const noexcept
 	result.indices = indices;
 
 	GLuint vbo;
-	glGenBuffers(1, &vbo);
+	GLCall(glGenBuffers(1, &vbo));
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(decltype(vertices)::value_type), vertices.data(), GL_STATIC_DRAW);
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(decltype(vertices)::value_type), vertices.data(), GL_STATIC_DRAW));
 
-	glGenVertexArrays(1, &result.vao);
-	glBindVertexArray(result.vao);
-	glVertexAttribPointer(0,
+	GLCall(glGenVertexArrays(1, &result.vao));
+	GLCall(glBindVertexArray(result.vao));
+	GLCall(glVertexAttribPointer(0,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1,
+		(void *)offsetof(Vertex, position)));
+	GLCall(glEnableVertexAttribArray(0));
+	GLCall(glVertexAttribPointer(1,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, normal));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2,
+		(void *)offsetof(Vertex, normal)));
+	GLCall(glEnableVertexAttribArray(1));
+	GLCall(glVertexAttribPointer(2,
 		4,
 		GL_FLOAT,
 		GL_FALSE,
 		sizeof(Vertex),
-		(void *)offsetof(Vertex, tint));
-	glEnableVertexAttribArray(2);
+		(void *)offsetof(Vertex, color)));
+	GLCall(glEnableVertexAttribArray(2));
 
 	if (texture) {
 		result.hasTexture = true;
@@ -47,7 +48,7 @@ CG::Drawable CG::DrawableBuilder::build() const noexcept
 		else if (texture->nbrChannels == 4)
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->data);
 
-		glGenerateMipmap(GL_TEXTURE_2D);
+		GLCall(glGenerateMipmap(GL_TEXTURE_2D));
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);

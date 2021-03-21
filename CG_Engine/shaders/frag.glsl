@@ -1,51 +1,75 @@
 #version 450 core
 
-in vec4 f_surfaceTint;
-in vec3 f_surfaceNormal;
-in vec3 f_surfacePosition;
-in vec2 f_texCoord;
+in vec3 f_normal;
+in vec3 f_pos;
+in vec3 f_color;
 
-flat in vec3 f_ambiantLightColor;
+uniform vec3 u_eyePos;
 
-flat in vec3 f_pointLightPosition;
-flat in vec3 f_pointLightColor;
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+};
 
-flat in float f_materialShininess;
+uniform Material u_material;
 
+// Light
+
+struct PointLight {
+    vec3 position;
+
+    vec3 color;
+    float diffuseIntensity;
+    float specularIntensity;
+};
+
+uniform PointLight u_pointLight;
+uniform vec3 u_ambiantLightColor;
+
+
+// Texture
 flat in int f_hasTexture;
-
+in vec2 f_texCoord;
 uniform sampler2D f_texture;
 
 
-out vec4 color;
+out vec4 out_color;
 
-float lightAttenuationFactor(float dist)
+
+vec3 get_ambiant()
 {
-    return 1 / pow(dist, 2);
+    return u_ambiantLightColor * u_material.ambient;
+}
+
+vec3 get_diffuse()
+{
+    vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
+    float intensity = max(dot(f_normal, lightDir), 0.0);
+
+    return  intensity * u_pointLight.diffuseIntensity * u_pointLight.color * u_pointLight.diffuseIntensity * u_material.diffuse;
+}
+
+vec3 get_specular()
+{
+    vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
+    vec3 viewDir = normalize(u_eyePos - f_pos);
+    vec3 reflectDir = reflect(-lightDir, f_normal);  
+
+    float intensity = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
+    return intensity * u_pointLight.specularIntensity * u_pointLight.color * u_pointLight.specularIntensity * u_material.specular;  
 }
 
 void main()
 {
-    const vec3 L = normalize(vec3(f_pointLightPosition) - f_surfacePosition);
-    const vec3 R = reflect(-L, f_surfaceNormal);
-
-    const float distanceSurfaceLight = distance(f_pointLightPosition, f_surfacePosition);
-    const float distanceSurfaceEye = length(f_surfacePosition);
-
-    const float diffuseLightColorAttenuation = lightAttenuationFactor(distanceSurfaceLight);
-    const float specularLightColorAttenuation = lightAttenuationFactor(distanceSurfaceLight + distanceSurfaceEye);
-
-    const float dotLN = max(0, dot(f_surfaceNormal, L));
-    const float dotRPos = max(0, dot(R, -f_surfacePosition));
-    
-    const vec3 diffuseLightColor =  diffuseLightColorAttenuation * f_pointLightColor * dotLN;
-    const vec3 specularLightColor = specularLightColorAttenuation * f_pointLightColor * pow(dotRPos, f_materialShininess);
-
-    vec4 surfaceColor = f_surfaceTint;
+    vec3 surfaceColor = f_color;
 
     // branch :( outrageously performant costy
     if (bool(f_hasTexture)) 
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
-    color = vec4(specularLightColor, 1.0) + surfaceColor * vec4(f_ambiantLightColor + diffuseLightColor, 1.0);
+
+    vec3 result = (get_ambiant() + get_diffuse() + get_specular()) * surfaceColor;
+    out_color = vec4(result, 1);
 }

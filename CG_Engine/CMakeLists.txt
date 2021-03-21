@@ -39,7 +39,12 @@ add_library(CG_Engine STATIC
     "src/components/renderer/CubeRenderer.cpp"
     "src/components/renderer/PlaneRenderer.cpp"
     "src/prefabs/PointLight.cpp"
-    "src/components/renderer/SphereRenderer.cpp" "src/components/renderer/MeshRenderer.cpp" "src/internal/DrawableBuilder.cpp" "src/internal/Texture.cpp" "include/CG/ui/imfilebrowser.h" "include/CG/prefabs/Sphere.hpp" "src/prefabs/Sphere.cpp")
+    "src/components/renderer/SphereRenderer.cpp"
+    "src/components/renderer/MeshRenderer.cpp"
+    "src/internal/DrawableBuilder.cpp"
+    "src/internal/Texture.cpp"
+    "src/internal/GlError.cpp"
+    "src/prefabs/Sphere.cpp" )
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

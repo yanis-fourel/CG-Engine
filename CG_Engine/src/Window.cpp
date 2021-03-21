@@ -111,3 +111,4 @@ void CG::Window::onFrameEnd()
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(m_window);
 }
+

@@ -3,9 +3,9 @@
 
 #include "GameObjects/Tile.hpp"
 
-Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Color &color)
+Tile::Tile(const CG::Vector3 &pos, const CG::Vector3 &scale, const CG::Material &material)
 {
 	addComponent<CG::Transform>(pos, scale);
-	addComponent<CG::PlaneRenderer>(color);
+	addComponent<CG::PlaneRenderer>().setMaterial(material);
 	setTag<"tile"_hs>();
 }

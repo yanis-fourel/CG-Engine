@@ -8,8 +8,7 @@ namespace CG::prefabs {
 
 class Sphere : public AGameObject {
 public:
-	Sphere(const Vector3 &pos, float radius, const Color &color);
-
+	Sphere(const Vector3 &pos, float radius);
 };
 
 }

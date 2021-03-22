@@ -11,7 +11,7 @@ class Core
 {
 public:
 	Core(std::unique_ptr<AGame> game);
-
+	
 	int run();
 private:
 	void updateGame(double deltatime);

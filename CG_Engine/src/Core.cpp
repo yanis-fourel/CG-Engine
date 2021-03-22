@@ -7,7 +7,7 @@
 #include "CG/Camera.hpp"
 #include "CG/Window.hpp"
 
-#include "CG/internal/ToDelete.hpp"
+#include "CG/internal/components/ToDelete.hpp"
 #include "CG/components/Updateable.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
@@ -35,7 +35,7 @@ int CG::Core::run()
 	while (m_game->getWindow().run()) {
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
-		updateGame(deltatime);
+		updateGame(m_game->isFrozen() ? 0 : deltatime);
 
 		cleanupDeadGameobjects();
 
@@ -44,21 +44,21 @@ int CG::Core::run()
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
 		deltatime = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() * 1e-9;
+		m_game->setRealDeltatime(deltatime);
 	}
 
 	return 0;
 }
 
-void CG::Core::updateGame(double deltatime)
+void CG::Core::updateGame(double deltaGametime)
 {
 	m_game->getInputManager().update();
 
-	m_game->update(deltatime);
+	m_game->update(deltaGametime);
 
-	m_game->getWorld().view<CG::Updateable>().each([deltatime](const CG::Updateable &u) {
-		u.call(deltatime);
-		});
-
+	m_game->getWorld().view<CG::Updateable>().each([deltaGametime](const CG::Updateable &u) {
+		u.call(deltaGametime);
+	});
 }
 
 void CG::Core::cleanupDeadGameobjects()
@@ -86,7 +86,7 @@ void CG::Core::displayGame()
 		m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
 			pointLight = light;
 			lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
-		});
+			});
 
 		m_onlyShader.uploadUniformVec3("u_pointLight.position", lightPos);
 		m_onlyShader.uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3() * pointLight.intensity);

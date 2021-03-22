@@ -2,7 +2,7 @@
 #include "CG/Core.hpp"
 #include "CG/Game.hpp"
 
-#include "CG/internal/ToDelete.hpp"
+#include "CG/internal/components/ToDelete.hpp"
 
 CG::AGameObject::AGameObject() : m_entity(getGame()->getWorld().create())
 {

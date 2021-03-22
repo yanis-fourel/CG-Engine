@@ -36,9 +36,18 @@ public:
 	template <std::uint32_t Tag>
 	void getObjectsOfTag(std::function<void(AGameObject &)> func);
 
+	// Destroys every single object of the scene
+	void clearScene();
+
 	// Call `obj.destroy()` unless you know what you're doing
 	void immediateDestroy(AGameObject::id_type obj);
 
+	[[nodiscard]] auto isFrozen() const noexcept { return m_isFrozen; }
+	void setFrozen(bool val) { m_isFrozen = val; }
+
+	[[nodiscard]] auto getRealDeltatime() const noexcept { return m_realDeltaTime; }
+	// You probably don't want to call that yourself
+	void setRealDeltatime(double seconds) { m_realDeltaTime = seconds; }
 public:
 	static inline AGame *instance = nullptr;
 
@@ -52,6 +61,9 @@ private:
 
 	// TODO: move to a component or something
 	Color m_ambiantLight { 0.2f, 0.2f, 0.2f };
+
+	bool m_isFrozen = false;
+	double m_realDeltaTime = 0;;
 };
 
 }

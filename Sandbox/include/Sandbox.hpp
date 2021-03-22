@@ -22,9 +22,13 @@ public:
 	void update(double deltatime) override;
 
 private:
+	void resetSimulation();
 
+private:
 	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;
 
-	CG::prefabs::Cube *m_rotatingCube;
+	std::vector<CG::AGameObject *> m_simulationObjects;
+
+	float m_simulationTime;
 };

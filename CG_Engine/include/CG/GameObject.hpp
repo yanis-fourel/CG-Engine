@@ -21,7 +21,7 @@ public:
 	virtual void start() {};
 
 	template<typename T>
-	T &getComponent();
+	T &getComponent() noexcept;
 
 	[[nodiscard]] AGame *getGame() const noexcept;
 
@@ -30,7 +30,10 @@ public:
 	void destroy() noexcept;
 protected:
 	template<typename T, typename... TArgs>
-	T &addComponent(TArgs &&... args);
+	T &addComponent(TArgs &&... args) noexcept;
+
+	template<typename T>
+	void removeComponent() noexcept;
 
 	template <std::uint32_t Tag>
 	void setTag();
@@ -52,15 +55,21 @@ private:
 #include "CG/Game.hpp"
 
 template<typename T>
-T &CG::AGameObject::getComponent()
+T &CG::AGameObject::getComponent() noexcept
 {
 	return getGame()->getWorld().get<T>(m_entity);
 }
 
 template<typename T, typename... TArgs>
-T &CG::AGameObject::addComponent(TArgs &&... args)
+T &CG::AGameObject::addComponent(TArgs &&... args) noexcept
 {
 	return getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
+}
+
+template<typename T>
+void CG::AGameObject::removeComponent() noexcept
+{
+	getGame()->getWorld().remove<T>(m_entity);
 }
 
 template<std::uint32_t Tag>

@@ -22,6 +22,8 @@ void FreeCameraManager::start()
 
 void FreeCameraManager::update(double deltatime)
 {
+	deltatime = getGame()->getRealDeltatime(); // camera should work even if game is paused
+
 	glm::vec3 moveDirection(0);
 	float verticalMove = 0;
 

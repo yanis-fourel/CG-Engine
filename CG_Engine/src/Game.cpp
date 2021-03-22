@@ -9,6 +9,12 @@ CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : 
 	AGame::instance = this;
 }
 
+void CG::AGame::clearScene()
+{
+	for (auto &[e, obj] : m_objects)
+		obj->destroy();
+}
+
 void CG::AGame::immediateDestroy(AGameObject::id_type obj)
 {
 	m_objects.erase(obj);

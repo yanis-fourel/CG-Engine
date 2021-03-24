@@ -26,6 +26,7 @@ add_library(glfw_imgui_impl STATIC ${CMAKE_BINARY_DIR}/download/imgui/${imgui_ve
 target_link_libraries(glfw_imgui_impl PUBLIC CONAN_PKG::glew CONAN_PKG::glfw CONAN_PKG::imgui)
 target_compile_definitions(glfw_imgui_impl PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLEW)
 
+add_subdirectory(vendor/cyclone)
 
 add_library(CG_Engine STATIC
     "src/Window.cpp"
@@ -49,11 +50,12 @@ add_library(CG_Engine STATIC
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/
 )
 
 target_link_libraries(CG_Engine PUBLIC 
     glfw_imgui_impl
+    cyclone
     CONAN_PKG::glm
     CONAN_PKG::fmt
     CONAN_PKG::spdlog

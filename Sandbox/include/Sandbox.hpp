@@ -22,6 +22,7 @@ public:
 	void update(double deltatime) override;
 
 private:
+	void createAxis();
 	void resetSimulation();
 
 private:

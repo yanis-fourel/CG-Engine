@@ -42,6 +42,7 @@ struct Material {
 	static constexpr Material GreenPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.1f, 0.35f, 0.1f}, {0.45f, 0.55f, 0.45f}, 0.25f * 128 }; }
 	static constexpr Material RedPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.5f, 0.0f, 0.0f}, {0.7f, 0.6f, 0.6f}, 0.25f * 128 }; }
 	static constexpr Material YellowPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.5f, 0.5f, 0.0f}, {0.60f, 0.60f, 0.50f}, 0.25f * 128 }; }
+	static constexpr Material BluePlastic() { return { {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.5f}, {0.6f, 0.6f, 0.7f}, 0.25f * 128 }; }
 
 	static constexpr Material BlackRubber() { return { {0.02f, 0.02f, 0.02f}, {0.01f, 0.01f, 0.01f}, {0.4f, 0.4f, 0.4f}, 0.078125f * 128 }; }
 	static constexpr Material CyanRubber() { return { {0.0f, 0.05f, 0.05f}, {0.4f, 0.5f, 0.5f}, {0.04f, 0.7f, 0.7f}, 0.078125f * 128 }; }
@@ -49,6 +50,8 @@ struct Material {
 	static constexpr Material RedRubber() { return { {0.05f, 0.0f, 0.0f}, {0.5f, 0.4f, 0.4f}, {0.7f, 0.04f, 0.04f}, 0.078125f * 128 }; }
 	static constexpr Material WhiteRubber() { return { {0.05f, 0.05f, 0.05f}, {0.5f, 0.5f, 0.5f}, {0.7f, 0.7f, 0.7f}, 0.078125f * 128 }; }
 	static constexpr Material YellowRubber() { return { {0.05f, 0.05f, 0.0f}, {0.5f, 0.5f, 0.4f}, {0.7f, 0.7f, 0.04f}, 0.078125f * 128 }; }
+	static constexpr Material BlueRubber() { return { {0.0f, 0.0f, 0.05f}, {0.4f, 0.4f, 0.5f}, {0.04f, 0.04f, 0.7f}, 0.078125f * 128 }; }
+
 };
 
 }

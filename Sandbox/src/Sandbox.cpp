@@ -31,8 +31,21 @@ void Sandbox::start()
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 	instanciate<Grid>(CG::Vector2(20, 20));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
-	
+
+	createAxis();
 	resetSimulation();
+}
+void Sandbox::createAxis()
+{
+	constexpr auto axisThickness = 0.05f;
+	constexpr auto axisLength = 100000.f;
+
+	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
+		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::RedPlastic());
+	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
+		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::GreenPlastic());
+	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
+		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::BluePlastic());
 }
 
 void Sandbox::resetSimulation()
@@ -82,5 +95,6 @@ void Sandbox::update(double deltatime)
 	}
 
 	ImGui::End();
+
 }
 

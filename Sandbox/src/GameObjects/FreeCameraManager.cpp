@@ -11,8 +11,9 @@ FreeCameraManager::FreeCameraManager()
 
 void FreeCameraManager::start()
 {
-	GameCamera->setPosition(glm::vec3(0, 5, 0));
-	GameCamera->setFacingDirection(glm::vec3(0.5, -0.707, 0.5));
+	// arbitrary start position
+	GameCamera->setPosition(glm::vec3(5, 8, 6));
+	GameCamera->setFacingDirection(glm::vec3(-0.251, -0.737, -0.627));
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);
 	GameCamera->setAspectRatio(16.f / 9);
@@ -59,4 +60,5 @@ void FreeCameraManager::update(double deltatime)
 		static_cast<float>(mouseMove.x * m_rotSpeed),
 		static_cast<float>(mouseMove.y * m_rotSpeed)
 	);
+
 }

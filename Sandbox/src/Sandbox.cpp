@@ -21,12 +21,14 @@
 #include "GameObjects/Tile.hpp"
 #include "GameObjects/Mesh.hpp"
 #include "GameObjects/Grid.hpp"
-#include "GameObjects/TestBall.hpp"
+#include "GameObjects/HomeworkBall.hpp"
 #include "AssetDir.hpp"
 
 
 void Sandbox::start()
 {
+	srand(time(nullptr)); // TODO: Engine random utilities
+
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 	instanciate<Grid>(CG::Vector2(20, 20));
@@ -61,7 +63,22 @@ void Sandbox::resetSimulation()
 	// clear ^^^ vvv setup
 
 
-	auto &ball = instanciate<TestBall>(CG::Vector3::Up() * 2, 1.f);
+	for (int i = 0; i < m_ballsCount; ++i)
+		spawnBall();
+}
+
+void Sandbox::spawnBall()
+{
+#define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
+#define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
+	CG::Vector3 pos
+	{
+		RANDRANGE(-8, 8),
+		RANDRANGE(1, 5),
+		RANDRANGE(-8, 7),
+	};
+
+	auto &ball = instanciate<HomeworkBall>(pos, 0.1f, RANDRANGE(0.5f, 0.95f));
 	m_simulationObjects.push_back(&ball);
 }
 
@@ -76,13 +93,14 @@ void Sandbox::update(double deltatime)
 	//	return;
 
 	float width = getGame()->getWindow().getSize().x;
-	float height = 50;
+	float height = 125;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(width, height));
 	ImGui::SetNextWindowBgAlpha(0.f);
 	ImGui::Begin("Simulation", nullptr, ImGuiWindowFlags_NoDecoration);
 
+	ImGui::Text("fps : %.1f (%.1fms)", 1 / getGame()->getRealDeltatime(), getGame()->getRealDeltatime());
 	ImGui::Text("Simulation time : %.3fs", m_simulationTime);
 
 	ImGui::SetCursorPosX((width - 100) * 0.5f);
@@ -94,7 +112,21 @@ void Sandbox::update(double deltatime)
 		resetSimulation();
 	}
 
+	static float asf = m_ballsCount;
+	ImGui::SliderFloat("Balls count", &asf, 1, 1'000, "%.0f balls", ImGuiSliderFlags_Logarithmic );
+	m_ballsCount = std::round(asf);
+
+	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
+	ImGui::Text("balls can't collide to each other. only to floor and invisible wall at x=9.5");
+
 	ImGui::End();
 
+
+	while (m_simulationObjects.size() > m_ballsCount) {
+		m_simulationObjects.front()->destroy();
+		m_simulationObjects.erase(m_simulationObjects.begin());
+	}
+	while (m_simulationObjects.size() < m_ballsCount)
+		spawnBall();
 }
 

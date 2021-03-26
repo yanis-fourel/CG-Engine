@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <cyclone/core.h>
 
 namespace CG {
 
@@ -14,7 +15,15 @@ struct Vector3
 	constexpr Vector3(value_type x, value_type y, value_type z) noexcept : x(x), y(y), z(z)
 	{}
 
-	constexpr Vector3(const glm::vec3 &vec) noexcept : x(vec.x), y(vec.y), z(vec.z)
+	constexpr Vector3(const glm::vec3 &vec) noexcept
+		: x(static_cast<value_type>(vec.x)),
+		y(static_cast<value_type>(vec.y)),
+		z(static_cast<value_type>(vec.z))
+	{}
+	constexpr Vector3(const cyclone::Vector3 &vec) noexcept
+		: x(static_cast<value_type>(vec.x)),
+		y(static_cast<value_type>(vec.y)),
+		z(static_cast<value_type>(vec.z))
 	{}
 
 	constexpr Vector3 &operator=(const glm::vec3 &vec) noexcept
@@ -29,6 +38,13 @@ struct Vector3
 	{
 		return glm::vec3{ x, y, z };
 	}
+
+	operator cyclone::Vector3() const noexcept
+	{
+		return cyclone::Vector3{ x, y, z };
+	}
+
+
 
 	double magnitude() const noexcept
 	{

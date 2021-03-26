@@ -25,6 +25,8 @@ private:
 	void createAxis();
 	void resetSimulation();
 
+	void spawnBall();
+
 private:
 	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;
@@ -32,4 +34,6 @@ private:
 	std::vector<CG::AGameObject *> m_simulationObjects;
 
 	float m_simulationTime;
+
+	int m_ballsCount = 1;
 };

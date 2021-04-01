@@ -6,6 +6,7 @@
 #include "CG/Game.hpp"
 #include "CG/Color.hpp"
 #include "CG/math/Vector2.hpp"
+#include "CG/math/Vector3.hpp"
 
 #include "CG/ui/imfilebrowser.h"
 #include <CG/prefabs/PointLight.hpp>
@@ -25,8 +26,7 @@ private:
 	void createAxis();
 	void resetSimulation();
 
-	void spawnBall();
-
+	auto getRandomSpawnPoint() -> CG::Vector3 const;
 private:
 	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;

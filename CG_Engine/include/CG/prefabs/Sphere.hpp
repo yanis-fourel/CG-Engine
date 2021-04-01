@@ -7,7 +7,7 @@ namespace CG::prefabs {
 
 class Sphere : public AGameObject {
 public:
-	Sphere(const Vector3 &pos, float radius);
+	Sphere(const Vector3 &pos = CG::Vector3::Zero(), float radius = 1.f);
 };
 
 }

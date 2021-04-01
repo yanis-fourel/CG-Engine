@@ -21,7 +21,11 @@
 #include "GameObjects/Tile.hpp"
 #include "GameObjects/Mesh.hpp"
 #include "GameObjects/Grid.hpp"
-#include "GameObjects/HomeworkBall.hpp"
+#include "GameObjects/bullets/SmallMass.hpp"
+#include "GameObjects/bullets/Fireball.hpp"
+#include "GameObjects/bullets/Artillery.hpp"
+#include "GameObjects/bullets/Pistol.hpp"
+#include "GameObjects/bullets/Floating.hpp"
 #include "AssetDir.hpp"
 
 
@@ -36,7 +40,10 @@ void Sandbox::start()
 
 	createAxis();
 	resetSimulation();
+
+	getGame()->setFrozen(false);
 }
+
 void Sandbox::createAxis()
 {
 	constexpr auto axisThickness = 0.05f;
@@ -63,23 +70,18 @@ void Sandbox::resetSimulation()
 	// clear ^^^ vvv setup
 
 
-	for (int i = 0; i < m_ballsCount; ++i)
-		spawnBall();
 }
 
-void Sandbox::spawnBall()
+auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 {
 #define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
 #define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
-	CG::Vector3 pos
-	{
+
+	return CG::Vector3{
 		RANDRANGE(-8, 8),
 		RANDRANGE(1, 5),
-		RANDRANGE(-8, 7),
+		RANDRANGE(-8, 7)
 	};
-
-	auto &ball = instanciate<HomeworkBall>(pos, 0.1f, RANDRANGE(0.5f, 0.95f));
-	m_simulationObjects.push_back(&ball);
 }
 
 void Sandbox::update(double deltatime)
@@ -93,7 +95,7 @@ void Sandbox::update(double deltatime)
 	//	return;
 
 	float width = getGame()->getWindow().getSize().x;
-	float height = 125;
+	float height = 135;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(width, height));
@@ -112,21 +114,59 @@ void Sandbox::update(double deltatime)
 		resetSimulation();
 	}
 
-	static float asf = m_ballsCount;
-	ImGui::SliderFloat("Balls count", &asf, 1, 1'000, "%.0f balls", ImGuiSliderFlags_Logarithmic );
-	m_ballsCount = std::round(asf);
+	CG::AGameObject *newBall = nullptr;
+
+	if (ImGui::Button("SmallMass"))
+		m_simulationObjects.push_back(&instanciate<SmallMass>(getRandomSpawnPoint(), 0.99f));
+
+	ImGui::SameLine();
+	if (ImGui::Button("FireBall"))
+		m_simulationObjects.push_back(&instanciate<Fireball>(getRandomSpawnPoint(), 0.90f));
+
+	ImGui::SameLine();
+	if (ImGui::Button("Artillery"))
+		m_simulationObjects.push_back(&instanciate<Artillery>(getRandomSpawnPoint(), 0.99f));
+
+	ImGui::SameLine();
+	if (ImGui::Button("Pistol"))
+		m_simulationObjects.push_back(&instanciate<Pistol>(getRandomSpawnPoint(), 0.99f));
+
+	ImGui::SameLine();
+	if (ImGui::Button("Floating"))
+		m_simulationObjects.push_back(&instanciate<Floating>(getRandomSpawnPoint(), 0.99f));
+
+	static bool spam = false;
+	ImGui::Checkbox("Spam create", &spam);
+	if (spam && !getGame()->isFrozen()) {
+		switch (static_cast<int>(RANDRANGE(0, 5)))
+		{
+		case 0:
+			m_simulationObjects.push_back(&instanciate<SmallMass>(getRandomSpawnPoint(), 0.99f));
+			break;
+		case 1:
+			break;
+
+		case 2:
+			m_simulationObjects.push_back(&instanciate<Artillery>(getRandomSpawnPoint(), 0.99f));
+			break;
+		case 3:
+			m_simulationObjects.push_back(&instanciate<Pistol>(getRandomSpawnPoint(), 0.99f));
+			break;
+		case 4:
+			m_simulationObjects.push_back(&instanciate<Floating>(getRandomSpawnPoint(), 0.99f));
+			break;
+		}
+	}
+
+
 
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
-	ImGui::Text("balls can't collide to each other. only to floor and invisible wall at x=9.5");
 
 	ImGui::End();
 
 
-	while (m_simulationObjects.size() > m_ballsCount) {
+	while (m_simulationObjects.size() > 500) {
 		m_simulationObjects.front()->destroy();
 		m_simulationObjects.erase(m_simulationObjects.begin());
 	}
-	while (m_simulationObjects.size() < m_ballsCount)
-		spawnBall();
 }
-

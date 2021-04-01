@@ -6,7 +6,14 @@ add_executable(Sandbox
 	
 	"src/Sandbox.cpp" 
 	"src/GameObjects/FreeCameraManager.cpp"
-	"src/GameObjects/Tile.cpp" "src/GameObjects/Mesh.cpp" "include/GameObjects/Mesh.hpp" "include/AssetDir.hpp" "src/GameObjects/Grid.cpp" "include/GameObjects/Grid.hpp" "src/GameObjects/HomeworkBall.cpp")
+	"src/GameObjects/Tile.cpp"
+	"src/GameObjects/Mesh.cpp"
+	"src/GameObjects/Grid.cpp"
+	"src/GameObjects/bullets/SmallMass.cpp"
+	"src/GameObjects/bullets/Fireball.cpp"
+	"src/GameObjects/bullets/Artillery.cpp"
+	"src/GameObjects/bullets/Pistol.cpp"
+	"src/GameObjects/bullets/Floating.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

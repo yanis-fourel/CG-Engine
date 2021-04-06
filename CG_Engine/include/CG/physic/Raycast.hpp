@@ -20,8 +20,8 @@ struct RaycastResult {
 auto castRaycast(AGame &game, const Ray &ray) noexcept -> RaycastResult;
 
 template <typename T>
-std::optional<Vector3> castRaycast(const T &col, const Ray &ray);
+std::optional<Vector3> castRaycastOn(const T &col, const Ray &ray);
 
 }
 
-#include "RaycastAlgo.inc"
+#include "raycastImpl/all.inc"

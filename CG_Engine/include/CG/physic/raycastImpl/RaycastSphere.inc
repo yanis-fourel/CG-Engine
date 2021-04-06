@@ -7,16 +7,10 @@
 
 #include "CG/components/collider/SphereCollider.hpp"
 
-
-//
-// This file contain template specialisation to compute intersection between a ray and every type of collider
-//
-
-
 namespace CG {
 
 template <>
-inline std::optional<Vector3> castRaycast<SphereCollider>(const SphereCollider &col, const Ray &ray)
+inline std::optional<Vector3> castRaycastOn<SphereCollider>(const SphereCollider &col, const Ray &ray)
 {
 // TODO respect actual scale
 	auto radius = (col.transform->scale.x + col.transform->scale.y + col.transform->scale.z) / 3 * 0.5;
@@ -39,6 +33,5 @@ inline std::optional<Vector3> castRaycast<SphereCollider>(const SphereCollider &
 
 	return p;
 }
-
 
 }

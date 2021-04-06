@@ -25,6 +25,9 @@ public:
 
 	[[nodiscard]] AGame *getGame() const noexcept;
 
+	template <std::uint32_t Tag>
+	[[nodiscard]] bool hasTag() const noexcept;
+
 	auto getId() const noexcept { return static_cast<id_type>(m_entity); }
 
 	void destroy() noexcept;
@@ -77,6 +80,12 @@ template<std::uint32_t Tag>
 void CG::AGameObject::setTag()
 {
 	getGame()->getWorld().emplace<entt::tag<Tag>>(m_entity);
+}
+
+template<std::uint32_t Tag>
+bool CG::AGameObject::hasTag() const noexcept
+{
+	return getGame()->getWorld().has<entt::tag<Tag>>(m_entity);
 }
 
 template <typename Tag>

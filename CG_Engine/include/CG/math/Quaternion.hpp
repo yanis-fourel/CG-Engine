@@ -26,7 +26,7 @@ public:
 	}
 
 	// Angles in radian
-	static Quaternion fromRotationAxis(Vector3 axis, float angle) noexcept
+	static Quaternion fromRotationAxis(const Vector3 &axis, float angle) noexcept
 	{
 		return glm::angleAxis(angle, static_cast<glm::vec3>(axis.normalized()));
 	}
@@ -39,6 +39,11 @@ public:
 	Quaternion operator*(const Quaternion &other) const noexcept
 	{
 		return _quat * other._quat;
+	}
+
+	Vector3 operator*(const Vector3 &vec) const noexcept
+	{
+		return static_cast<glm::vec3>(vec) * _quat;
 	}
 
 	Quaternion &operator*=(const Quaternion &other) noexcept

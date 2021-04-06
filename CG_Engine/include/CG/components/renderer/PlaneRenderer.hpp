@@ -10,8 +10,6 @@ class ShaderManager;
 
 class PlaneRenderer {
 public:
-	// TODO: static shader
-
 	PlaneRenderer();
 
 	void draw(ShaderManager &sm) const noexcept;

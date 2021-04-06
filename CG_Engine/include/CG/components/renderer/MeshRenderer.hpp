@@ -21,8 +21,6 @@ class ShaderManager;
 
 class MeshRenderer {
 public:
-	// TODO: static shader
-
 	MeshRenderer(const std::string &path);
 
 	void draw(ShaderManager &sm) const noexcept;

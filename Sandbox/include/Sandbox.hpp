@@ -22,6 +22,7 @@ public:
 
 private:
 	void createAxis();
+	void createGrid(const CG::Vector2 &size);
 	void resetSimulation();
 
 	auto getRandomSpawnPoint() -> CG::Vector3 const;
@@ -29,8 +30,6 @@ private:
 	void handleBallDragDrop();
 private:
 	CG::prefabs::PointLight *m_pointLight;
-
-	std::vector<CG::AGameObject *> m_simulationObjects;
 
 	float m_simulationTime;
 

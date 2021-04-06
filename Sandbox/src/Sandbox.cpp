@@ -9,19 +9,23 @@
 #include <CG/math/Utility.hpp>
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Sphere.hpp>
+#include <CG/prefabs/Plane.hpp>
 #include <CG/ui/imfilebrowser.h>
 #include <CG/physic/Raycast.hpp>
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/renderer/SphereRenderer.hpp"
+#include "CG/components/renderer/PlaneRenderer.hpp"
 #include "CG/components/renderer/CubeRenderer.hpp"
+
+#include "CG/components/collider/PlaneCollider.hpp"
 
 #include "Sandbox.hpp"
 
 #include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/Tile.hpp"
-#include "GameObjects/Grid.hpp"
+#include "GameObjects/TestBall.hpp"
 #include "AssetDir.hpp"
 
 
@@ -31,13 +35,24 @@ void Sandbox::start()
 
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
-	instanciate<Grid>(CG::Vector2(20, 20));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
 
+	createGrid(CG::Vector2(20, 20));
 	createAxis();
 	resetSimulation();
+}
 
-	getGame()->setFrozen(false);
+void Sandbox::createGrid(const CG::Vector2 &size)
+{
+	float height = 0.f;
+
+	for (int x = static_cast<int>(size.x * -.5); x < size.x * 0.5; ++x)
+		for (int y = static_cast<int>(size.y * -.5); y < size.y * 0.5; ++y)
+			instanciate<Tile>(
+				CG::Vector3(static_cast<float>(x), height, static_cast<float>(y)),
+				CG::Vector2::One(),
+				(x + y) % 2 ? CG::Material::BlackRubber() : CG::Material::WhiteRubber()
+				);
 }
 
 void Sandbox::createAxis()
@@ -59,13 +74,13 @@ void Sandbox::resetSimulation()
 	m_simulationTime = 0;
 
 
-	for (auto &obj : m_simulationObjects)
-		obj->destroy();
-	m_simulationObjects.clear();
+	getGame()->getObjectsOfTag<"simulation_object"_hs>([&](auto &obj) {
+		obj.destroy();
+		});
 
 	// clear ^^^ vvv setup
 
-	m_simulationObjects.push_back(&instanciate<CG::prefabs::Sphere>(CG::Vector3::Up()));
+	&instanciate<TestBall>(CG::Vector3::Up(), 1.f, CG::Material::RedPlastic());
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
@@ -82,27 +97,49 @@ auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 
 void Sandbox::handleBallDragDrop()
 {
+	constexpr auto kBind = GLFW_KEY_SPACE;
+
 	const auto &im = getInputManager();
 
 	if (im.isMouseCaptured())
 		return;
 
-	if (im.isKeyPressed(GLFW_KEY_SPACE)) {
-		const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
-		const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
-		const auto castResult = CG::castRaycast(*getGame(), ray);
+	if (!m_dragging) {
+		if (im.isKeyPressed(kBind)) {
+			const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
+			const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
+			const auto castResult = CG::castRaycast(*getGame(), ray);
 
-		if (castResult.hit)
-			m_simulationObjects.front()->getComponent<CG::SphereRenderer>().setMaterial(CG::Material::Ruby());
-		else
-			m_simulationObjects.front()->getComponent<CG::SphereRenderer>().setMaterial(CG::Material::Default());
+			if (castResult.hit && castResult.object->hasTag<"simulation_object"_hs>()) {
+				m_dragging = castResult.object;
+			}
+		}
+
+	}
+	else {
+		if (im.isKeyDown(kBind)) {
+			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::fromEuler(0, 3.1415 * 0.5, 0), CG::Vector3::One() };
+
+			if (im.isKeyDown(GLFW_KEY_LEFT_CONTROL))
+				planTransform.rotation = CG::Quaternion::identity();
+
+			const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
+			const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
+
+			auto castResult = CG::castRaycastOn(CG::PlaneCollider{ &planTransform }, ray);
+			if (!castResult) {
+				planTransform.rotation *= CG::Quaternion::fromEuler(180, 0, 0);
+				castResult = CG::castRaycastOn(CG::PlaneCollider{ &planTransform }, ray);
+			}
+
+			if (castResult)
+				m_dragging->getComponent<CG::Transform>().position = *castResult;
+		}
+
+		if (im.isKeyUp(kBind))
+			m_dragging = nullptr;
 	}
 
-	//if (im.isKeyDown(GLFW_MOUSE_BUTTON_1)) {
-	//	if (m_dragging) {
-	//		
-	//	}
-	//}
 }
 
 void Sandbox::update(double deltatime)

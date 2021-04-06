@@ -7,7 +7,7 @@ add_executable(Sandbox
 	"src/Sandbox.cpp" 
 	"src/GameObjects/FreeCameraManager.cpp"
 	"src/GameObjects/Tile.cpp"
-	"src/GameObjects/Grid.cpp")
+	 "src/GameObjects/TestBall.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

@@ -12,8 +12,6 @@ class ShaderManager;
 
 class CubeRenderer {
 public:
-	// TODO: static shader
-
 	CubeRenderer();
 
 	void draw(ShaderManager &sm) const noexcept;

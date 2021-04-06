@@ -9,10 +9,10 @@ CG::PlaneRenderer::PlaneRenderer()
 #define P +0.5
 #define N -0.5
 	Vertex vertices[8]{
-		{{N, 0, N}, Vector3::Up(), Color::White()},
-		{{P, 0, N}, Vector3::Up(), Color::White()},
-		{{P, 0, P}, Vector3::Up(), Color::White()},
-		{{N, 0, P}, Vector3::Up(), Color::White()},
+		{{N, N, 0}, Vector3::Forward(), Color::White()},
+		{{P, N, 0}, Vector3::Forward(), Color::White()},
+		{{P, P, 0}, Vector3::Forward(), Color::White()},
+		{{N, P, 0}, Vector3::Forward(), Color::White()},
 	};
 #undef P
 #undef N

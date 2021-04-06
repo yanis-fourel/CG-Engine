@@ -1,12 +1,14 @@
 #pragma once
 
-#include "CG/components/Transform.hpp"
+#include "CG/math/Vector3.hpp"
 
 namespace CG {
 
+// All data are relative to the object's transform
 struct SphereCollider
 {
-	const Transform *transform;
+	Vector3 center = Vector3::Zero();
+	float radius = 0.5f;
 };
 
 }

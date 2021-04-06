@@ -7,5 +7,5 @@ CG::prefabs::Plane::Plane(const Vector3 &pos, const Quaternion &normalRotation, 
 {
 	auto &t = addComponent<CG::Transform>(pos, normalRotation, Vector3(size.x, size.y, 1));
 	addComponent<CG::PlaneRenderer>();
-	addComponent<CG::PlaneCollider>(&t);
+	addComponent<CG::PlaneCollider>();
 }

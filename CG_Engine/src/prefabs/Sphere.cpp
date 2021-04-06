@@ -10,5 +10,5 @@ CG::prefabs::Sphere::Sphere(const Vector3 &pos, float radius)
 	t.scale = Vector3(radius, radius, radius);
 
 	addComponent<CG::SphereRenderer>();
-	addComponent<CG::SphereCollider>(&t);
+	addComponent<CG::SphereCollider>();
 }

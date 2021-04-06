@@ -4,6 +4,7 @@
 
 #include "CG/AGameObject.hpp"
 #include "CG/Game.hpp"
+#include "CG/components/Transform.hpp"
 #include "CG/math/Ray.hpp"
 
 namespace CG {
@@ -20,7 +21,7 @@ struct RaycastResult {
 auto castRaycast(AGame &game, const Ray &ray) noexcept -> RaycastResult;
 
 template <typename T>
-std::optional<Vector3> castRaycastOn(const T &col, const Ray &ray);
+std::optional<Vector3> castRaycastOn(const T &col, const CG::Transform &trans, const Ray &ray);
 
 }
 

@@ -97,7 +97,7 @@ auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 
 void Sandbox::handleBallDragDrop()
 {
-	constexpr auto kBind = GLFW_KEY_SPACE;
+	constexpr auto kBind = GLFW_MOUSE_BUTTON_LEFT;
 
 	const auto &im = getInputManager();
 
@@ -105,19 +105,18 @@ void Sandbox::handleBallDragDrop()
 		return;
 
 	if (!m_dragging) {
-		if (im.isKeyPressed(kBind)) {
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
 			const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
 			const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
 			const auto castResult = CG::castRaycast(*getGame(), ray);
 
-			if (castResult.hit && castResult.object->hasTag<"simulation_object"_hs>()) {
+			if (castResult.hit && castResult.object->hasTag<"simulation_object"_hs>())
 				m_dragging = castResult.object;
-			}
 		}
 
 	}
 	else {
-		if (im.isKeyDown(kBind)) {
+		if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
 			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::fromEuler(0, 3.1415 * 0.5, 0), CG::Vector3::One() };
 
 			if (im.isKeyDown(GLFW_KEY_LEFT_CONTROL))
@@ -126,17 +125,17 @@ void Sandbox::handleBallDragDrop()
 			const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
 			const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
 
-			auto castResult = CG::castRaycastOn(CG::PlaneCollider{ &planTransform }, ray);
+			auto castResult = CG::castRaycastOn(CG::PlaneCollider{}, planTransform, ray);
 			if (!castResult) {
 				planTransform.rotation *= CG::Quaternion::fromEuler(180, 0, 0);
-				castResult = CG::castRaycastOn(CG::PlaneCollider{ &planTransform }, ray);
+				castResult = CG::castRaycastOn(CG::PlaneCollider{}, planTransform, ray);
 			}
 
 			if (castResult)
 				m_dragging->getComponent<CG::Transform>().position = *castResult;
 		}
 
-		if (im.isKeyUp(kBind))
+		if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
 			m_dragging = nullptr;
 	}
 
@@ -176,6 +175,7 @@ void Sandbox::update(double deltatime)
 	}
 
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
+	ImGui::Text("You can grab the ball with the mouse, drag it around with left click on the XZ axis, or XY axis if you hold control");
 
 	ImGui::End();
 

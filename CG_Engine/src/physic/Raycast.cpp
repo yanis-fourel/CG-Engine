@@ -22,7 +22,7 @@ auto CG::castRaycast(AGame &game, const Ray &ray) noexcept -> RaycastResult
 	};
 
 #define CHECK_WITH(type) \
-game.getWorld().view<type>().each([&](auto e, type &collider) { individualRaycastHandler(e, castRaycastOn(collider, ray)); });
+game.getWorld().view<type, CG::Transform>().each([&](auto e, type &collider, CG::Transform &trans) { individualRaycastHandler(e, castRaycastOn(collider, trans, ray)); });
 
 	CHECK_WITH(SphereCollider);
 	CHECK_WITH(PlaneCollider);

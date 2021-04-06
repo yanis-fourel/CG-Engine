@@ -10,11 +10,11 @@
 namespace CG {
 
 template <>
-inline std::optional<Vector3> castRaycastOn<SphereCollider>(const SphereCollider &col, const Ray &ray)
+inline std::optional<Vector3> castRaycastOn<SphereCollider>(const SphereCollider &col, const CG::Transform &trans, const Ray &ray)
 {
 // TODO respect actual scale
-	auto radius = (col.transform->scale.x + col.transform->scale.y + col.transform->scale.z) / 3 * 0.5;
-	auto position = col.transform->position;
+	auto radius = col.radius;
+	auto position = trans.position + col.center;
 
 	auto delta = std::pow(Vector3::dot(ray.direction(), ray.start - position), 2) - std::pow((ray.start - position).magnitude(), 2) + radius*radius;
 

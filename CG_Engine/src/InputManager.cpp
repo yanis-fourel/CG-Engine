@@ -38,7 +38,7 @@ bool CG::InputManager::isKeyDown(int key) const noexcept
 
 bool CG::InputManager::isKeyPressed(int key) const noexcept
 {
-	return ImGui::IsKeyPressed(key);
+	return ImGui::IsKeyPressed(key, false);
 }
 
 bool CG::InputManager::isKeyUp(int key) const noexcept

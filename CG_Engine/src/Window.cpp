@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -88,6 +89,17 @@ auto CG::Window::getSize() const noexcept -> CG::Vector2
 		static_cast<CG::Vector2::value_type>(display_w),
 		static_cast<CG::Vector2::value_type>(display_h)
 	};
+}
+
+auto CG::Window::pointToNormalized(const CG::Vector2 &pixelPos) const noexcept -> CG::Vector2  
+{
+	CG::Vector2 ratio_0_1(pixelPos / getSize());
+
+	// Prevent out of range if cursor is out of the window
+	ratio_0_1.x = std::clamp(ratio_0_1.x, 0.f, 1.f);
+	ratio_0_1.y = std::clamp(ratio_0_1.y, 0.f, 1.f);
+
+	return ratio_0_1 * 2 - Vector2(1, 1);
 }
 
 void CG::Window::onFrameBegin()

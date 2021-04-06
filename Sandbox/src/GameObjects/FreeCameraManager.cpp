@@ -17,7 +17,7 @@ void FreeCameraManager::start()
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);
 	GameCamera->setAspectRatio(16.f / 9);
-	GameCamera->setRenderDistance(99999);
+	GameCamera->setRenderDistance(100);
 	InputManager->setMouseCapture(false);
 }
 

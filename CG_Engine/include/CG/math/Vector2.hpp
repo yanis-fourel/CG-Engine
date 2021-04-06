@@ -28,14 +28,24 @@ struct Vector2
 		};
 	}
 
-	Vector2 operator+(const Vector2 &other)
+	Vector2 operator+(const Vector2 &other) const noexcept
 	{
-		return { x + other.x, y + other.y};
+		return { x + other.x, y + other.y };
 	}
 
-	Vector2 operator-(const Vector2 &other)
+	Vector2 operator-(const Vector2 &other) const noexcept
 	{
-		return { x + other.x, y + other.y};
+		return { x - other.x, y - other.y };
+	}
+
+	Vector2 operator*(const Vector2 &other) const noexcept
+	{
+		return { x * other.x, y * other.y };
+	}
+
+	Vector2 operator/(const Vector2 &other) const noexcept
+	{
+		return { x / other.x, y / other.y };
 	}
 
 	Vector2 &operator+=(const Vector2 &other)
@@ -47,6 +57,18 @@ struct Vector2
 	Vector2 &operator-=(const Vector2 &other)
 	{
 		*this = *this - other;
+		return *this;
+	}
+
+	Vector2 &operator*=(const Vector2 &other)
+	{
+		*this = *this * other;
+		return *this;
+	}
+
+	Vector2 &operator/=(const Vector2 &other)
+	{
+		*this = *this / other;
 		return *this;
 	}
 

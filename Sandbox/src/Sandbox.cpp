@@ -6,6 +6,7 @@
 
 #include <CG/Color.hpp>
 #include <CG/math/Vector3.hpp>
+#include <CG/math/Utility.hpp>
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Sphere.hpp>
 #include <CG/ui/imfilebrowser.h>
@@ -78,8 +79,33 @@ auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 	};
 }
 
+void Sandbox::handleBallDragDrop()
+{
+	const auto &im = getInputManager();
+
+	if (im.isMouseCaptured())
+		return;
+
+
+	const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
+
+	spdlog::info("Mouse pos : {}, {}", screenPos.x, screenPos.y);
+
+	const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
+
+	spdlog::info("Ray : {}, {}, {}  ->   {}, {}, {}       mag : {}", ray.start.x, ray.start.y, ray.start.z, ray.finish.x, ray.finish.y, ray.finish.z, (ray.finish - ray.start).magnitude());
+
+	//if (im.isKeyDown(GLFW_MOUSE_BUTTON_1)) {
+	//	if (m_dragging) {
+	//		
+	//	}
+	//}
+}
+
 void Sandbox::update(double deltatime)
 {
+	handleBallDragDrop();
+
 	m_simulationTime += static_cast<float>(deltatime);
 
 	if (getInputManager().isKeyDown(GLFW_KEY_ESCAPE))

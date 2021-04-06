@@ -30,6 +30,9 @@ public:
 	// Only return a value if currently capturing mouse
 	[[nodiscard]] auto getMouseMovement() const noexcept -> Vector2;
 
+	// unit: Pixel. May be negative or bigger than window size if mouse is out of the window
+	[[nodiscard]] auto getMousePosition() const noexcept -> Vector2;
+
 	void setMouseCapture(bool enabled) noexcept;
 	void toggleMouseCapture() noexcept;
 	bool isMouseCaptured() const noexcept { return m_captureMouse; }

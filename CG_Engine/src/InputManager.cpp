@@ -8,9 +8,9 @@ CG::InputManager::InputManager(GLFWwindow *window) : m_window(window)
 {
 	setMouseCapture(true);
 
-    ::glfwSetCharCallback(m_window, ImGui_ImplGlfw_CharCallback);
-    ::glfwSetKeyCallback(m_window, ImGui_ImplGlfw_KeyCallback);
-    ::glfwSetMouseButtonCallback(m_window, ImGui_ImplGlfw_MouseButtonCallback);
+	::glfwSetCharCallback(m_window, ImGui_ImplGlfw_CharCallback);
+	::glfwSetKeyCallback(m_window, ImGui_ImplGlfw_KeyCallback);
+	::glfwSetMouseButtonCallback(m_window, ImGui_ImplGlfw_MouseButtonCallback);
 }
 
 void CG::InputManager::update()
@@ -19,10 +19,10 @@ void CG::InputManager::update()
 		int w, h;
 		glfwGetWindowSize(m_window, &w, &h);
 
-		double x, y;
-		glfwGetCursorPos(m_window, &x, &y);
-		m_mouseMovement.x = static_cast<Vector2::value_type>(x - w * 0.5);
-		m_mouseMovement.y = static_cast<Vector2::value_type>(y - h * 0.5);
+		Vector2 screenSize(w, h);
+		auto cursorPos = getMousePosition();
+
+		m_mouseMovement = cursorPos - screenSize * 0.5;
 
 		resetCursorPos();
 	}
@@ -49,6 +49,17 @@ bool CG::InputManager::isKeyUp(int key) const noexcept
 CG::Vector2 CG::InputManager::getMouseMovement() const noexcept
 {
 	return m_mouseMovement;
+}
+
+auto CG::InputManager::getMousePosition() const noexcept -> Vector2
+{
+	double x, y;
+	glfwGetCursorPos(m_window, &x, &y);
+
+	return {
+		static_cast<Vector2::value_type>(x),
+		static_cast<Vector2::value_type>(y)
+	};
 }
 
 void CG::InputManager::setMouseCapture(bool enabled) noexcept

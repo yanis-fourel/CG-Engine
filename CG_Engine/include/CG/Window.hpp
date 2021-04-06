@@ -17,7 +17,10 @@ public:
 	[[nodiscard]] auto getWindow() noexcept { return m_window; };
 	void close() noexcept;
 
-	auto getSize() const noexcept -> CG::Vector2;
+	[[nodiscard]] auto getSize() const noexcept -> CG::Vector2;
+
+	// Takes screen pixel position and return its normalized [-1, 1] position.
+	[[nodiscard]] auto pointToNormalized(const Vector2 &pixelPos) const noexcept -> CG::Vector2;
 
 private:
 	void onFrameBegin();

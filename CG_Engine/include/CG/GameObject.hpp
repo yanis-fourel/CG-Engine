@@ -28,6 +28,7 @@ public:
 	auto getId() const noexcept { return static_cast<id_type>(m_entity); }
 
 	void destroy() noexcept;
+	
 protected:
 	template<typename T, typename... TArgs>
 	T &addComponent(TArgs &&... args) noexcept;

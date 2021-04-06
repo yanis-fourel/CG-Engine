@@ -76,14 +76,14 @@ struct Vector3
 		};
 	}
 
-	Vector3 operator+(const Vector3 &other)
+	Vector3 operator+(const Vector3 &other) const noexcept
 	{
 		return { x + other.x, y + other.y, z + other.z };
 	}
 
-	Vector3 operator-(const Vector3 &other)
+	Vector3 operator-(const Vector3 &other) const noexcept
 	{
-		return { x + other.x, y + other.y, z + other.z };
+		return { x - other.x, y - other.y, z - other.z };
 	}
 
 	Vector3 &operator+=(const Vector3 &other)

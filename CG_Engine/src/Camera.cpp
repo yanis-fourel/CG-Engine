@@ -56,7 +56,7 @@ auto CG::Camera::getViewMatrix() const noexcept -> glm::mat4x4
 
 auto CG::Camera::getViewProjMatrix() const noexcept -> glm::mat4x4
 {
-	auto proj = glm::perspective(glm::radians(m_fov), m_aspectRatio, 0.1f, m_renderDistance);
+	auto proj = glm::perspective(glm::radians(m_fov), m_aspectRatio, kNearRenderDistance, m_renderDistance);
 
 	return proj * getViewMatrix();
 }

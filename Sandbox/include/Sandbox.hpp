@@ -25,10 +25,14 @@ private:
 	void resetSimulation();
 
 	auto getRandomSpawnPoint() -> CG::Vector3 const;
+
+	void handleBallDragDrop();
 private:
 	CG::prefabs::PointLight *m_pointLight;
 
 	std::vector<CG::AGameObject *> m_simulationObjects;
 
 	float m_simulationTime;
+
+	CG::AGameObject *m_dragging = nullptr;
 };

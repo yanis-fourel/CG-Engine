@@ -89,11 +89,7 @@ void Sandbox::handleBallDragDrop()
 
 	const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
 
-	spdlog::info("Mouse pos : {}, {}", screenPos.x, screenPos.y);
-
 	const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
-
-	spdlog::info("Ray : {}, {}, {}  ->   {}, {}, {}       mag : {}", ray.start.x, ray.start.y, ray.start.z, ray.finish.x, ray.finish.y, ray.finish.z, (ray.finish - ray.start).magnitude());
 
 	//if (im.isKeyDown(GLFW_MOUSE_BUTTON_1)) {
 	//	if (m_dragging) {

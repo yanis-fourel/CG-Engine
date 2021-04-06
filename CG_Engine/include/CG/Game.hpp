@@ -13,6 +13,8 @@
 
 namespace CG {
 
+class ICollider;
+
 class AGame {
 public:
 	AGame(const CG::Vector2 windowSize = { 640, 480 }, const std::string &windowName = "CG Application");
@@ -35,6 +37,8 @@ public:
 
 	template <std::uint32_t Tag>
 	void getObjectsOfTag(std::function<void(AGameObject &)> func);
+
+	void forAllColliders(std::function<void(ICollider *)> func);
 
 	// Destroys every single object of the scene
 	void clearScene();

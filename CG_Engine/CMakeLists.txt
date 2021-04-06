@@ -48,6 +48,8 @@ add_library(CG_Engine STATIC
     "src/prefabs/Sphere.cpp" 
     "src/prefabs/Cube.cpp"
     "src/math/Utility.cpp"
+    "src/components/collider/SphereCollider.cpp"
+    "src/math/Ray.cpp"
 )
 
 target_include_directories(CG_Engine PUBLIC include 

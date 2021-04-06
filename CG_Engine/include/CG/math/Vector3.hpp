@@ -61,6 +61,11 @@ struct Vector3
 		};
 	}
 
+	constexpr float dot(const Vector3 &other) const noexcept
+	{
+		return x * other.x + y * other.y + z * other.z;
+	}
+
 	constexpr Vector3 operator -() const noexcept
 	{
 		return Vector3{ -x, -y, -z };
@@ -73,6 +78,17 @@ struct Vector3
 			x * static_cast<value_type>(fact),
 			y * static_cast<value_type>(fact),
 			z * static_cast<value_type>(fact)
+		};
+	}
+
+
+	template <typename T>
+	constexpr Vector3 operator/(T real) const noexcept
+	{
+		return {
+			x / static_cast<value_type>(real),
+			y / static_cast<value_type>(real),
+			z / static_cast<value_type>(real)
 		};
 	}
 

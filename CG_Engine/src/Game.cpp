@@ -1,7 +1,6 @@
 #include <stdexcept>
 
 #include "CG/Game.hpp"
-#include "CG/internal/components/ICollider.hpp"
 #include "CG/components/collider/SphereCollider.hpp"
 
 CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : m_window(windowSize, windowName), m_inputManager(m_window.getWindow())
@@ -11,10 +10,9 @@ CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : 
 	AGame::instance = this;
 }
 
-void CG::AGame::getAllColliders(std::function<void(AGameObject &, ICollider*)> func) noexcept
+auto CG::AGame::getObject(entt::entity e) -> AGameObject &
 {
-	auto view = m_world.view<SphereCollider>();
-	view.each([&](auto e, SphereCollider &c) { func(*m_objects.at(e), &c); });
+	return *m_objects.at(e);
 }
 
 void CG::AGame::clearScene()

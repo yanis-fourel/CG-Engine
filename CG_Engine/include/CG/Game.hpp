@@ -38,7 +38,7 @@ public:
 	template <std::uint32_t Tag>
 	void getObjectsOfTag(std::function<void(AGameObject &)> func) noexcept;
 
-	void getAllColliders(std::function<void(AGameObject &, ICollider *)> func) noexcept;
+	[[nodiscard]] auto getObject(entt::entity e) -> AGameObject &;
 
 	// Destroys every single object of the scene
 	void clearScene();

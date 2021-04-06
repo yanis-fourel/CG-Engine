@@ -48,15 +48,17 @@ add_library(CG_Engine STATIC
     "src/prefabs/Sphere.cpp" 
     "src/prefabs/Cube.cpp"
     "src/math/Utility.cpp"
-    "src/components/collider/SphereCollider.cpp"
     "src/math/Ray.cpp"
- "include/CG/physic/Raycast.hpp" "src/physic/Raycast.cpp")
+    "src/physic/Raycast.cpp"
+    )
 
-target_include_directories(CG_Engine PUBLIC include 
+target_include_directories(CG_Engine PUBLIC   
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/
 )
+target_include_directories(CG_Engine PUBLIC include)   
+
 
 target_link_libraries(CG_Engine PUBLIC 
     glfw_imgui_impl

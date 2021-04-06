@@ -107,7 +107,8 @@ void Sandbox::handleBallDragDrop()
 
 void Sandbox::update(double deltatime)
 {
-	handleBallDragDrop();
+	if (getGame()->isFrozen())
+		handleBallDragDrop();
 
 	m_simulationTime += static_cast<float>(deltatime);
 

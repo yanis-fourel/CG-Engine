@@ -5,6 +5,8 @@
 namespace CG {
 
 struct Material {
+	// TODO: Shader
+
 	Color ambiant;
 	Color diffuse;
 	Color specular;

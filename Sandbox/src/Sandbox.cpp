@@ -19,19 +19,13 @@
 
 #include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/Tile.hpp"
-#include "GameObjects/Mesh.hpp"
 #include "GameObjects/Grid.hpp"
-#include "GameObjects/bullets/SmallMass.hpp"
-#include "GameObjects/bullets/Fireball.hpp"
-#include "GameObjects/bullets/Artillery.hpp"
-#include "GameObjects/bullets/Pistol.hpp"
-#include "GameObjects/bullets/Floating.hpp"
 #include "AssetDir.hpp"
 
 
 void Sandbox::start()
 {
-	srand(time(nullptr)); // TODO: Engine random utilities
+	srand(static_cast<unsigned int>(time(nullptr))); // TODO: Engine random utilities
 
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
@@ -114,59 +108,8 @@ void Sandbox::update(double deltatime)
 		resetSimulation();
 	}
 
-	CG::AGameObject *newBall = nullptr;
-
-	if (ImGui::Button("SmallMass"))
-		m_simulationObjects.push_back(&instanciate<SmallMass>(getRandomSpawnPoint(), 0.99f));
-
-	ImGui::SameLine();
-	if (ImGui::Button("FireBall"))
-		m_simulationObjects.push_back(&instanciate<Fireball>(getRandomSpawnPoint(), 0.90f));
-
-	ImGui::SameLine();
-	if (ImGui::Button("Artillery"))
-		m_simulationObjects.push_back(&instanciate<Artillery>(getRandomSpawnPoint(), 0.99f));
-
-	ImGui::SameLine();
-	if (ImGui::Button("Pistol"))
-		m_simulationObjects.push_back(&instanciate<Pistol>(getRandomSpawnPoint(), 0.99f));
-
-	ImGui::SameLine();
-	if (ImGui::Button("Floating"))
-		m_simulationObjects.push_back(&instanciate<Floating>(getRandomSpawnPoint(), 0.99f));
-
-	static bool spam = false;
-	ImGui::Checkbox("Spam create", &spam);
-	if (spam && !getGame()->isFrozen()) {
-		switch (static_cast<int>(RANDRANGE(0, 5)))
-		{
-		case 0:
-			m_simulationObjects.push_back(&instanciate<SmallMass>(getRandomSpawnPoint(), 0.99f));
-			break;
-		case 1:
-			break;
-
-		case 2:
-			m_simulationObjects.push_back(&instanciate<Artillery>(getRandomSpawnPoint(), 0.99f));
-			break;
-		case 3:
-			m_simulationObjects.push_back(&instanciate<Pistol>(getRandomSpawnPoint(), 0.99f));
-			break;
-		case 4:
-			m_simulationObjects.push_back(&instanciate<Floating>(getRandomSpawnPoint(), 0.99f));
-			break;
-		}
-	}
-
-
-
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
 
 	ImGui::End();
 
-
-	while (m_simulationObjects.size() > 500) {
-		m_simulationObjects.front()->destroy();
-		m_simulationObjects.erase(m_simulationObjects.begin());
-	}
 }

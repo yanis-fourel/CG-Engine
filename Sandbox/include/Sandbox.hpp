@@ -12,8 +12,6 @@
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Cube.hpp>
 
-#include "GameObjects/Mesh.hpp"
-
 class Sandbox : public CG::AGame {
 public:
 	Sandbox() : CG::AGame(CG::Vector2{ 1600, 900 }, "Sandbox")
@@ -28,12 +26,9 @@ private:
 
 	auto getRandomSpawnPoint() -> CG::Vector3 const;
 private:
-	std::vector<Mesh *> m_meshes;
 	CG::prefabs::PointLight *m_pointLight;
 
 	std::vector<CG::AGameObject *> m_simulationObjects;
 
 	float m_simulationTime;
-
-	int m_ballsCount = 1;
 };

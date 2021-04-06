@@ -1,4 +1,4 @@
-#include "CG/GameObject.hpp"
+#include "CG/AGameObject.hpp"
 #include "CG/Core.hpp"
 #include "CG/Game.hpp"
 

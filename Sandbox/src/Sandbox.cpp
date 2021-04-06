@@ -10,6 +10,7 @@
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Sphere.hpp>
 #include <CG/ui/imfilebrowser.h>
+#include <CG/physic/Raycast.hpp>
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
@@ -64,7 +65,7 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-
+	m_simulationObjects.push_back(&instanciate<CG::prefabs::Sphere>(CG::Vector3::Up()));
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
@@ -86,10 +87,16 @@ void Sandbox::handleBallDragDrop()
 	if (im.isMouseCaptured())
 		return;
 
+	if (im.isKeyPressed(GLFW_KEY_SPACE)) {
+		const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
+		const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
+		const auto castResult = CG::castRaycast(*getGame(), ray);
 
-	const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
-
-	const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
+		if (castResult.hit)
+			m_simulationObjects.front()->getComponent<CG::SphereRenderer>().setMaterial(CG::Material::Ruby());
+		else
+			m_simulationObjects.front()->getComponent<CG::SphereRenderer>().setMaterial(CG::Material::Default());
+	}
 
 	//if (im.isKeyDown(GLFW_MOUSE_BUTTON_1)) {
 	//	if (m_dragging) {

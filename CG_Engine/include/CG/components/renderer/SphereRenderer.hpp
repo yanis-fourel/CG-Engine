@@ -29,7 +29,7 @@ private:
 
 	void registerVertices(const std::vector<Vertex> &vertices, const std::vector<std::uint32_t> &indices);
 private:
-	static constexpr float kRadius = 1.0f;
+	static constexpr float kRadius = 0.5f;
 
 	Drawable m_drawable;
 	GLuint m_slices, m_stacks;

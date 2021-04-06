@@ -11,9 +11,10 @@ CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : 
 	AGame::instance = this;
 }
 
-void CG::AGame::forAllColliders(std::function<void(ICollider*)> func)
+void CG::AGame::getAllColliders(std::function<void(AGameObject &, ICollider*)> func) noexcept
 {
-	m_world.view<SphereCollider>().each([func](auto _, SphereCollider &c) { func(&c); });
+	auto view = m_world.view<SphereCollider>();
+	view.each([&](auto e, SphereCollider &c) { func(*m_objects.at(e), &c); });
 }
 
 void CG::AGame::clearScene()
@@ -22,7 +23,7 @@ void CG::AGame::clearScene()
 		obj->destroy();
 }
 
-void CG::AGame::immediateDestroy(AGameObject::id_type obj)
+void CG::AGame::immediateDestroy(AGameObject::id_type obj) noexcept
 {
 	m_objects.erase(obj);
 }

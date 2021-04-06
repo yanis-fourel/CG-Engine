@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CG/GameObject.hpp>
+#include <CG/AGameObject.hpp>
 
 class Grid : public CG::AGameObject
 {

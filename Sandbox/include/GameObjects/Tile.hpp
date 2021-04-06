@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CG/GameObject.hpp>
+#include <CG/AGameObject.hpp>
 #include <CG/math/Vector3.hpp>
 #include <CG/Material.hpp>
 

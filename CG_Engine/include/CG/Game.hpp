@@ -5,7 +5,7 @@
 #include <cstdint>
 
 #include "CG/Window.hpp"
-#include "CG/GameObject.hpp"
+#include "CG/AGameObject.hpp"
 #include "CG/Camera.hpp"
 #include "CG/InputManager.hpp"
 
@@ -36,20 +36,21 @@ public:
 	T &instanciate(TArgs &&... args);
 
 	template <std::uint32_t Tag>
-	void getObjectsOfTag(std::function<void(AGameObject &)> func);
+	void getObjectsOfTag(std::function<void(AGameObject &)> func) noexcept;
 
-	void forAllColliders(std::function<void(ICollider *)> func);
+	void getAllColliders(std::function<void(AGameObject &, ICollider *)> func) noexcept;
 
 	// Destroys every single object of the scene
 	void clearScene();
 
 	// Call `obj.destroy()` unless you know what you're doing
-	void immediateDestroy(AGameObject::id_type obj);
+	void immediateDestroy(AGameObject::id_type obj) noexcept;
 
 	[[nodiscard]] auto isFrozen() const noexcept { return m_isFrozen; }
 	void setFrozen(bool val) { m_isFrozen = val; }
 
 	[[nodiscard]] auto getRealDeltatime() const noexcept { return m_realDeltaTime; }
+
 	// You probably don't want to call that yourself
 	void setRealDeltatime(double seconds) { m_realDeltaTime = seconds; }
 public:
@@ -85,7 +86,7 @@ T &CG::AGame::instanciate(TArgs &&... args)
 }
 
 template<std::uint32_t Tag>
-void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject &)> func)
+void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject &)> func) noexcept
 {
 	for (auto id : m_world.view<entt::tag<Tag>>())
 		func(*m_objects.at(id));

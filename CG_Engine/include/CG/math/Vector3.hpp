@@ -61,11 +61,6 @@ struct Vector3
 		};
 	}
 
-	constexpr float dot(const Vector3 &other) const noexcept
-	{
-		return x * other.x + y * other.y + z * other.z;
-	}
-
 	constexpr Vector3 operator -() const noexcept
 	{
 		return Vector3{ -x, -y, -z };
@@ -114,6 +109,15 @@ struct Vector3
 		return *this;
 	}
 
+	static double distance(const Vector3 &a, const Vector3 &b) noexcept
+	{
+		return (b - a).magnitude();
+	}
+
+	static constexpr float dot(const Vector3 &a, const Vector3 &b) noexcept
+	{
+		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
 
 
 	static constexpr Vector3 Zero() { return { 0, 0, 0 }; }

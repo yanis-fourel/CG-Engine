@@ -50,7 +50,7 @@ add_library(CG_Engine STATIC
     "src/math/Utility.cpp"
     "src/components/collider/SphereCollider.cpp"
     "src/math/Ray.cpp"
-)
+ "include/CG/physic/Raycast.hpp" "src/physic/Raycast.cpp")
 
 target_include_directories(CG_Engine PUBLIC include 
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

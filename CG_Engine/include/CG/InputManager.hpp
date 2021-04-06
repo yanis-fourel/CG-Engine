@@ -21,7 +21,7 @@ public:
 	// True while key is down
 	[[nodiscard]] auto isKeyDown(int key) const noexcept -> bool;
 
-	// True only the tick the key was pressed
+	// True the tick the key was pressed, and after a while (just like when typing that letter in notepad)
 	[[nodiscard]] auto isKeyPressed(int key) const noexcept -> bool;
 
 	// True while key is up

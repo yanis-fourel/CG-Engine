@@ -38,21 +38,22 @@ struct Material {
 	static constexpr Material Gold() { return { {0.24725f, 0.1995f, 0.0745f}, {0.75164f, 0.60648f, 0.22648f}, {0.628281f, 0.555802f, 0.366065f}, 0.4f * 128 }; }
 	static constexpr Material Silver() { return { {0.19225f, 0.19225f, 0.19225f}, {0.50754f, 0.50754f, 0.50754f}, {0.508273f, 0.508273f, 0.508273f}, 0.4f * 128 }; }
 
+	// Made ambiant effect higher vvv
 	static constexpr Material BlackPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.01f, 0.01f, 0.01f}, {0.50f, 0.50f, 0.50f}, 0.25f * 128 }; }
-	static constexpr Material WhitePlastic() { return { {0.0f, 0.0f, 0.0f}, {0.55f, 0.55f, 0.55f}, {0.70f, 0.70f, 0.70f}, 0.25f * 128 }; }
-	static constexpr Material CyanPlastic() { return { {0.0f, 0.1f, 0.06f}, {0.0f, 0.50980392f, 0.50980392f}, {0.50196078f, 0.50196078f, 0.50196078f}, 0.25f * 128 }; }
-	static constexpr Material GreenPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.1f, 0.35f, 0.1f}, {0.45f, 0.55f, 0.45f}, 0.25f * 128 }; }
-	static constexpr Material RedPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.5f, 0.0f, 0.0f}, {0.7f, 0.6f, 0.6f}, 0.25f * 128 }; }
-	static constexpr Material YellowPlastic() { return { {0.0f, 0.0f, 0.0f}, {0.5f, 0.5f, 0.0f}, {0.60f, 0.60f, 0.50f}, 0.25f * 128 }; }
-	static constexpr Material BluePlastic() { return { {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.5f}, {0.6f, 0.6f, 0.7f}, 0.25f * 128 }; }
+	static constexpr Material WhitePlastic() { return { {0.25f, 0.25f, 0.25f}, {0.55f, 0.55f, 0.55f}, {0.70f, 0.70f, 0.70f}, 0.25f * 128 }; }
+	static constexpr Material CyanPlastic() { return { {0.0f, 0.3f, 0.28f}, {0.0f, 0.50980392f, 0.50980392f}, {0.50196078f, 0.50196078f, 0.50196078f}, 0.25f * 128 }; }
+	static constexpr Material GreenPlastic() { return { {0.025f, 0.1f, 0.025f}, {0.1f, 0.35f, 0.1f}, {0.45f, 0.55f, 0.45f}, 0.25f * 128 }; }
+	static constexpr Material RedPlastic() { return { {0.25f, 0.0f, 0.0f}, {0.5f, 0.0f, 0.0f}, {0.7f, 0.6f, 0.6f}, 0.25f * 128 }; }
+	static constexpr Material YellowPlastic() { return { {0.25f, 0.25f, 0.0f}, {0.5f, 0.5f, 0.0f}, {0.60f, 0.60f, 0.50f}, 0.25f * 128 }; }
+	static constexpr Material BluePlastic() { return { {0.0f, 0.0f, 0.25f}, {0.0f, 0.0f, 0.5f}, {0.6f, 0.6f, 0.7f}, 0.25f * 128 }; }
 
 	static constexpr Material BlackRubber() { return { {0.02f, 0.02f, 0.02f}, {0.01f, 0.01f, 0.01f}, {0.4f, 0.4f, 0.4f}, 0.078125f * 128 }; }
-	static constexpr Material CyanRubber() { return { {0.0f, 0.05f, 0.05f}, {0.4f, 0.5f, 0.5f}, {0.04f, 0.7f, 0.7f}, 0.078125f * 128 }; }
-	static constexpr Material GreenRubber() { return { {0.0f, 0.05f, 0.0f}, {0.4f, 0.5f, 0.4f}, {0.04f, 0.7f, 0.04f}, 0.078125f * 128 }; }
-	static constexpr Material RedRubber() { return { {0.05f, 0.0f, 0.0f}, {0.5f, 0.4f, 0.4f}, {0.7f, 0.04f, 0.04f}, 0.078125f * 128 }; }
-	static constexpr Material WhiteRubber() { return { {0.05f, 0.05f, 0.05f}, {0.5f, 0.5f, 0.5f}, {0.7f, 0.7f, 0.7f}, 0.078125f * 128 }; }
-	static constexpr Material YellowRubber() { return { {0.05f, 0.05f, 0.0f}, {0.5f, 0.5f, 0.4f}, {0.7f, 0.7f, 0.04f}, 0.078125f * 128 }; }
-	static constexpr Material BlueRubber() { return { {0.0f, 0.0f, 0.05f}, {0.4f, 0.4f, 0.5f}, {0.04f, 0.04f, 0.7f}, 0.078125f * 128 }; }
+	static constexpr Material CyanRubber() { return { {0.2f, 0.3f, 0.3f}, {0.4f, 0.5f, 0.5f}, {0.04f, 0.7f, 0.7f}, 0.078125f * 128 }; }
+	static constexpr Material GreenRubber() { return { {0.2f, 0.3f, 0.2f}, {0.4f, 0.5f, 0.4f}, {0.04f, 0.7f, 0.04f}, 0.078125f * 128 }; }
+	static constexpr Material RedRubber() { return { {0.3f, 0.2f, 0.2f}, {0.5f, 0.4f, 0.4f}, {0.7f, 0.04f, 0.04f}, 0.078125f * 128 }; }
+	static constexpr Material WhiteRubber() { return { {0.3f, 0.3f, 0.3f}, {0.5f, 0.5f, 0.5f}, {0.7f, 0.7f, 0.7f}, 0.078125f * 128 }; }
+	static constexpr Material YellowRubber() { return { {0.3f, 0.3f, 0.2f}, {0.5f, 0.5f, 0.4f}, {0.7f, 0.7f, 0.04f}, 0.078125f * 128 }; }
+	static constexpr Material BlueRubber() { return { {0.2f, 0.2f, 0.3f}, {0.4f, 0.4f, 0.5f}, {0.04f, 0.04f, 0.7f}, 0.078125f * 128 }; }
 
 };
 

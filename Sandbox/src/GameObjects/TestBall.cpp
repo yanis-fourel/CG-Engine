@@ -11,13 +11,13 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::Material &mat
 
 	addComponent<CG::Updateable>([this](double d) {update(d); });
 
+	auto &p = addComponent<cyclone::Particle>();
 
-
-	m_particle.setPosition(pos);
-	m_particle.setVelocity(CG::Vector3::Zero());
-	m_particle.setMass(1.0f);
-	m_particle.setDamping(0.95f);
-	m_particle.setAcceleration(cyclone::Vector3::GRAVITY);
+	p.setPosition(pos);
+	p.setVelocity(CG::Vector3::Zero());
+	p.setMass(1.0f);
+	p.setDamping(0.95f);
+	p.setAcceleration(cyclone::Vector3::GRAVITY);
 }
 
 void TestBall::update(double deltatime)
@@ -25,35 +25,37 @@ void TestBall::update(double deltatime)
 	if (deltatime == 0)
 		return;
 
+	auto &particle = getComponent<cyclone::Particle>();
+
 	const auto radius = 0.5f;
 
-	m_particle.addForce(CG::Vector3(1.f, 0, 0));
-	m_particle.setPosition(getComponent<CG::Transform>().position);
+	//particle.addForce(CG::Vector3(1.f, 0, 0));
+	particle.setPosition(getComponent<CG::Transform>().position);
 
 
-	m_particle.integrate(deltatime);
+	particle.integrate(deltatime);
 
-	auto pos = m_particle.getPosition();
+	auto pos = particle.getPosition();
 
 	// Floor colision
 	if (pos.y < radius) {
 		pos.y = radius + (radius - pos.y);
-		m_particle.setPosition(pos);
+		particle.setPosition(pos);
 
-		auto vel = m_particle.getVelocity();
+		auto vel = particle.getVelocity();
 		vel.y = -vel.y;
-		m_particle.setVelocity(vel);
+		particle.setVelocity(vel);
 	}
 
 	// Invisible wall collision
 	const auto wallX = 9.5;
 	if (pos.x > wallX) {
 		pos.x = wallX + (pos.x - wallX);
-		m_particle.setPosition(pos);
+		particle.setPosition(pos);
 
-		auto vel = m_particle.getVelocity();
+		auto vel = particle.getVelocity();
 		vel.x = -vel.x;
-		m_particle.setVelocity(vel);
+		particle.setVelocity(vel);
 	}
 
 	getComponent<CG::Transform>().position = pos;

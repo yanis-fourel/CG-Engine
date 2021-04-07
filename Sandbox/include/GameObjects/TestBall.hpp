@@ -14,7 +14,4 @@ public:
 
 private:
 	void update(double deltatime);
-
-private:
-	cyclone::Particle m_particle;
 };

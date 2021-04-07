@@ -26,6 +26,7 @@
 #include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/Tile.hpp"
 #include "GameObjects/TestBall.hpp"
+#include "GameObjects/Spring.hpp"
 #include "AssetDir.hpp"
 
 
@@ -80,7 +81,13 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	&instanciate<TestBall>(CG::Vector3::Up(), 1.f, CG::Material::RedPlastic());
+	auto &obj1 = instanciate<TestBall>(CG::Vector3(2.f, 1.f, 2.f), 1.f, CG::Material::RedPlastic());
+	auto &obj2 = instanciate<TestBall>(CG::Vector3(1.f, 1.f, 1.f), 1.f, CG::Material::BluePlastic());
+	auto &obj3 = instanciate<TestBall>(CG::Vector3(1.f, 1.f, 1.f), 1.f, CG::Material::CyanPlastic());
+
+	instanciate<Spring>(obj1, obj2, 10, 1);
+	instanciate<Spring>(obj2, obj3, 10, 1);
+	instanciate<Spring>(obj1, obj3, 10, 1);
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const

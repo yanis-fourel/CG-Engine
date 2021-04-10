@@ -81,13 +81,47 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	auto &obj1 = instanciate<TestBall>(CG::Vector3(2.f, 1.f, 2.f), 1.f, CG::Material::RedPlastic());
-	auto &obj2 = instanciate<TestBall>(CG::Vector3(1.f, 1.f, 1.f), 1.f, CG::Material::BluePlastic());
-	auto &obj3 = instanciate<TestBall>(CG::Vector3(1.f, 1.f, 1.f), 1.f, CG::Material::CyanPlastic());
+	std::vector<CG::Material> materials = {
+		CG::Material::Default(),
+		CG::Material::Emerald(),
+		CG::Material::Jade(),
+		CG::Material::Obsidian(),
+		CG::Material::Pearl(),
+		CG::Material::Ruby(),
+		CG::Material::Turquoise(),
+		CG::Material::Brass(),
+		CG::Material::Bronze(),
+		CG::Material::Chrome(),
+		CG::Material::Copper(),
+		CG::Material::Gold(),
+		CG::Material::Silver(),
+		CG::Material::BlackPlastic(),
+		CG::Material::WhitePlastic(),
+		CG::Material::CyanPlastic(),
+		CG::Material::GreenPlastic(),
+		CG::Material::RedPlastic(),
+		CG::Material::YellowPlastic(),
+		CG::Material::BluePlastic(),
+		CG::Material::BlackRubber(),
+		CG::Material::CyanRubber(),
+		CG::Material::GreenRubber(),
+		CG::Material::RedRubber(),
+		CG::Material::WhiteRubber(),
+		CG::Material::YellowRubber(),
+		CG::Material::BlueRubber(),
+	};
 
-	instanciate<Spring>(obj1, obj2, 10, 1);
-	instanciate<Spring>(obj2, obj3, 10, 1);
-	instanciate<Spring>(obj1, obj3, 10, 1);
+	std::vector<CG::AGameObject *> balls;
+
+	constexpr auto ballCount = 500;
+	for (int i = 0; i < ballCount; ++i) {
+		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
+
+		for (auto &prev : balls)
+			instanciate<Spring>(obj, *prev, 1.f, 3.f);
+
+		balls.push_back(&obj);
+	}
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
@@ -124,7 +158,7 @@ void Sandbox::handleBallDragDrop()
 	}
 	else {
 		if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
-			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::fromEuler(0, 3.1415 * 0.5, 0), CG::Vector3::One() };
+			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::fromEuler(0, 3.1415 * 0.5f, 0), CG::Vector3::One() };
 
 			if (im.isKeyDown(GLFW_KEY_LEFT_CONTROL))
 				planTransform.rotation = CG::Quaternion::identity();

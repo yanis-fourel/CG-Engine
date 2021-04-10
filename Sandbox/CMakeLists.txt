@@ -12,3 +12,5 @@ add_executable(Sandbox
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 
 target_include_directories(Sandbox PUBLIC include/)
+
+target_compile_features(Sandbox PUBLIC cxx_std_20)

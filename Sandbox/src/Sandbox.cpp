@@ -113,7 +113,7 @@ void Sandbox::resetSimulation()
 
 	std::vector<CG::AGameObject *> balls;
 
-	constexpr auto ballCount = 500;
+	constexpr auto ballCount = 25;
 	for (int i = 0; i < ballCount; ++i) {
 		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
 

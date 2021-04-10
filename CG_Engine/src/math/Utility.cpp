@@ -11,8 +11,8 @@ CG::Ray CG::getRayFromScreenPos(const Camera &cam, const Vector2 &screenPosNorm)
 	glm::vec4 normHomNearPoint(screenPosNorm.x, -screenPosNorm.y, -1, 1);
 	glm::vec4 normHomFarPoint(screenPosNorm.x, -screenPosNorm.y, 1, 1);
 
-	return {
-		ivp * normHomNearPoint * cam.kNearRenderDistance,
-		ivp * normHomFarPoint * cam.getRenderDistance()
+	return CG::Ray{
+		.start = ivp * normHomNearPoint * cam.kNearRenderDistance,
+		.finish = ivp * normHomFarPoint * cam.getRenderDistance()
 	};
 }

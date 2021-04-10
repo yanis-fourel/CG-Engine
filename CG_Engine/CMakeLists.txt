@@ -70,7 +70,7 @@ target_link_libraries(CG_Engine PUBLIC
     CONAN_PKG::assimp
 )
 
-target_compile_features(CG_Engine PUBLIC cxx_std_17)
+target_compile_features(CG_Engine PUBLIC cxx_std_20)
 
 target_compile_definitions(CG_Engine PRIVATE 
     CG_SHADER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/shaders/"

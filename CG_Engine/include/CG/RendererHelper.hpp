@@ -11,8 +11,14 @@
 namespace CG
 {
 
-template <typename Renderer>
-inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm, const Camera &c)
+template<typename T>
+concept Renderer = requires(T r, ShaderManager &sm)
+{
+	r.draw(sm);
+};
+
+template <Renderer T> 
+inline void render(const T &r, const CG::Transform &t, ShaderManager &sm, const Camera &c)
 {
 	glm::mat4 model = glm::mat4(1);
 	model = glm::translate(model, static_cast<glm::vec3>(t.position));
@@ -26,4 +32,8 @@ inline void render(const Renderer &r, const CG::Transform &t, ShaderManager &sm,
 	r.draw(sm);
 }
 
+//#define ADD_RENDERER(type) \
+//	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
+//		render(r, t, m_onlyShader, m_game->getCamera()); \
+//		});
 }

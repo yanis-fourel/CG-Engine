@@ -28,6 +28,7 @@
 #include "GameObjects/TestBall.hpp"
 #include "GameObjects/Spring.hpp"
 #include "GameObjects/AnchorSpring.hpp"
+#include "GameObjects/WaterCube.hpp"
 #include "AssetDir.hpp"
 
 
@@ -124,6 +125,7 @@ void Sandbox::resetSimulation()
 	//	balls.push_back(&obj);
 	//}
 
+	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 500);
 	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);
 	instanciate<AnchorSpring>(CG::Vector3(0, 3, 0), obj, 5.f, 1.f);
 }

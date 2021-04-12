@@ -10,7 +10,7 @@ add_executable(Sandbox
 	"src/GameObjects/TestBall.cpp" 
 	"src/GameObjects/Spring.cpp"
 	"src/GameObjects/AnchorSpring.cpp"
-)
+	"src/GameObjects/WaterCube.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

@@ -11,6 +11,7 @@ struct Material {
 	Color diffuse;
 	Color specular;
 	float shininess;
+	float opacity = 1;
 
 	Material &operator=(const Material &other)
 	{
@@ -18,6 +19,7 @@ struct Material {
 		diffuse = other.diffuse;
 		specular = other.specular;
 		shininess = other.shininess;
+		opacity = other.opacity;
 
 		return *this;
 	}

@@ -11,6 +11,7 @@ struct Material {
     vec3 diffuse;
     vec3 specular;
     float shininess;
+    float opacity;
 };
 
 uniform Material u_material;
@@ -65,11 +66,11 @@ void main()
 {
     vec3 surfaceColor = f_color;
 
-    // branch :( outrageously performant costy
+    // branch :( at least branch predicto *should* be doing a god job
     if (bool(f_hasTexture)) 
         surfaceColor *= texture2D(f_texture, f_texCoord);
 
 
     vec3 result = (get_ambiant() + get_diffuse() + get_specular()) * surfaceColor;
-    out_color = vec4(result, 1);
+    out_color = vec4(result, u_material.opacity);
 }

@@ -32,7 +32,7 @@ void CG::SphereRenderer::generateVertices()
 		vertices.push_back(Vertex{
 			CG::Vector3{v[i], v[i + 1], v[i + 2]},
 			CG::Vector3{n[i], n[i + 1], n[i + 2]},
-			Color::White()
+			CG::Color::White()
 			});
 	}
 

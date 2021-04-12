@@ -4,6 +4,7 @@
 
 namespace CG {
 
+// Values RGBA each in range [0, 1]
 struct Color
 {
 	using value_type = float;

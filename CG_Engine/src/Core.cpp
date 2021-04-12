@@ -94,7 +94,7 @@ void CG::Core::displayGame()
 		m_onlyShader.uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
 	}
 
-
+	// TODO: draw Material by material
 #define ADD_RENDERER(type) \
 	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
 		render(r, t, m_onlyShader, m_game->getCamera()); \

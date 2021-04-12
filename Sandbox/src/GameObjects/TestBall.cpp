@@ -16,7 +16,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::Material &mat
 	p.setPosition(pos);
 	p.setVelocity(CG::Vector3::Zero());
 	p.setMass(1.0f);
-	p.setDamping(0.95f);
+	p.setDamping(0.8f);
 	p.setAcceleration(cyclone::Vector3::GRAVITY);
 }
 
@@ -48,15 +48,15 @@ void TestBall::update(double deltatime)
 	}
 
 	// Invisible wall collision
-	const auto wallX = 9.5;
-	if (pos.x > wallX) {
-		pos.x = wallX + (pos.x - wallX);
-		particle.setPosition(pos);
+	//const auto wallX = 9.5;
+	//if (pos.x > wallX) {
+	//	pos.x = wallX + (pos.x - wallX);
+	//	particle.setPosition(pos);
 
-		auto vel = particle.getVelocity();
-		vel.x = -vel.x;
-		particle.setVelocity(vel);
-	}
+	//	auto vel = particle.getVelocity();
+	//	vel.x = -vel.x;
+	//	particle.setVelocity(vel);
+	//}
 
 	getComponent<CG::Transform>().position = pos;
 }

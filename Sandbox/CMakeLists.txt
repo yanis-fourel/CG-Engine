@@ -7,7 +7,10 @@ add_executable(Sandbox
 	"src/Sandbox.cpp" 
 	"src/GameObjects/FreeCameraManager.cpp"
 	"src/GameObjects/Tile.cpp"
-	 "src/GameObjects/TestBall.cpp" "include/GameObjects/Spring.hpp" "src/GameObjects/Spring.cpp")
+	"src/GameObjects/TestBall.cpp" 
+	"src/GameObjects/Spring.cpp"
+	"src/GameObjects/AnchorSpring.cpp"
+)
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

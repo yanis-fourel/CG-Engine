@@ -27,6 +27,7 @@
 #include "GameObjects/Tile.hpp"
 #include "GameObjects/TestBall.hpp"
 #include "GameObjects/Spring.hpp"
+#include "GameObjects/AnchorSpring.hpp"
 #include "AssetDir.hpp"
 
 
@@ -113,15 +114,18 @@ void Sandbox::resetSimulation()
 
 	std::vector<CG::AGameObject *> balls;
 
-	constexpr auto ballCount = 25;
-	for (int i = 0; i < ballCount; ++i) {
-		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
+	//constexpr auto ballCount = 25;
+	//for (int i = 0; i < ballCount; ++i) {
+	//	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
 
-		for (auto &prev : balls)
-			instanciate<Spring>(obj, *prev, 1.f, 3.f);
+	//	for (auto &prev : balls)
+	//		instanciate<Spring>(obj, *prev, 1.f, 3.f);
 
-		balls.push_back(&obj);
-	}
+	//	balls.push_back(&obj);
+	//}
+
+	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);
+	instanciate<AnchorSpring>(CG::Vector3(0, 3, 0), obj, 5.f, 1.f);
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const

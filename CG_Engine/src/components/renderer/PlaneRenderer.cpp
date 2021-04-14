@@ -1,6 +1,6 @@
 #include "CG/components/renderer/PlaneRenderer.hpp"
 #include "CG/internal/Vertex.hpp"
-#include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 #include "CG/internal/GlError.hpp"
 
 
@@ -54,7 +54,7 @@ CG::PlaneRenderer::PlaneRenderer()
 	};
 }
 
-void CG::PlaneRenderer::draw(ShaderManager &sm) const noexcept
+void CG::PlaneRenderer::draw(ShaderProgram &sm) const noexcept
 {
 	m_drawable.draw(sm);
 }

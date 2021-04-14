@@ -1,6 +1,6 @@
 #include "CG/components/renderer/CubeRenderer.hpp"
 #include "CG/internal/Vertex.hpp"
-#include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 #include "CG/internal/GlError.hpp"
 
 CG::CubeRenderer::CubeRenderer()
@@ -100,7 +100,7 @@ CG::CubeRenderer::CubeRenderer()
 	GLCall(glEnableVertexAttribArray(2));
 }
 
-void CG::CubeRenderer::draw(ShaderManager &sm) const noexcept
+void CG::CubeRenderer::draw(ShaderProgram &sm) const noexcept
 {
 	m_drawable.draw(sm);
 }

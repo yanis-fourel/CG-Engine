@@ -66,7 +66,7 @@ void main()
 {
     vec3 surfaceColor = f_color;
 
-    // branch :( at least branch predicto *should* be doing a god job
+    // branch :( at least branch predictor *should* be doing a god job
     if (bool(f_hasTexture)) 
         surfaceColor *= texture2D(f_texture, f_texCoord);
 

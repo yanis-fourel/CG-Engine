@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 #include "CG/Game.hpp"
 
 namespace CG {
@@ -22,7 +22,7 @@ private:
 public:
 	std::unique_ptr<AGame> m_game;
 
-	ShaderManager m_onlyShader; // TODO: delegate shader responsability to material
+	ShaderProgram m_onlyShader; // TODO: delegate shader responsability to material
 };
 
 }

@@ -2,13 +2,15 @@
 
 #include <string>
 
+// TODO: resource cache
+
 namespace CG {
 
 struct Texture {
 	Texture(const std::string &path);
 	~Texture();
 
-	// problem with ownership of `data`
+	// delete because of problem with ownership of `data`
 	Texture(const Texture &) = delete;
 	Texture &operator=(const Texture &) = delete;
 

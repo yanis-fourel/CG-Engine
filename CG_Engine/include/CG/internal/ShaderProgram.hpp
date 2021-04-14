@@ -10,10 +10,10 @@
 
 namespace CG {
 
-class ShaderManager
+class ShaderProgram
 {
 public:
-    ~ShaderManager();
+    ~ShaderProgram();
     void addShader(GLenum type, const std::string_view relpath);
     void validate();
     

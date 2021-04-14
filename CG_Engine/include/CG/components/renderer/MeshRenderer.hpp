@@ -17,13 +17,13 @@ typedef aiMatrix4x4t<ai_real> aiMatrix4x4;
 
 namespace CG {
 
-class ShaderManager;
+class ShaderProgram;
 
 class MeshRenderer {
 public:
 	MeshRenderer(const std::string &path);
 
-	void draw(ShaderManager &sm) const noexcept;
+	void draw(ShaderProgram &sm) const noexcept;
 
 private:
 	static std::string getDirectoryOfFile(const std::string &file) noexcept;

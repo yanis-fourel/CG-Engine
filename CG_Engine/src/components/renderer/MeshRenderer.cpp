@@ -7,7 +7,7 @@
 #include <assimp/matrix4x4.h>    
 
 #include "CG/components/renderer/MeshRenderer.hpp"
-#include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 
 CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectoryOfFile(path))
 {
@@ -25,7 +25,7 @@ CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectory
 	processAssimpNode(scene, scene->mRootNode, {});
 }
 
-void CG::MeshRenderer::draw(ShaderManager &sm) const noexcept
+void CG::MeshRenderer::draw(ShaderProgram &sm) const noexcept
 {
 	for (const auto &d : m_meshesDrawable) {
 		d.draw(sm);

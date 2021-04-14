@@ -6,13 +6,13 @@
 
 namespace CG {
 
-class ShaderManager;
+class ShaderProgram;
 
 class PlaneRenderer {
 public:
 	PlaneRenderer();
 
-	void draw(ShaderManager &sm) const noexcept;
+	void draw(ShaderProgram &sm) const noexcept;
 
 	[[nodiscard]] auto getMaterial() const noexcept -> const Material &{ return m_drawable.material; }
 	void setMaterial(const Material &mat) noexcept { m_drawable.material = mat; }

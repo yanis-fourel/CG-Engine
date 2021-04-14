@@ -5,20 +5,20 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "CG/components/Transform.hpp"
-#include "CG/internal/ShaderManager.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 #include "CG/Camera.hpp"
 
 namespace CG::Renderer
 {
 
 template<typename T>
-concept Renderer = requires(T r, ShaderManager &sm)
+concept Renderer = requires(T r, ShaderProgram &sm)
 {
 	r.draw(sm);
 };
 
 template <Renderer T> 
-inline void render(const T &r, const CG::Transform &t, ShaderManager &sm, const Camera &c)
+inline void render(const T &r, const CG::Transform &t, ShaderProgram &sm, const Camera &c)
 {
 	glm::mat4 model = glm::mat4(1);
 	model = glm::translate(model, static_cast<glm::vec3>(t.position));

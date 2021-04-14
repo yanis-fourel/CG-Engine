@@ -9,7 +9,32 @@
 
 #include "CG/rendering/RendererHelper.hpp"
 
-void CG::Renderer::renderScene(ShaderManager &onlyshader, const AGame &game) noexcept
+void CG::Renderer::renderScene(ShaderProgram &onlyshader, const AGame &game) noexcept
+{
+	detail::uploadGlobalUniforms(onlyshader, game);
+
+	
+	// TODO: Get two collections of AMaterial *, tranparent and non-transparent (cache optimizable), opti : entt::observer observer{registry, entt::collector.update<...>()};
+	// Display non transparent quickly
+	// Sort transparent by distance(camera, obj center)
+	// display from furthest to closest
+
+
+// TODO: use template instead of macro wtf
+#define ADD_RENDERER(type) \
+	game.getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
+		render(r, t, onlyshader, game.getCamera()); \
+		});
+
+	ADD_RENDERER(CG::CubeRenderer);
+	ADD_RENDERER(CG::PlaneRenderer);
+	ADD_RENDERER(CG::SphereRenderer);
+	ADD_RENDERER(CG::MeshRenderer);
+
+#undef ADD_RENDERER
+}
+
+void CG::Renderer::detail::uploadGlobalUniforms(ShaderProgram &onlyshader, const AGame &game) noexcept
 {
 	// TODO: multiple shader management
 	onlyshader.use();
@@ -35,17 +60,4 @@ void CG::Renderer::renderScene(ShaderManager &onlyshader, const AGame &game) noe
 		onlyshader.uploadUniform1f("u_pointLight.diffuseIntensity", pointLight.diffuseIntensity);
 		onlyshader.uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
 	}
-
-	// TODO: draw Material by material
-#define ADD_RENDERER(type) \
-	game.getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
-		render(r, t, onlyshader, game.getCamera()); \
-		});
-
-	ADD_RENDERER(CG::CubeRenderer);
-	ADD_RENDERER(CG::PlaneRenderer);
-	ADD_RENDERER(CG::SphereRenderer);
-	ADD_RENDERER(CG::MeshRenderer);
-
-#undef ADD_RENDERER
 }

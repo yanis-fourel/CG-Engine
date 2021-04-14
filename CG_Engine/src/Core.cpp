@@ -12,12 +12,7 @@
 #include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
 
-#include "CG/components/renderer/CubeRenderer.hpp"
-#include "CG/components/renderer/PlaneRenderer.hpp"
-#include "CG/components/renderer/SphereRenderer.hpp"
-#include "CG/components/renderer/MeshRenderer.hpp"
-
-#include "CG/RendererHelper.hpp"
+#include "CG/rendering/RenderSystem.hpp"
 
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 {
@@ -35,11 +30,7 @@ int CG::Core::run()
 	while (m_game->getWindow().run()) {
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
-		updateGame(m_game->isFrozen() ? 0 : deltatime);
-
-		cleanupDeadGameobjects();
-
-		displayGame();
+		tick(m_game->isFrozen() ? 0 : deltatime);
 
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
@@ -50,10 +41,19 @@ int CG::Core::run()
 	return 0;
 }
 
-void CG::Core::updateGame(double deltaGametime)
+void CG::Core::tick(double deltatime)
 {
 	m_game->getInputManager().update();
 
+	updateGame(deltatime);
+
+	cleanupDeadGameobjects();
+
+	CG::Renderer::renderScene(m_onlyShader, *m_game);
+}
+
+void CG::Core::updateGame(double deltaGametime)
+{
 	m_game->update(deltaGametime);
 
 	m_game->getWorld().view<CG::Updateable>().each([deltaGametime](const CG::Updateable &u) {
@@ -65,45 +65,4 @@ void CG::Core::cleanupDeadGameobjects()
 {
 	for (const auto &e : m_game->getWorld().view<CG::ToDelete>())
 		m_game->immediateDestroy(e);
-}
-
-void CG::Core::displayGame()
-{
-	// TODO: multiple shader management
-	m_onlyShader.use();
-
-	m_onlyShader.uploadUniformMat4("u_viewProj", m_game->getCamera().getViewProjMatrix());
-	m_onlyShader.uploadUniformVec3("u_ambiantLightColor", m_game->getAmbiantLight().toVec3());
-	m_onlyShader.uploadUniformVec3("u_eyePos", m_game->getCamera().getPosition());
-
-
-	{ // Point light
-
-		// TODO: Support multiple lights and multiple light types
-		glm::vec3 lightPos;
-		CG::PointLight pointLight;
-
-		m_game->getWorld().view<CG::PointLight, CG::Transform>().each([&](const auto &light, const auto t) {
-			pointLight = light;
-			lightPos = glm::vec4(static_cast<glm::vec3>(t.position), 1.0);
-			});
-
-		m_onlyShader.uploadUniformVec3("u_pointLight.position", lightPos);
-		m_onlyShader.uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3() * pointLight.intensity);
-		m_onlyShader.uploadUniform1f("u_pointLight.diffuseIntensity", pointLight.diffuseIntensity);
-		m_onlyShader.uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
-	}
-
-	// TODO: draw Material by material
-#define ADD_RENDERER(type) \
-	m_game->getWorld().view<type, CG::Transform>().each([&](const type &r, const CG::Transform &t) { \
-		render(r, t, m_onlyShader, m_game->getCamera()); \
-		});
-
-	ADD_RENDERER(CG::CubeRenderer);
-	ADD_RENDERER(CG::PlaneRenderer);
-	ADD_RENDERER(CG::SphereRenderer);
-	ADD_RENDERER(CG::MeshRenderer);
-
-#undef ADD_RENDERER
 }

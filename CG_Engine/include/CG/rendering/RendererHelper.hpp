@@ -8,7 +8,7 @@
 #include "CG/internal/ShaderManager.hpp"
 #include "CG/Camera.hpp"
 
-namespace CG
+namespace CG::Renderer
 {
 
 template<typename T>

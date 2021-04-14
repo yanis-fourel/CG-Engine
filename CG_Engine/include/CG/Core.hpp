@@ -14,14 +14,15 @@ public:
 	
 	int run();
 private:
+	void tick(double deltatime);
+
 	void updateGame(double deltatime);
 	void cleanupDeadGameobjects();
-	void displayGame();
 
 public:
 	std::unique_ptr<AGame> m_game;
 
-	ShaderManager m_onlyShader; // TODO: delegae shader responsability to material
+	ShaderManager m_onlyShader; // TODO: delegate shader responsability to material
 };
 
 }

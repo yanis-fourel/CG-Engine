@@ -27,9 +27,10 @@ public:
 	[[nodiscard]] auto getWindow() noexcept -> Window &{ return m_window; }
 	[[nodiscard]] auto getInputManager()noexcept -> InputManager &{ return m_inputManager; }
 	[[nodiscard]] auto getCamera() noexcept -> Camera &{ return m_camera; }
-	[[nodiscard]] auto getWorld() noexcept -> entt::registry &{ return m_world; }
+	[[nodiscard]] auto getCamera() const noexcept -> const Camera &{ return m_camera; }
+	[[nodiscard]] auto getWorld() const noexcept -> entt::registry &{ return m_world; }
 
-	[[nodiscard]] auto getAmbiantLight() noexcept -> const Color & { return m_ambiantLight; }
+	[[nodiscard]] auto getAmbiantLight() const noexcept -> const Color &{ return m_ambiantLight; }
 	void setAmbiantLight(const Color &val) noexcept { m_ambiantLight = val; }
 
 	template <typename T, typename... TArgs>
@@ -38,7 +39,7 @@ public:
 	template <std::uint32_t Tag>
 	void getObjectsOfTag(std::function<void(AGameObject &)> func) noexcept;
 
-	[[nodiscard]] auto getObject(entt::entity e) -> AGameObject &;
+	[[nodiscard]] auto getObject(entt::entity e)->AGameObject &;
 
 	// Destroys every single object of the scene
 	void clearScene();
@@ -61,11 +62,11 @@ private:
 	InputManager m_inputManager;
 	Camera m_camera;
 
-	entt::registry m_world;
+	mutable entt::registry m_world;
 	std::unordered_map<AGameObject::id_type, std::unique_ptr<AGameObject>> m_objects;
 
 	// TODO: move to a component or something
-	Color m_ambiantLight { 0.2f, 0.2f, 0.2f };
+	Color m_ambiantLight{ 0.2f, 0.2f, 0.2f };
 
 	bool m_isFrozen = false;
 	double m_realDeltaTime = 0;;

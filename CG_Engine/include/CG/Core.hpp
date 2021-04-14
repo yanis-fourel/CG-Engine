@@ -21,8 +21,6 @@ private:
 
 public:
 	std::unique_ptr<AGame> m_game;
-
-	ShaderProgram m_onlyShader; // TODO: delegate shader responsability to material
 };
 
 }

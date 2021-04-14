@@ -4,9 +4,9 @@
 
 #include "GameObjects/TestBall.hpp"
 
-TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::Material &material) : CG::prefabs::Sphere(pos, radius)
+TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::MaterialSolid &material) : CG::prefabs::Sphere(pos, radius)
 {
-	getComponent<CG::SphereRenderer>().setMaterial(material);
+	addComponent<CG::MaterialSolid>(material);
 	setTag<"simulation_object"_hs>();
 
 	addComponent<CG::Updateable>([this](double d) {update(d); });

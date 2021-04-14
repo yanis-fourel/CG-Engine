@@ -32,9 +32,11 @@ public:
 
 	void destroy() noexcept;
 	
-protected:
 	template<typename T, typename... TArgs>
 	T &addComponent(TArgs &&... args) noexcept;
+
+	template<typename T, typename... TArgs>
+	T &replaceComponent(TArgs &&... args) noexcept;
 
 	template<typename T>
 	void removeComponent() noexcept;
@@ -42,7 +44,7 @@ protected:
 	template <std::uint32_t Tag>
 	void setTag();
 
-	// QoL getters
+protected: // QoL getters
 	template <typename Tag>
 	void getObjectsOfTag(std::function<void(AGameObject &)> func) const noexcept;
 
@@ -68,6 +70,12 @@ template<typename T, typename... TArgs>
 T &CG::AGameObject::addComponent(TArgs &&... args) noexcept
 {
 	return getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
+}
+
+template<typename T, typename ...TArgs>
+inline T & CG::AGameObject::replaceComponent(TArgs && ...args) noexcept
+{
+	return getGame()->getWorld().emplace_or_replace<T>(m_entity, std::forward<TArgs>(args)...);
 }
 
 template<typename T>

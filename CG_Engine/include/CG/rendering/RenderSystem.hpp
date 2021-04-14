@@ -7,10 +7,10 @@
 
 namespace CG::Renderer {
 
-void renderScene(ShaderProgram &onlyshader, const AGame &game) noexcept;
+void renderScene(const AGame &game) noexcept;
 
 namespace detail {
-void uploadGlobalUniforms(ShaderProgram &onlyshader, const AGame &game) noexcept;
+void uploadGlobalUniforms(const AGame &game) noexcept;
 }
 
 }

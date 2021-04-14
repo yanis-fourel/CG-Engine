@@ -16,9 +16,7 @@
 
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
 {
-	m_onlyShader.addShader(GL_VERTEX_SHADER, "vert.glsl");
-	m_onlyShader.addShader(GL_FRAGMENT_SHADER, "frag.glsl");
-	m_onlyShader.validate();
+
 }
 
 int CG::Core::run()
@@ -49,7 +47,7 @@ void CG::Core::tick(double deltatime)
 
 	cleanupDeadGameobjects();
 
-	CG::Renderer::renderScene(m_onlyShader, *m_game);
+	CG::Renderer::renderScene(*m_game);
 }
 
 void CG::Core::updateGame(double deltaGametime)

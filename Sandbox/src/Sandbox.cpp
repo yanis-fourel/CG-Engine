@@ -54,7 +54,7 @@ void Sandbox::createGrid(const CG::Vector2 &size)
 			instanciate<Tile>(
 				CG::Vector3(static_cast<float>(x), height, static_cast<float>(y)),
 				CG::Vector2::One(),
-				(x + y) % 2 ? CG::Material::BlackRubber() : CG::Material::WhiteRubber()
+				(x + y) % 2 ? CG::MaterialSolid::BlackRubber() : CG::MaterialSolid::WhiteRubber()
 				);
 }
 
@@ -64,11 +64,11 @@ void Sandbox::createAxis()
 	constexpr auto axisLength = 100000.f;
 
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
-		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::RedPlastic());
+		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::RedPlastic());
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
-		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::GreenPlastic());
+		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::GreenPlastic());
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
-		.getComponent<CG::CubeRenderer>().setMaterial(CG::Material::BluePlastic());
+		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::BluePlastic());
 }
 
 void Sandbox::resetSimulation()
@@ -83,34 +83,34 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	std::vector<CG::Material> materials = {
-		CG::Material::Default(),
-		CG::Material::Emerald(),
-		CG::Material::Jade(),
-		CG::Material::Obsidian(),
-		CG::Material::Pearl(),
-		CG::Material::Ruby(),
-		CG::Material::Turquoise(),
-		CG::Material::Brass(),
-		CG::Material::Bronze(),
-		CG::Material::Chrome(),
-		CG::Material::Copper(),
-		CG::Material::Gold(),
-		CG::Material::Silver(),
-		CG::Material::BlackPlastic(),
-		CG::Material::WhitePlastic(),
-		CG::Material::CyanPlastic(),
-		CG::Material::GreenPlastic(),
-		CG::Material::RedPlastic(),
-		CG::Material::YellowPlastic(),
-		CG::Material::BluePlastic(),
-		CG::Material::BlackRubber(),
-		CG::Material::CyanRubber(),
-		CG::Material::GreenRubber(),
-		CG::Material::RedRubber(),
-		CG::Material::WhiteRubber(),
-		CG::Material::YellowRubber(),
-		CG::Material::BlueRubber(),
+	std::vector<CG::MaterialSolid> materials = {
+		CG::MaterialSolid::Default(),
+		CG::MaterialSolid::Emerald(),
+		CG::MaterialSolid::Jade(),
+		CG::MaterialSolid::Obsidian(),
+		CG::MaterialSolid::Pearl(),
+		CG::MaterialSolid::Ruby(),
+		CG::MaterialSolid::Turquoise(),
+		CG::MaterialSolid::Brass(),
+		CG::MaterialSolid::Bronze(),
+		CG::MaterialSolid::Chrome(),
+		CG::MaterialSolid::Copper(),
+		CG::MaterialSolid::Gold(),
+		CG::MaterialSolid::Silver(),
+		CG::MaterialSolid::BlackPlastic(),
+		CG::MaterialSolid::WhitePlastic(),
+		CG::MaterialSolid::CyanPlastic(),
+		CG::MaterialSolid::GreenPlastic(),
+		CG::MaterialSolid::RedPlastic(),
+		CG::MaterialSolid::YellowPlastic(),
+		CG::MaterialSolid::BluePlastic(),
+		CG::MaterialSolid::BlackRubber(),
+		CG::MaterialSolid::CyanRubber(),
+		CG::MaterialSolid::GreenRubber(),
+		CG::MaterialSolid::RedRubber(),
+		CG::MaterialSolid::WhiteRubber(),
+		CG::MaterialSolid::YellowRubber(),
+		CG::MaterialSolid::BlueRubber(),
 	};
 
 	std::vector<CG::AGameObject *> balls;

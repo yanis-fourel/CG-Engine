@@ -52,7 +52,7 @@ add_library(CG_Engine STATIC
     "src/physic/Raycast.cpp"
     "src/prefabs/Plane.cpp"
     "src/rendering/RenderSystem.cpp"
-)
+ "include/CG/internal/Material.hpp" "include/CG/components/material/MaterialSolid.hpp" "src/components/material/MaterialSolid.cpp")
 
 target_include_directories(CG_Engine PUBLIC   
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}

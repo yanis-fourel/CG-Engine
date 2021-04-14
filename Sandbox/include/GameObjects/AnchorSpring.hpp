@@ -2,7 +2,6 @@
 
 #include <CG/prefabs/Plane.hpp>
 #include <CG/math/Vector3.hpp>
-#include <CG/Material.hpp>
 
 class AnchorSpring : public CG::AGameObject
 {

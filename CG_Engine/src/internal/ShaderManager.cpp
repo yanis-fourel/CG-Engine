@@ -62,7 +62,7 @@ void CG::ShaderProgram::validate()
 	spdlog::info("Successfully validated shader");
 }
 
-void CG::ShaderProgram::use()
+void CG::ShaderProgram::use() const noexcept
 {
 	GLCall(glUseProgram(_program));
 }
@@ -80,7 +80,7 @@ std::optional<GLint> CG::ShaderProgram::getUniformLocation(std::string_view name
 	}
 }
 
-void CG::ShaderProgram::uploadUniformMat4(std::string_view name, const glm::mat4 &mat)
+void CG::ShaderProgram::uploadUniformMat4(std::string_view name, const glm::mat4 &mat) const noexcept
 {
 	auto position = getUniformLocation(name);
 
@@ -89,7 +89,7 @@ void CG::ShaderProgram::uploadUniformMat4(std::string_view name, const glm::mat4
 }
 
 
-void CG::ShaderProgram::uploadUniformMat3(std::string_view name, const glm::mat3 &mat)
+void CG::ShaderProgram::uploadUniformMat3(std::string_view name, const glm::mat3 &mat) const noexcept
 {
 	auto position = getUniformLocation(name);
 
@@ -97,7 +97,7 @@ void CG::ShaderProgram::uploadUniformMat3(std::string_view name, const glm::mat3
 		GLCall(glUniformMatrix3fv(position.value(), 1, GL_FALSE, glm::value_ptr(mat)));
 }
 
-void CG::ShaderProgram::uploadUniformVec4(std::string_view name, const glm::vec4 &vec)
+void CG::ShaderProgram::uploadUniformVec4(std::string_view name, const glm::vec4 &vec) const noexcept
 {
 	auto position = getUniformLocation(name);
 
@@ -105,7 +105,7 @@ void CG::ShaderProgram::uploadUniformVec4(std::string_view name, const glm::vec4
 		GLCall(glUniform4f(position.value(), vec.x, vec.y, vec.z, vec.w));
 }
 
-void CG::ShaderProgram::uploadUniformVec3(std::string_view name, const glm::vec3 &vec)
+void CG::ShaderProgram::uploadUniformVec3(std::string_view name, const glm::vec3 &vec) const noexcept
 {
 	auto position = getUniformLocation(name);
 
@@ -113,7 +113,7 @@ void CG::ShaderProgram::uploadUniformVec3(std::string_view name, const glm::vec3
 		GLCall(glUniform3f(position.value(), vec.x, vec.y, vec.z));
 }
 
-void CG::ShaderProgram::uploadUniform1f(std::string_view name, float f)
+void CG::ShaderProgram::uploadUniform1f(std::string_view name, float f) const noexcept
 {
 	auto position = getUniformLocation(name);
 
@@ -121,7 +121,7 @@ void CG::ShaderProgram::uploadUniform1f(std::string_view name, float f)
 		GLCall(glUniform1f(position.value(), f));
 }
 
-void CG::ShaderProgram::uploadUniform1b(std::string_view name, bool b)
+void CG::ShaderProgram::uploadUniform1b(std::string_view name, bool b) const noexcept
 {
 	auto position = getUniformLocation(name);
 

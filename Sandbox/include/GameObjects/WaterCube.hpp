@@ -2,7 +2,6 @@
 
 #include <CG/prefabs/Cube.hpp>
 #include <CG/math/Vector3.hpp>
-#include <CG/Material.hpp>
 
 #include <cyclone/particle.h>
 

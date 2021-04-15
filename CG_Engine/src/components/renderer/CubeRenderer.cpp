@@ -100,7 +100,7 @@ CG::CubeRenderer::CubeRenderer()
 	GLCall(glEnableVertexAttribArray(2));
 }
 
-void CG::CubeRenderer::draw(ShaderProgram &sm) const noexcept
+void CG::CubeRenderer::draw(const ShaderProgram &sm) const noexcept
 {
 	m_drawable.draw(sm);
 }

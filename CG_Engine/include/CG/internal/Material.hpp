@@ -31,4 +31,15 @@ const ShaderProgram &getMaterialShader()
 	return *shaderProgram;
 }
 
+class AMaterial
+{
+public:
+	virtual ~AMaterial() = default;
+
+public:
+	virtual void uploadUniforms() const noexcept = 0;
+	virtual bool hasTransparence() const noexcept = 0; // TODO: (opti) store separately in ECS
+	virtual auto getShader() const noexcept -> const ShaderProgram & = 0;
+};
+
 }

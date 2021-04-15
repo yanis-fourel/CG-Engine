@@ -25,7 +25,7 @@ CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectory
 	processAssimpNode(scene, scene->mRootNode, {});
 }
 
-void CG::MeshRenderer::draw(ShaderProgram &sm) const noexcept
+void CG::MeshRenderer::draw(const ShaderProgram &sm) const noexcept
 {
 	for (const auto &d : m_meshesDrawable) {
 		d.draw(sm);

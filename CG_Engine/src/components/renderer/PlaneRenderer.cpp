@@ -54,7 +54,7 @@ CG::PlaneRenderer::PlaneRenderer()
 	};
 }
 
-void CG::PlaneRenderer::draw(ShaderProgram &sm) const noexcept
+void CG::PlaneRenderer::draw(const ShaderProgram &sm) const noexcept
 {
 	m_drawable.draw(sm);
 }

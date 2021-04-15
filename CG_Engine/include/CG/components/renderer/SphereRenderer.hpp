@@ -17,7 +17,7 @@ public:
 
 	SphereRenderer(std::uint32_t slices = 50, std::uint32_t stacks = 50) noexcept;
 
-	void draw(ShaderProgram &sm) const noexcept;
+	void draw(const ShaderProgram &sm) const noexcept;
 
 private:
 	void generateVertices();

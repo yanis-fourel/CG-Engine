@@ -11,7 +11,7 @@ class PlaneRenderer {
 public:
 	PlaneRenderer();
 
-	void draw(ShaderProgram &sm) const noexcept;
+	void draw(const ShaderProgram &sm) const noexcept;
 
 private:
 	Drawable m_drawable;

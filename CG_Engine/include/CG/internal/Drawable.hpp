@@ -14,8 +14,7 @@ struct Drawable {
 	GLuint texture;
 	bool hasTexture = false;
 
-	// Shader ref ? or in renderer
-	inline void draw(ShaderProgram &sm) const noexcept
+	inline void draw(const ShaderProgram &sm) const noexcept
 	{
 		glBindVertexArray(vao);
 

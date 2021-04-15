@@ -23,7 +23,7 @@ class MeshRenderer {
 public:
 	MeshRenderer(const std::string &path);
 
-	void draw(ShaderProgram &sm) const noexcept;
+	void draw(const ShaderProgram &sm) const noexcept;
 
 private:
 	static std::string getDirectoryOfFile(const std::string &file) noexcept;

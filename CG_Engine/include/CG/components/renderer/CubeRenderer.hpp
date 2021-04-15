@@ -13,7 +13,7 @@ class CubeRenderer {
 public:
 	CubeRenderer();
 
-	void draw(ShaderProgram &sm) const noexcept;
+	void draw(const ShaderProgram &sm) const noexcept;
 
 private:
 	Drawable m_drawable;

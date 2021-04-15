@@ -145,4 +145,4 @@ void CG::SphereRenderer::registerVertices(const std::vector<Vertex> &vertices, c
 }
 
 
-void CG::SphereRenderer::draw(ShaderProgram &sm) const noexcept { m_drawable.draw(sm); }
+void CG::SphereRenderer::draw(const ShaderProgram &sm) const noexcept { m_drawable.draw(sm); }

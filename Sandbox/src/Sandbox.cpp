@@ -117,15 +117,15 @@ void Sandbox::resetSimulation()
 
 	std::vector<CG::GameObject *> balls;
 
-	//constexpr auto ballCount = 10;
-	//for (int i = 0; i < ballCount; ++i) {
-	//	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
+	constexpr auto ballCount = 10;
+	for (int i = 0; i < ballCount; ++i) {
+		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
 
-	//	for (auto &prev : balls)
-	//		instanciate<Spring>(obj, *prev, 1.f, 3.f);
+		for (auto &prev : balls)
+			instanciate<Spring>(obj, *prev, 1.f, 3.f);
 
-	//	balls.push_back(&obj);
-	//}
+		balls.push_back(&obj);
+	}
 
 	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 20);
 	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);

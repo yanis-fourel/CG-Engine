@@ -28,7 +28,7 @@ void Spring::update(double d) noexcept
 	lr.from = pos1;
 	lr.to = pos2;
 
-	lr.material.color = lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.1));
+	lr.material.color = lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.2));
 
 	if (getGame()->isFrozen())
 		return;

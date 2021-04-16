@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "CG/internal/Drawable.hpp"
+#include "CG/rendering/GLTriangles.hpp"
 #include "CG/Color.hpp"
 
 namespace CG {
@@ -16,7 +16,7 @@ public:
 	void draw(const ShaderProgram &sm) const noexcept;
 
 private:
-	Drawable m_drawable;
+	GLTriangles m_drawable;
 };
 
 }

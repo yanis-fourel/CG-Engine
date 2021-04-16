@@ -36,13 +36,12 @@ add_library(CG_Engine STATIC
     "src/GameObject.cpp"
     "src/Game.cpp"
     "src/InputManager.cpp"
-    "src/internal/Drawable.cpp"
     "src/components/renderer/CubeRenderer.cpp"
     "src/components/renderer/PlaneRenderer.cpp"
     "src/prefabs/PointLight.cpp"
     "src/components/renderer/SphereRenderer.cpp"
     "src/components/renderer/MeshRenderer.cpp"
-    "src/internal/DrawableBuilder.cpp"
+    "src/rendering/GLTrianglesBuilder.cpp"
     "src/internal/Texture.cpp"
     "src/internal/GlError.cpp"
     "src/prefabs/Sphere.cpp" 
@@ -52,9 +51,11 @@ add_library(CG_Engine STATIC
     "src/physic/Raycast.cpp"
     "src/prefabs/Plane.cpp"
     "src/rendering/RenderSystem.cpp"
- "include/CG/internal/Material.hpp" "include/CG/components/material/MaterialSolid.hpp" "src/components/material/MaterialSolid.cpp")
+    "src/components/material/MaterialSolid.cpp"
+)
 
-target_include_directories(CG_Engine PUBLIC   
+target_include_directories(CG_Engine
+PUBLIC   
     ${CMAKE_BINARY_DIR}/download/imgui/${imgui_version}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/

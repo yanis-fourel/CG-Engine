@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GL/GL.h>
 
-#include "CG/internal/Drawable.hpp"
+#include "CG/rendering/GLTriangles.hpp"
 #include "CG/internal/Vertex.hpp"
 #include "CG/Color.hpp"
 
@@ -27,7 +27,7 @@ private:
 private:
 	static constexpr float kRadius = 0.5f;
 
-	Drawable m_drawable;
+	GLTriangles m_drawable;
 	GLuint m_slices, m_stacks;
 };
 

@@ -3,11 +3,11 @@
 #include <GL/glew.h>
 #include <vector>
 
-#include "ShaderProgram.hpp"
+#include "CG/internal/ShaderProgram.hpp"
 
 namespace CG {
 
-struct Drawable {
+struct GLTriangles {
 	GLuint vao = -1;
 	std::vector<unsigned int> indices;
 

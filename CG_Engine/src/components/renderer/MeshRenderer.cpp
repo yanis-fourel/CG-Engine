@@ -8,6 +8,7 @@
 
 #include "CG/components/renderer/MeshRenderer.hpp"
 #include "CG/internal/ShaderProgram.hpp"
+#include "CG/rendering/GLTrianglesBuilder.hpp"
 
 CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectoryOfFile(path))
 {
@@ -89,7 +90,7 @@ void CG::MeshRenderer::processAssimpNode(const aiScene *scene, const aiNode *nod
 
 void CG::MeshRenderer::processAssimpMesh(const aiScene *scene, const aiMesh *mesh, aiMatrix4x4 origin) noexcept
 {
-	DrawableBuilder builder;
+	GLTrianglesBuilder builder;
 	builder.vertices.reserve(mesh->mNumVertices);
 	builder.indices.reserve(static_cast<std::size_t>(mesh->mNumFaces) * 3);
 

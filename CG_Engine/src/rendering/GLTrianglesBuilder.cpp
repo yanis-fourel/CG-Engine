@@ -1,9 +1,9 @@
-#include "CG/internal/DrawableBuilder.hpp"
+#include "CG/rendering/GLTrianglesBuilder.hpp"
 #include "CG/internal/GlError.hpp"
 
-CG::Drawable CG::DrawableBuilder::build() const noexcept
+CG::GLTriangles CG::GLTrianglesBuilder::build() const noexcept
 {
-	CG::Drawable result;
+	CG::GLTriangles result;
 
 	result.indices = indices;
 

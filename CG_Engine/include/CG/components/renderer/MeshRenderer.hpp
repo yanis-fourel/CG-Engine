@@ -4,7 +4,8 @@
 #include <unordered_map>
 #include <memory>
 
-#include "CG/internal/DrawableBuilder.hpp"
+#include "CG/rendering/GLTriangles.hpp"
+#include "CG/internal/Texture.hpp"
 
 struct aiScene;
 struct aiNode;
@@ -34,7 +35,7 @@ private:
 private:
 	std::string m_fileDir;
 	std::vector<std::shared_ptr<Texture>> m_textures;
-	std::vector<Drawable> m_meshesDrawable;
+	std::vector<GLTriangles> m_meshesDrawable;
 };
 
 }

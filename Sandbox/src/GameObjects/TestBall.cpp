@@ -1,13 +1,14 @@
-#include <CG/components/renderer/SphereRenderer.hpp>
+#include <CG/components/renderer/ShapeRenderer.hpp>
 #include <CG/components/Updateable.hpp>
 #include <CG/components/Transform.hpp>
 
 #include "GameObjects/TestBall.hpp"
 
-TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::MaterialSolid &material) : CG::prefabs::Sphere(pos, radius)
+TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Solid &material) : CG::prefabs::Sphere(pos, radius)
 {
-	addComponent<CG::MaterialSolid>(material);
 	setTag<"simulation_object"_hs>();
+
+	getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(material);
 
 	addComponent<CG::Updateable>([this](double d) {update(d); });
 

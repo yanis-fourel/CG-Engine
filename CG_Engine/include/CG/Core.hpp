@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "CG/internal/ShaderProgram.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
 #include "CG/Game.hpp"
 
 namespace CG {

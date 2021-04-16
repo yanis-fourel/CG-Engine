@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "CG/rendering/GLTriangles.hpp"
-#include "CG/internal/Texture.hpp"
+#include "CG/rendering/Texture.hpp"
 
 struct aiScene;
 struct aiNode;

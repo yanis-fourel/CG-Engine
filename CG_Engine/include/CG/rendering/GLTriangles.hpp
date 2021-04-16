@@ -3,13 +3,13 @@
 #include <GL/glew.h>
 #include <vector>
 
-#include "CG/internal/ShaderProgram.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
 
 namespace CG {
 
 struct GLTriangles {
-	GLuint vao = -1;
-	std::vector<unsigned int> indices;
+	GLuint vao;
+	std::vector<unsigned int> indices; // note: very expensive copy 
 
 	GLuint texture;
 	bool hasTexture = false;

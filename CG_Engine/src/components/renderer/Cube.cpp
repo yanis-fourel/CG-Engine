@@ -1,11 +1,12 @@
-#include "CG/components/renderer/CubeRenderer.hpp"
-#include "CG/internal/Vertex.hpp"
-#include "CG/internal/ShaderProgram.hpp"
-#include "CG/internal/GlError.hpp"
+#include "CG/components/renderer/ShapeRenderer.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
+#include "CG/rendering/GLTrianglesBuilder.hpp"
 
-CG::CubeRenderer::CubeRenderer()
+CG::ShapeRenderer CG::ShapeRenderer::Cube()
 {
-	Vertex vertices[24]{
+	GLTrianglesBuilder builder;
+
+	builder.vertices = {
 		//bottom
 		{(Vector3::Down() + Vector3::Left() + Vector3::Backward()) * 0.5,	Vector3::Down(), Color::White()},
 		{(Vector3::Down() + Vector3::Left() + Vector3::Forward()) * 0.5,	Vector3::Down(), Color::White()},
@@ -43,7 +44,7 @@ CG::CubeRenderer::CubeRenderer()
 		{(Vector3::Up() + Vector3::Right() + Vector3::Backward()) * 0.5,	Vector3::Up(), Color::White()},
 	};
 
-	m_drawable.indices = {
+	builder.indices = {
 		//bottom
 		0, 1, 2,
 		0, 2, 3,
@@ -68,8 +69,10 @@ CG::CubeRenderer::CubeRenderer()
 		20, 21, 22,
 		20, 22, 23
 	};
+	
+	return CG::ShapeRenderer(std::move(builder.build()));
 
-	GLuint vbo;
+	/*GLuint vbo;
 	GLCall(glGenBuffers(1, &vbo));
 
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
@@ -97,10 +100,5 @@ CG::CubeRenderer::CubeRenderer()
 		GL_FALSE,
 		sizeof(Vertex),
 		(void *)offsetof(Vertex, color)));
-	GLCall(glEnableVertexAttribArray(2));
-}
-
-void CG::CubeRenderer::draw(const ShaderProgram &sm) const noexcept
-{
-	m_drawable.draw(sm);
+	GLCall(glEnableVertexAttribArray(2));*/
 }

@@ -15,9 +15,7 @@
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
-#include "CG/components/renderer/SphereRenderer.hpp"
-#include "CG/components/renderer/PlaneRenderer.hpp"
-#include "CG/components/renderer/CubeRenderer.hpp"
+#include "CG/components/renderer/ShapeRenderer.hpp"
 
 #include "CG/components/collider/PlaneCollider.hpp"
 
@@ -54,7 +52,7 @@ void Sandbox::createGrid(const CG::Vector2 &size)
 			instanciate<Tile>(
 				CG::Vector3(static_cast<float>(x), height, static_cast<float>(y)),
 				CG::Vector2::One(),
-				(x + y) % 2 ? CG::MaterialSolid::BlackRubber() : CG::MaterialSolid::WhiteRubber()
+				(x + y) % 2 ? CG::material::Solid::BlackRubber() : CG::material::Solid::WhiteRubber()
 				);
 }
 
@@ -64,11 +62,11 @@ void Sandbox::createAxis()
 	constexpr auto axisLength = 100000.f;
 
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
-		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::RedPlastic());
+		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
-		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::GreenPlastic());
+		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::GreenPlastic());
 	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
-		.replaceComponent<CG::MaterialSolid>(CG::MaterialSolid::BluePlastic());
+		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::BluePlastic());
 }
 
 void Sandbox::resetSimulation()
@@ -83,34 +81,34 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	std::vector<CG::MaterialSolid> materials = {
-		CG::MaterialSolid::Default(),
-		CG::MaterialSolid::Emerald(),
-		CG::MaterialSolid::Jade(),
-		CG::MaterialSolid::Obsidian(),
-		CG::MaterialSolid::Pearl(),
-		CG::MaterialSolid::Ruby(),
-		CG::MaterialSolid::Turquoise(),
-		CG::MaterialSolid::Brass(),
-		CG::MaterialSolid::Bronze(),
-		CG::MaterialSolid::Chrome(),
-		CG::MaterialSolid::Copper(),
-		CG::MaterialSolid::Gold(),
-		CG::MaterialSolid::Silver(),
-		CG::MaterialSolid::BlackPlastic(),
-		CG::MaterialSolid::WhitePlastic(),
-		CG::MaterialSolid::CyanPlastic(),
-		CG::MaterialSolid::GreenPlastic(),
-		CG::MaterialSolid::RedPlastic(),
-		CG::MaterialSolid::YellowPlastic(),
-		CG::MaterialSolid::BluePlastic(),
-		CG::MaterialSolid::BlackRubber(),
-		CG::MaterialSolid::CyanRubber(),
-		CG::MaterialSolid::GreenRubber(),
-		CG::MaterialSolid::RedRubber(),
-		CG::MaterialSolid::WhiteRubber(),
-		CG::MaterialSolid::YellowRubber(),
-		CG::MaterialSolid::BlueRubber(),
+	std::vector<CG::material::Solid> materials = {
+		CG::material::Solid::Default(),
+		CG::material::Solid::Emerald(),
+		CG::material::Solid::Jade(),
+		CG::material::Solid::Obsidian(),
+		CG::material::Solid::Pearl(),
+		CG::material::Solid::Ruby(),
+		CG::material::Solid::Turquoise(),
+		CG::material::Solid::Brass(),
+		CG::material::Solid::Bronze(),
+		CG::material::Solid::Chrome(),
+		CG::material::Solid::Copper(),
+		CG::material::Solid::Gold(),
+		CG::material::Solid::Silver(),
+		CG::material::Solid::BlackPlastic(),
+		CG::material::Solid::WhitePlastic(),
+		CG::material::Solid::CyanPlastic(),
+		CG::material::Solid::GreenPlastic(),
+		CG::material::Solid::RedPlastic(),
+		CG::material::Solid::YellowPlastic(),
+		CG::material::Solid::BluePlastic(),
+		CG::material::Solid::BlackRubber(),
+		CG::material::Solid::CyanRubber(),
+		CG::material::Solid::GreenRubber(),
+		CG::material::Solid::RedRubber(),
+		CG::material::Solid::WhiteRubber(),
+		CG::material::Solid::YellowRubber(),
+		CG::material::Solid::BlueRubber(),
 	};
 
 	std::vector<CG::AGameObject *> balls;
@@ -125,7 +123,7 @@ void Sandbox::resetSimulation()
 	//	balls.push_back(&obj);
 	//}
 
-	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 500);
+	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 20);
 	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);
 	instanciate<AnchorSpring>(CG::Vector3(0, 3, 0), obj, 5.f, 1.f);
 }
@@ -209,7 +207,7 @@ void Sandbox::update(double deltatime)
 	ImGui::SetNextWindowBgAlpha(0.f);
 	ImGui::Begin("Simulation", nullptr, ImGuiWindowFlags_NoDecoration);
 
-	ImGui::Text("fps : %.1f (%.1fms)", 1 / getGame()->getRealDeltatime(), getGame()->getRealDeltatime());
+	ImGui::Text("fps : %.1f (%.1fms)", 1 / getGame()->getRealDeltatime(), getGame()->getRealDeltatime() * 1000);
 	ImGui::Text("Simulation time : %.3fs", m_simulationTime);
 
 	ImGui::SetCursorPosX((width - 100) * 0.5f);

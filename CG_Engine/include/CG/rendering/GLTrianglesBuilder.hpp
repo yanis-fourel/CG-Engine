@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "CG/internal/Vertex.hpp"
-#include "CG/internal/Texture.hpp"
+#include "CG/rendering/Texture.hpp"
 
 #include "GLTriangles.hpp"
 

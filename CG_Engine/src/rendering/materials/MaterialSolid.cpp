@@ -1,8 +1,8 @@
-#include "CG/components/material/MaterialSolid.hpp"
+#include "CG/rendering/materials/MaterialSolid.hpp"
 
-void CG::MaterialSolid::uploadUniforms() const noexcept
+void CG::material::Solid::uploadUniforms() const noexcept
 {
-	const auto &shader = getMaterialShader<MaterialSolid>();
+	const auto &shader = getMaterialShader<Solid>();
 
 	shader.uploadUniformVec3("u_material.ambient", ambiant.toVec3());
 	shader.uploadUniformVec3("u_material.diffuse", diffuse.toVec3());

@@ -7,7 +7,7 @@
 #include <assimp/matrix4x4.h>    
 
 #include "CG/components/renderer/MeshRenderer.hpp"
-#include "CG/internal/ShaderProgram.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
 #include "CG/rendering/GLTrianglesBuilder.hpp"
 
 CG::MeshRenderer::MeshRenderer(const std::string &path) : m_fileDir(getDirectoryOfFile(path))

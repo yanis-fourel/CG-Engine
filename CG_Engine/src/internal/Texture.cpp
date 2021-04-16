@@ -3,7 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "CG/internal/Texture.hpp"
+#include "CG/rendering/Texture.hpp"
 
 CG::Texture::Texture(const std::string &path)
 {

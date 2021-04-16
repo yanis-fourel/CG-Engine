@@ -1,14 +1,15 @@
-#include "CG/components/renderer/PlaneRenderer.hpp"
-#include "CG/internal/Vertex.hpp"
-#include "CG/internal/ShaderProgram.hpp"
-#include "CG/internal/GlError.hpp"
+#include "CG/components/renderer/ShapeRenderer.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
+#include "CG/rendering/GLTrianglesBuilder.hpp"
 
-
-CG::PlaneRenderer::PlaneRenderer()
+CG::ShapeRenderer CG::ShapeRenderer::Plane()
 {
+	GLTrianglesBuilder builder;
+
+
 #define P +0.5
 #define N -0.5
-	Vertex vertices[8]{
+	builder.vertices = {
 		{{N, N, 0}, Vector3::Forward(), Color::White()},
 		{{P, N, 0}, Vector3::Forward(), Color::White()},
 		{{P, P, 0}, Vector3::Forward(), Color::White()},
@@ -17,7 +18,14 @@ CG::PlaneRenderer::PlaneRenderer()
 #undef P
 #undef N
 
-	GLuint vbo;
+	builder.indices = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+
+	return CG::ShapeRenderer(std::move(builder.build()));
+
+	/*GLuint vbo;
 	GLCall(glGenBuffers(1, &vbo));
 
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
@@ -45,16 +53,6 @@ CG::PlaneRenderer::PlaneRenderer()
 		GL_FALSE,
 		sizeof(Vertex),
 		(void *)offsetof(Vertex, color)));
-	GLCall(glEnableVertexAttribArray(2));
-
-
-	m_drawable.indices = {
-		0, 1, 2,
-		0, 2, 3,
-	};
+	GLCall(glEnableVertexAttribArray(2));*/
 }
 
-void CG::PlaneRenderer::draw(const ShaderProgram &sm) const noexcept
-{
-	m_drawable.draw(sm);
-}

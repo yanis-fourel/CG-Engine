@@ -1,6 +1,6 @@
 #include <CG/components/Transform.hpp>
-#include <CG/components/renderer/CubeRenderer.hpp>
-#include <CG/components/material/MaterialSolid.hpp>
+#include <CG/components/renderer/ShapeRenderer.hpp>
+#include <CG/rendering/materials/MaterialSolid.hpp>
 
 #include "GameObjects/WaterCube.hpp"
 
@@ -8,7 +8,7 @@ WaterCube::WaterCube(const CG::Vector3 &pos, float sideSize) : CG::prefabs::Cube
 {
 	getComponent<CG::Transform>().position.y -= kHeight * 0.5;
 
-	auto material = CG::MaterialSolid{
+	auto material = CG::material::Solid{
 		{0.f, 0.f, 1.f},
 		{0.2f, 0.2f, 0.4f},
 		{0.3f, 0.3f, 0.5f},
@@ -16,5 +16,5 @@ WaterCube::WaterCube(const CG::Vector3 &pos, float sideSize) : CG::prefabs::Cube
 		0.5f
 	};
 
-	addComponent<CG::MaterialSolid>(material);
+	getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(material);
 }

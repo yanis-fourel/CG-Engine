@@ -12,5 +12,5 @@ public:
 	WaterCube(const CG::Vector3 &pos, float sideSize);
 
 private:
-	static constexpr float kHeight = 0.2;
+	static constexpr float kHeight = 2;
 };

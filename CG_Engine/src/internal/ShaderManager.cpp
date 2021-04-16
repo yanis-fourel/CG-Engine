@@ -2,7 +2,7 @@
 #include <spdlog/spdlog.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "CG/internal/ShaderProgram.hpp"
+#include "CG/rendering/ShaderProgram.hpp"
 #include "CG/internal/GlError.hpp"
 
 CG::ShaderProgram::~ShaderProgram()

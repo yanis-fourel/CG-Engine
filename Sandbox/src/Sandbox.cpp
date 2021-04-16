@@ -51,7 +51,7 @@ void Sandbox::createGrid(const CG::Vector2 &size)
 	for (int x = static_cast<int>(size.x * -.5); x < size.x * 0.5; ++x)
 		for (int y = static_cast<int>(size.y * -.5); y < size.y * 0.5; ++y)
 			instanciate<Tile>(
-				CG::Vector3(static_cast<float>(x), height, static_cast<float>(y)),
+				CG::Vector3(x + 0.5f, height, y + 0.5f),
 				CG::Vector2::One(),
 				(x + y) % 2 ? CG::material::Solid::BlackRubber() : CG::material::Solid::WhiteRubber()
 				);
@@ -117,15 +117,15 @@ void Sandbox::resetSimulation()
 
 	std::vector<CG::GameObject *> balls;
 
-	constexpr auto ballCount = 10;
-	for (int i = 0; i < ballCount; ++i) {
-		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
+	//constexpr auto ballCount = 10;
+	//for (int i = 0; i < ballCount; ++i) {
+	//	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
 
-		for (auto &prev : balls)
-			instanciate<Spring>(obj, *prev, 1.f, 3.f);
+	//	for (auto &prev : balls)
+	//		instanciate<Spring>(obj, *prev, 1.f, 3.f);
 
-		balls.push_back(&obj);
-	}
+	//	balls.push_back(&obj);
+	//}
 
 	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 20);
 	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);

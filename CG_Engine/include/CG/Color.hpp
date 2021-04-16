@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include "math/Vector3.hpp"
 
 namespace CG {
@@ -31,5 +33,16 @@ struct Color
 	static constexpr Color Magenta() { return { 1, 1, 0, 1 }; }
 
 };
+
+
+inline Color lerp(const Color &a, const Color &b, Color::value_type val)
+{
+	return Color {
+		std::lerp(a.r, b.r, val),
+		std::lerp(a.g, b.g, val),
+		std::lerp(a.b, b.b, val),
+		std::lerp(a.a, b.a, val),
+	};
+}
 
 }

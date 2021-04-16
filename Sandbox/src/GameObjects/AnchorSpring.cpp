@@ -6,7 +6,7 @@
 
 #include "GameObjects/AnchorSpring.hpp"
 
-AnchorSpring::AnchorSpring(const CG::Vector3 &anchor, CG::AGameObject &b, double force, double restLength)
+AnchorSpring::AnchorSpring(const CG::Vector3 &anchor, CG::GameObject &b, double force, double restLength)
 	: m_anchor(anchor), m_obj(b), m_force(force), m_restLength(restLength)
 {
 	// TODO: add Line renderer

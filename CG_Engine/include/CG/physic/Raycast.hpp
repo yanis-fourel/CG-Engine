@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "CG/AGameObject.hpp"
+#include "CG/GameObject.hpp"
 #include "CG/Game.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/math/Ray.hpp"
@@ -13,7 +13,7 @@ struct RaycastResult {
 	bool hit;
 
 	// Only initialized if `hit`
-	AGameObject *object = nullptr;
+	GameObject *object = nullptr;
 	Vector3 impact;
 };
 

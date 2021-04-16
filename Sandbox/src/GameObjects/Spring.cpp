@@ -6,7 +6,7 @@
 
 #include "GameObjects/Spring.hpp"
 
-Spring::Spring(CG::AGameObject &a, CG::AGameObject &b, double force, double restLength)
+Spring::Spring(CG::GameObject &a, CG::GameObject &b, double force, double restLength)
 	: m_obj1(a), m_obj2(b), m_force(force), m_restLength(restLength)
 {
 	// TODO: add Line renderer

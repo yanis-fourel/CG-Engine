@@ -10,7 +10,7 @@ CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : 
 	AGame::instance = this;
 }
 
-auto CG::AGame::getObject(entt::entity e) -> AGameObject &
+auto CG::AGame::getObject(entt::entity e) -> GameObject &
 {
 	return *m_objects.at(e);
 }
@@ -21,7 +21,7 @@ void CG::AGame::clearScene()
 		obj->destroy();
 }
 
-void CG::AGame::immediateDestroy(AGameObject::id_type obj) noexcept
+void CG::AGame::immediateDestroy(GameObject::id_type obj) noexcept
 {
 	m_objects.erase(obj);
 }

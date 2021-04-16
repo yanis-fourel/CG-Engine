@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string_view>
-
 #include "CG/Color.hpp"
 #include "CG/rendering/Material.hpp"
 

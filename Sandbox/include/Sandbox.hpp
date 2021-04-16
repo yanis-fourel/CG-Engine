@@ -33,5 +33,5 @@ private:
 
 	float m_simulationTime;
 
-	CG::AGameObject *m_dragging = nullptr;
+	CG::GameObject *m_dragging = nullptr;
 };

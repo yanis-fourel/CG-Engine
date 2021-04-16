@@ -1,8 +1,8 @@
 #pragma once
 
-#include "CG/AGameObject.hpp"
+#include "CG/GameObject.hpp"
 
-class FreeCameraManager : public CG::AGameObject
+class FreeCameraManager : public CG::GameObject
 {
 public:
 	FreeCameraManager();

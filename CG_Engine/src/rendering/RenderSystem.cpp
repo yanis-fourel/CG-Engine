@@ -10,7 +10,9 @@
 #include "CG/components/renderer/_all.hpp"
 
 #include "CG/rendering/materials/MaterialSolid.hpp"
+#include "CG/rendering/GLLine.hpp"
 
+// TODO: support other renderer transparency + performance optimisation
 
 void CG::Renderer::renderScene(const AGame &game) noexcept
 {
@@ -20,12 +22,23 @@ void CG::Renderer::renderScene(const AGame &game) noexcept
 	auto viewMR = game.getWorld().view<CG::MeshRenderer, CG::Transform>();
 	viewMR.each([&](const MeshRenderer &mr, const auto &transform) {
 		const auto &usedShader = getMaterialShader<CG::material::Solid>();
+		usedShader.use();
 		uploadModelMatrixes(usedShader, transform, game.getCamera());
 		mr.draw(usedShader);
 		});
 
 
-	// TODO: support other renderer transparency + performance optimisation
+	auto viewLR = game.getWorld().view<CG::LineRenderer>();
+	viewLR.each([&](const LineRenderer &lr) {
+		const auto &shader = lr.material.getShader();
+		shader.use();
+		shader.uploadUniformVec3("u_p1", lr.from);
+		shader.uploadUniformVec3("u_p2", lr.to);
+		lr.material.uploadUniforms();
+
+		GLLine::draw();
+		});
+
 
 	std::vector<std::pair<const CG::ShapeRenderer *, CG::Transform>> transparentShapes;
 
@@ -34,6 +47,7 @@ void CG::Renderer::renderScene(const AGame &game) noexcept
 		if (sr.hasTransparence()) // Terrible branching
 			transparentShapes.push_back(std::make_pair(&sr, transform));
 		else {
+			sr.material->getShader().use();
 			uploadModelMatrixes(sr.material->getShader(), transform, game.getCamera());
 			sr.draw();
 		}
@@ -46,6 +60,7 @@ void CG::Renderer::renderScene(const AGame &game) noexcept
 		});
 
 	for (const auto &[sr, transform] : transparentShapes) {
+		sr->material->getShader().use();
 		uploadModelMatrixes(sr->material->getShader(), transform, game.getCamera());
 		sr->draw();
 	}
@@ -69,7 +84,7 @@ void CG::Renderer::detail::uploadGlobalUniforms(const AGame &game) noexcept
 
 
 	// TODO: shared uniforms (uniform that would be shared across every shader, if possible?)
-	for (auto &shader : allShaders) {
+	for (const auto &shader : allShaders) {
 		shader->use();
 
 		shader->uploadUniformMat4("u_viewProj", game.getCamera().getViewProjMatrix());
@@ -80,5 +95,12 @@ void CG::Renderer::detail::uploadGlobalUniforms(const AGame &game) noexcept
 		shader->uploadUniformVec3("u_pointLight.color", pointLight.color.toVec3() * pointLight.intensity);
 		shader->uploadUniform1f("u_pointLight.diffuseIntensity", pointLight.diffuseIntensity);
 		shader->uploadUniform1f("u_pointLight.specularIntensity", pointLight.specularIntensity);
+	}
+
+	{ // This shader only needs one
+		const auto &lineShader = getMaterialShader<CG::material::Line>();
+		
+		lineShader.use();
+		lineShader.uploadUniformMat4("u_viewProj", game.getCamera().getViewProjMatrix());
 	}
 }

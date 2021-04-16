@@ -5,7 +5,7 @@
 #include <cstdint>
 
 #include "CG/Window.hpp"
-#include "CG/AGameObject.hpp"
+#include "CG/GameObject.hpp"
 #include "CG/Camera.hpp"
 #include "CG/InputManager.hpp"
 
@@ -37,15 +37,15 @@ public:
 	T &instanciate(TArgs &&... args);
 
 	template <std::uint32_t Tag>
-	void getObjectsOfTag(std::function<void(AGameObject &)> func) noexcept;
+	void getObjectsOfTag(std::function<void(GameObject &)> func) noexcept;
 
-	[[nodiscard]] auto getObject(entt::entity e)->AGameObject &;
+	[[nodiscard]] auto getObject(entt::entity e)->GameObject &;
 
 	// Destroys every single object of the scene
 	void clearScene();
 
 	// Call `obj.destroy()` unless you know what you're doing
-	void immediateDestroy(AGameObject::id_type obj) noexcept;
+	void immediateDestroy(GameObject::id_type obj) noexcept;
 
 	[[nodiscard]] auto isFrozen() const noexcept { return m_isFrozen; }
 	void setFrozen(bool val) { m_isFrozen = val; }
@@ -63,7 +63,7 @@ private:
 	Camera m_camera;
 
 	mutable entt::registry m_world;
-	std::unordered_map<AGameObject::id_type, std::unique_ptr<AGameObject>> m_objects;
+	std::unordered_map<GameObject::id_type, std::unique_ptr<GameObject>> m_objects;
 
 	// TODO: move to a component or something
 	Color m_ambiantLight{ 0.2f, 0.2f, 0.2f };
@@ -87,7 +87,7 @@ T &CG::AGame::instanciate(TArgs &&... args)
 }
 
 template<std::uint32_t Tag>
-void CG::AGame::getObjectsOfTag(std::function<void(CG::AGameObject &)> func) noexcept
+void CG::AGame::getObjectsOfTag(std::function<void(CG::GameObject &)> func) noexcept
 {
 	for (auto id : m_world.view<entt::tag<Tag>>())
 		func(*m_objects.at(id));

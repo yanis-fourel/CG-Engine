@@ -16,6 +16,7 @@
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/renderer/ShapeRenderer.hpp"
+#include "CG/components/renderer/LineRenderer.hpp"
 
 #include "CG/components/collider/PlaneCollider.hpp"
 
@@ -58,15 +59,18 @@ void Sandbox::createGrid(const CG::Vector2 &size)
 
 void Sandbox::createAxis()
 {
-	constexpr auto axisThickness = 0.05f;
 	constexpr auto axisLength = 100000.f;
 
-	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
-		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
-	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
-		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::GreenPlastic());
-	instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
-		.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::BluePlastic());
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(axisLength, 0, 0), CG::material::Line {CG::Color::Red()});
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, axisLength, 0), CG::material::Line {CG::Color::Green()});
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, 0, axisLength), CG::material::Line {CG::Color::Blue()});
+
+	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
+	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
+	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
+	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::GreenPlastic());
+	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
+	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::BluePlastic());
 }
 
 void Sandbox::resetSimulation()
@@ -111,7 +115,7 @@ void Sandbox::resetSimulation()
 		CG::material::Solid::BlueRubber(),
 	};
 
-	std::vector<CG::AGameObject *> balls;
+	std::vector<CG::GameObject *> balls;
 
 	constexpr auto ballCount = 10;
 	for (int i = 0; i < ballCount; ++i) {

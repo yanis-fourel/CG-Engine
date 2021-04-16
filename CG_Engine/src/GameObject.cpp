@@ -1,26 +1,26 @@
-#include "CG/AGameObject.hpp"
+#include "CG/GameObject.hpp"
 #include "CG/Core.hpp"
 #include "CG/Game.hpp"
 
 #include "CG/internal/components/ToDelete.hpp"
 
-CG::AGameObject::AGameObject() : m_entity(getGame()->getWorld().create())
+CG::GameObject::GameObject() : m_entity(getGame()->getWorld().create())
 {
 	InputManager = &getGame()->getInputManager();
 	GameCamera = &getGame()->getCamera();
 }
 
-CG::AGameObject::~AGameObject()
+CG::GameObject::~GameObject()
 {
 	getGame()->getWorld().destroy(m_entity);
 }
 
-CG::AGame *CG::AGameObject::getGame() const noexcept
+CG::AGame *CG::GameObject::getGame() const noexcept
 {
 	return AGame::instance;
 }
 
-void CG::AGameObject::destroy() noexcept
+void CG::GameObject::destroy() noexcept
 {
 	addComponent<CG::ToDelete>();
 }

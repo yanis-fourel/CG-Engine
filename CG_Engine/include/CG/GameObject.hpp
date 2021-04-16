@@ -10,12 +10,12 @@ namespace CG {
 
 class AGame;
 
-class AGameObject {
+class GameObject {
 public:
 	using id_type = entt::registry::entity_type;
 
-	AGameObject();
-	virtual ~AGameObject();
+	GameObject();
+	virtual ~GameObject();
 
 	// Called once upon gameobject creation
 	virtual void start() {};
@@ -46,7 +46,7 @@ public:
 
 protected: // QoL getters
 	template <typename Tag>
-	void getObjectsOfTag(std::function<void(AGameObject &)> func) const noexcept;
+	void getObjectsOfTag(std::function<void(GameObject &)> func) const noexcept;
 
 	InputManager *InputManager;
 	Camera *GameCamera;
@@ -61,43 +61,43 @@ private:
 #include "CG/Game.hpp"
 
 template<typename T>
-T &CG::AGameObject::getComponent() noexcept
+T &CG::GameObject::getComponent() noexcept
 {
 	return getGame()->getWorld().get<T>(m_entity);
 }
 
 template<typename T, typename... TArgs>
-T &CG::AGameObject::addComponent(TArgs &&... args) noexcept
+T &CG::GameObject::addComponent(TArgs &&... args) noexcept
 {
 	return getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
 }
 
 template<typename T, typename ...TArgs>
-inline T & CG::AGameObject::replaceComponent(TArgs && ...args) noexcept
+inline T & CG::GameObject::replaceComponent(TArgs && ...args) noexcept
 {
 	return getGame()->getWorld().emplace_or_replace<T>(m_entity, std::forward<TArgs>(args)...);
 }
 
 template<typename T>
-void CG::AGameObject::removeComponent() noexcept
+void CG::GameObject::removeComponent() noexcept
 {
 	getGame()->getWorld().remove<T>(m_entity);
 }
 
 template<std::uint32_t Tag>
-void CG::AGameObject::setTag()
+void CG::GameObject::setTag()
 {
 	getGame()->getWorld().emplace<entt::tag<Tag>>(m_entity);
 }
 
 template<std::uint32_t Tag>
-bool CG::AGameObject::hasTag() const noexcept
+bool CG::GameObject::hasTag() const noexcept
 {
 	return getGame()->getWorld().has<entt::tag<Tag>>(m_entity);
 }
 
 template <typename Tag>
-void CG::AGameObject::getObjectsOfTag(std::function<void(AGameObject &)> func) const noexcept
+void CG::GameObject::getObjectsOfTag(std::function<void(GameObject &)> func) const noexcept
 {
 	getGame()->getObjectsOfTag<Tag>(func);
 }

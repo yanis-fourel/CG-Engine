@@ -12,7 +12,7 @@ namespace CG {
 struct ShapeRenderer 
 {
 	GLTriangles triangles;
-	std::unique_ptr<AMaterial> material;
+	std::unique_ptr<AMaterial> material; // note: having a pointer here prevent from using cache optimisation. bad
 
 	explicit ShapeRenderer(GLTriangles &&triangles);
 	explicit ShapeRenderer(GLTriangles &&triangles, std::unique_ptr<AMaterial> &&material);

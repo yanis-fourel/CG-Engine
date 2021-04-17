@@ -28,7 +28,12 @@
 #include "GameObjects/Spring.hpp"
 #include "GameObjects/AnchorSpring.hpp"
 #include "GameObjects/WaterCube.hpp"
+#include "GameObjects/BuoyancyFApplier.hpp"
 #include "AssetDir.hpp"
+
+
+#define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
+#define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
 
 
 void Sandbox::start()
@@ -61,9 +66,9 @@ void Sandbox::createAxis()
 {
 	constexpr auto axisLength = 100000.f;
 
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(axisLength, 0, 0), CG::material::Line {CG::Color::Red()});
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, axisLength, 0), CG::material::Line {CG::Color::Green()});
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, 0, axisLength), CG::material::Line {CG::Color::Blue()});
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(axisLength, 0, 0), CG::material::Line{ CG::Color::Red() });
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, axisLength, 0), CG::material::Line{ CG::Color::Green() });
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, 0, axisLength), CG::material::Line{ CG::Color::Blue() });
 
 	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
 	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
@@ -117,26 +122,38 @@ void Sandbox::resetSimulation()
 
 	std::vector<CG::GameObject *> balls;
 
-	constexpr auto ballCount = 10;
-	for (int i = 0; i < ballCount; ++i) {
-		auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[i % materials.size()]);
 
-		for (auto &prev : balls)
-			instanciate<Spring>(obj, *prev, 1.f, 3.f);
+	if (m_currentScenario == 0) {
+		constexpr float kPoleHeight = 5.f;
+		constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
+		constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
 
-		balls.push_back(&obj);
+		auto &pole = instanciate<CG::GameObject>();
+
+		pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
+		pole.setTag<"simulation_object"_hs>();
+
+
+		constexpr int kBallCount = 5;
+
+		for (int i = 0; i < kBallCount; ++i) {
+			auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
+
+			instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 1.f);
+		}
 	}
+	else {
+		constexpr float kSeaLevel = 5.f;
 
-	instanciate<WaterCube>(CG::Vector3(0, 1, 0), 20);
-	auto &obj = instanciate<TestBall>(getRandomSpawnPoint(), 0.5f, materials[std::rand() % materials.size()]);
-	instanciate<AnchorSpring>(CG::Vector3(0, 3, 0), obj, 5.f, 1.f);
+		instanciate<WaterCube>(CG::Vector3(0, kSeaLevel, 0), 20);
+		auto &obj = instanciate<TestBall>(CG::Vector3(2.f, RANDRANGE(8.f, 20.f), 2.f), 0.5f /*RANDRANGE(0.2f, 2.f)*/, CG::material::Solid::Gold());
+
+		m_buoyancyApplier = &instanciate<BuoyancyFApplier>(obj, kSeaLevel, m_byancyDensity);
+	}
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 {
-#define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
-#define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
-
 	return CG::Vector3{
 		RANDRANGE(-8, 8),
 		RANDRANGE(1, 5),
@@ -204,7 +221,7 @@ void Sandbox::update(double deltatime)
 	//	return;
 
 	float width = getGame()->getWindow().getSize().x;
-	float height = 135;
+	float height = 150;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(width, height));
@@ -225,6 +242,14 @@ void Sandbox::update(double deltatime)
 
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
 	ImGui::Text("You can grab the ball with the mouse, drag it around with left click on the XZ axis, or XY axis if you hold control");
+
+	if (ImGui::SliderInt("Scenario", &m_currentScenario, 0, 1))
+		resetSimulation();
+
+	if (m_currentScenario == 1) {
+		if (ImGui::SliderFloat("Liquid density", &m_byancyDensity, 0.01f, 4096.f))
+			m_buoyancyApplier->setDensity(m_byancyDensity);
+	}
 
 	ImGui::End();
 

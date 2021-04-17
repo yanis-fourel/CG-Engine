@@ -8,9 +8,11 @@
 #include "CG/math/Vector2.hpp"
 #include "CG/math/Vector3.hpp"
 
-#include "CG/ui/imfilebrowser.h"
+#include <CG/ui/imfilebrowser.h>
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Cube.hpp>
+
+#include "GameObjects/BuoyancyFApplier.hpp"
 
 class Sandbox : public CG::AGame {
 public:
@@ -34,4 +36,10 @@ private:
 	float m_simulationTime;
 
 	CG::GameObject *m_dragging = nullptr;
+
+
+	int m_currentScenario = 0;
+
+	float m_byancyDensity = 2.f;
+	BuoyancyFApplier *m_buoyancyApplier;
 };

@@ -1,8 +1,8 @@
-#include <cyclone/particle.h>
 #include <spdlog/spdlog.h>
 
 #include <CG/components/Updateable.hpp>
 #include <CG/components/Transform.hpp>
+#include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
 #include "GameObjects/AnchorSpring.hpp"
@@ -33,5 +33,6 @@ void AnchorSpring::update(double d) noexcept
 
 	if (getGame()->isFrozen())
 		return;
-	m_obj.getComponent<cyclone::Particle>().addForce(force_1to2);
+
+	m_obj.getComponent<CG::Rigidbody>().addForce(force_1to2);
 }

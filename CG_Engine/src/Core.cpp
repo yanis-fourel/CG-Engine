@@ -12,12 +12,11 @@
 #include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
 
+#include "CG/physic/PhysicSystem.hpp"
 #include "CG/rendering/RenderSystem.hpp"
 
 CG::Core::Core(std::unique_ptr<AGame> game) : m_game(std::move(game))
-{
-
-}
+{}
 
 int CG::Core::run()
 {
@@ -44,6 +43,7 @@ void CG::Core::tick(double deltatime)
 	m_game->getInputManager().update();
 
 	updateGame(deltatime);
+	physic::update(*m_game, deltatime);
 
 	cleanupDeadGameobjects();
 

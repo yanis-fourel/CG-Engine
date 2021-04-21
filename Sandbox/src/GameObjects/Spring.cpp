@@ -1,8 +1,8 @@
-#include <cyclone/particle.h>
 #include <spdlog/spdlog.h>
 
 #include <CG/components/Updateable.hpp>
 #include <CG/components/Transform.hpp>
+#include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
 #include "GameObjects/Spring.hpp"
@@ -35,6 +35,6 @@ void Spring::update(double d) noexcept
 
 	//spdlog::info("Distance : {}, force : {} aka {}, {}, {}", currentLength, force_1to2.magnitude(), force_1to2.x, force_1to2.y, force_1to2.z);
 
-	m_obj1.getComponent<cyclone::Particle>().addForce(force_1to2);
-	m_obj2.getComponent<cyclone::Particle>().addForce(-force_1to2);
+	m_obj1.getComponent<CG::Rigidbody>().addForce(force_1to2);
+	m_obj2.getComponent<CG::Rigidbody>().addForce(-force_1to2);
 }

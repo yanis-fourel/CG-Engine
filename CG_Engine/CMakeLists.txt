@@ -55,7 +55,7 @@ add_library(CG_Engine STATIC
     "src/math/Utility.cpp"
     "src/math/Ray.cpp"
     "src/physic/Raycast.cpp"
-)
+  "src/physic/PhysicSystem.cpp")
 
 target_include_directories(CG_Engine
 PUBLIC   
@@ -82,3 +82,6 @@ target_compile_definitions(CG_Engine PRIVATE
     CG_SHADER_DIR="${CMAKE_CURRENT_SOURCE_DIR}/shaders/"
     NOMINMAX
 )
+
+target_compile_definitions(CG_Engine PRIVATE    CG_INTERNAL_METHOD=public)
+target_compile_definitions(CG_Engine INTERFACE  CG_INTERNAL_METHOD=private)

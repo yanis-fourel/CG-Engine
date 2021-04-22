@@ -124,7 +124,7 @@ void Sandbox::resetSimulation()
 	std::vector<CG::GameObject *> balls;
 
 
-	constexpr float kPoleHeight = 5.f;
+	constexpr float kPoleHeight = 50.f;
 	constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
 	constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
 
@@ -152,7 +152,7 @@ void Sandbox::resetSimulation()
 	for (int i = 0; i < kBallCount; ++i) {
 		auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
 
-		instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 1.f);
+		instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 0.f);
 	}
 }
 

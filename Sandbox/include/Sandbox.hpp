@@ -42,4 +42,6 @@ private:
 
 	float m_simulationSpeed = 1;
 	int m_freezeInXTicks = 0;
+
+	double m_pauseAtSimulationTime = 0;
 };

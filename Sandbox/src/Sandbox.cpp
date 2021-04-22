@@ -150,9 +150,9 @@ void Sandbox::resetSimulation()
 
 	constexpr auto kBallCount = 50;
 	for (int i = 0; i < kBallCount; ++i) {
-			auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
+		auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
 
-			instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 1.f);
+		instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 1.f);
 	}
 }
 
@@ -227,7 +227,7 @@ void Sandbox::update(double deltatime)
 	//	return;
 
 	float width = getGame()->getWindow().getSize().x;
-	float height = 175;
+	float height = 200;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(width, height));
@@ -280,6 +280,22 @@ void Sandbox::update(double deltatime)
 
 		if (m_freezeInXTicks > 0 && --m_freezeInXTicks == 0)
 			getGame()->setFrozen(true);
+	}
+
+	{
+		static bool pauseAtEnabled = false;
+
+		ImGui::Text("Pause at t=");
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(150);
+		pauseAtEnabled |= ImGui::InputDouble("##pauseAtInput", &m_pauseAtSimulationTime, 0.0, 0.0, "%.2f");
+		ImGui::SameLine();
+		ImGui::Checkbox("##pauseAtInput_enabled", &pauseAtEnabled);
+		
+		if (pauseAtEnabled && m_simulationTime >= m_pauseAtSimulationTime) {
+			getGame()->setFrozen(true);
+			pauseAtEnabled = false;
+		}
 	}
 
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");

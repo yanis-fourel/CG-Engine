@@ -38,8 +38,6 @@ private:
 	CG::GameObject *m_dragging = nullptr;
 
 
-	int m_currentScenario = 0;
-
-	float m_byancyDensity = 2.f;
-	BuoyancyFApplier *m_buoyancyApplier;
+	float m_simulationSpeed = 1;
+	int m_freezeInXTicks = 0;
 };

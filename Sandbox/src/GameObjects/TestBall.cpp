@@ -19,6 +19,8 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Sol
 	p.setMass(1.0f);
 	p.setDamping(0.8f);
 	p.setAcceleration(cyclone::Vector3::GRAVITY);
+
+	p.setRestitution(0.759); // About a tennis ball
 }
 
 void TestBall::update(double deltatime)
@@ -29,7 +31,7 @@ void TestBall::update(double deltatime)
 	auto &rb = getComponent<CG::Rigidbody>();
 	auto &transform = getComponent<CG::Transform>();
 
-	const auto radius = transform.scale.y;
+	const auto radius = transform.scale.y * 0.5;
 
 	auto pos = transform.position;
 

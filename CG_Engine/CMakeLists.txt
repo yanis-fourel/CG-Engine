@@ -43,6 +43,7 @@ add_library(CG_Engine STATIC
     "src/components/renderer/Plane.cpp"
     "src/components/renderer/Sphere.cpp"
     "src/components/renderer/MeshRenderer.cpp"
+    "src/components/Rigidbody.cpp"
     "src/rendering/GLTrianglesBuilder.cpp"
     "src/rendering/RenderSystem.cpp"
     "src/rendering/GLLine.cpp"
@@ -55,7 +56,8 @@ add_library(CG_Engine STATIC
     "src/math/Utility.cpp"
     "src/math/Ray.cpp"
     "src/physic/Raycast.cpp"
-  "src/physic/PhysicSystem.cpp")
+    "src/physic/PhysicSystem.cpp"
+)
 
 target_include_directories(CG_Engine
 PUBLIC   

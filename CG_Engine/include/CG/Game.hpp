@@ -51,8 +51,11 @@ public:
 	void setFrozen(bool val) { m_isFrozen = val; }
 
 	[[nodiscard]] auto getRealDeltatime() const noexcept { return m_realDeltaTime; }
+	[[nodiscard]] auto getGlobalTimeFactor() const noexcept { return m_globalTimeFactor; }
 
-	// You probably don't want to call that yourself
+	void setGlobalTimeFactor(double fact) { m_globalTimeFactor = fact; }
+
+CG_INTERNAL_METHOD:
 	void setRealDeltatime(double seconds) { m_realDeltaTime = seconds; }
 public:
 	static inline AGame *instance = nullptr;
@@ -69,7 +72,8 @@ private:
 	Color m_ambiantLight{ 0.2f, 0.2f, 0.2f };
 
 	bool m_isFrozen = false;
-	double m_realDeltaTime = 0;;
+	double m_realDeltaTime = 0;
+	double m_globalTimeFactor = 1;
 };
 
 }

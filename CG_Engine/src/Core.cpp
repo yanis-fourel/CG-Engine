@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <chrono>
+#include <spdlog/spdlog.h>
 
 #include <glm/gtx/transform.hpp>
 
@@ -27,7 +28,7 @@ int CG::Core::run()
 	while (m_game->getWindow().run()) {
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
-		tick(m_game->isFrozen() ? 0 : deltatime);
+		tick(m_game->isFrozen() ? 0 : deltatime * m_game->getGlobalTimeFactor());
 
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 

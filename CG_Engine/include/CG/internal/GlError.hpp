@@ -6,6 +6,9 @@
 #define DEBUG_BREAK_ON_GL_ERR {}
 #endif
 
+#ifdef NDEBUG
+#define GLCall(x) x
+#else
 #define GLCall(x) \
 	do {												\
 		::CG::GlClearError();							\
@@ -13,6 +16,7 @@
 		if(::CG::GLLogCall(#x, __FILE__, __LINE__))		\
 			DEBUG_BREAK_ON_GL_ERR;						\
 	} while (0);
+#endif
 
 namespace CG {
 

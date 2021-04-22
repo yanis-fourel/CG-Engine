@@ -15,6 +15,7 @@
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
+#include "CG/components/Rigidbody.hpp"
 #include "CG/components/renderer/ShapeRenderer.hpp"
 #include "CG/components/renderer/LineRenderer.hpp"
 
@@ -123,32 +124,35 @@ void Sandbox::resetSimulation()
 	std::vector<CG::GameObject *> balls;
 
 
-	if (m_currentScenario == 0) {
-		constexpr float kPoleHeight = 5.f;
-		constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
-		constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
+	constexpr float kPoleHeight = 5.f;
+	constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
+	constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
 
-		auto &pole = instanciate<CG::GameObject>();
+	auto &pole = instanciate<CG::GameObject>();
 
-		pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
-		pole.setTag<"simulation_object"_hs>();
+	pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
+	pole.setTag<"simulation_object"_hs>();
 
 
-		constexpr int kBallCount = 5;
+	//auto &ball1 = instanciate<TestBall>(CG::Vector3(1, 0.5, 1), 0.5f, CG::material::Solid::YellowPlastic());
+	//auto &ball2 = instanciate<TestBall>(CG::Vector3(1, 0.5, -1), 0.5f, CG::material::Solid::RedPlastic());
 
-		for (int i = 0; i < kBallCount; ++i) {
+	//// Disable gravity
+	//ball1.getComponent<CG::Rigidbody>().setAcceleration(CG::Vector3::Zero());
+	//ball2.getComponent<CG::Rigidbody>().setAcceleration(CG::Vector3::Zero());
+
+	////ball1.getComponent<CG::Rigidbody>().setMass(2);
+
+	////ball1.getComponent<CG::Rigidbody>().addImpulse(CG::Vector3(0.1f, 0, -0.5f));
+	////ball2.getComponent<CG::Rigidbody>().addImpulse(CG::Vector3(0, 0, 0.5f));
+
+	//instanciate<Spring>(ball1, ball2, 5.f, 0.f);
+
+	constexpr auto kBallCount = 50;
+	for (int i = 0; i < kBallCount; ++i) {
 			auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
 
 			instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 1.f);
-		}
-	}
-	else {
-		constexpr float kSeaLevel = 5.f;
-
-		instanciate<WaterCube>(CG::Vector3(0, kSeaLevel, 0), 20);
-		auto &obj = instanciate<TestBall>(CG::Vector3(2.f, RANDRANGE(8.f, 20.f), 2.f), 0.5f /*RANDRANGE(0.2f, 2.f)*/, CG::material::Solid::Gold());
-
-		m_buoyancyApplier = &instanciate<BuoyancyFApplier>(obj, kSeaLevel, m_byancyDensity);
 	}
 }
 
@@ -240,16 +244,43 @@ void Sandbox::update(double deltatime)
 		resetSimulation();
 	}
 
+	ImGui::SetCursorPosX((width - 1200) * 0.5f);
+	if (ImGui::Button("reset")) {
+		m_simulationSpeed = 1;
+		getGame()->setGlobalTimeFactor(m_simulationSpeed);
+	}
+	ImGui::SameLine();
+	if (ImGui::SliderFloat("Simulation speed", &m_simulationSpeed, 0.01, 10))
+		getGame()->setGlobalTimeFactor(m_simulationSpeed);
+
+	{ // Freeze in x ticks
+		ImGui::SetCursorPosX((width - 100) * 0.5f);
+
+		auto buttonEnabled = getGame()->isFrozen();
+		if (!buttonEnabled)
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+
+		auto local_freezeIn = 0;
+
+		local_freezeIn += ImGui::Button("1 tick"); ImGui::SameLine();
+		local_freezeIn += 2 * ImGui::Button("2"); ImGui::SameLine();
+		local_freezeIn += 5 * ImGui::Button("5"); ImGui::SameLine();
+		local_freezeIn += 30 * ImGui::Button("30");
+
+		if (local_freezeIn && buttonEnabled) {
+			getGame()->setFrozen(false);
+			m_freezeInXTicks = local_freezeIn + 1;
+		}
+
+		if (!buttonEnabled)
+			ImGui::PopStyleVar();
+
+		if (m_freezeInXTicks > 0 && --m_freezeInXTicks == 0)
+			getGame()->setFrozen(true);
+	}
+
 	ImGui::Text("[F1] to toggle free camera mode (WASDQE + mouse)");
 	ImGui::Text("You can grab the ball with the mouse, drag it around with left click on the XZ axis, or XY axis if you hold control");
-
-	if (ImGui::SliderInt("Scenario", &m_currentScenario, 0, 1))
-		resetSimulation();
-
-	if (m_currentScenario == 1) {
-		if (ImGui::SliderFloat("Liquid density", &m_byancyDensity, 0.01f, 4096.f))
-			m_buoyancyApplier->setDensity(m_byancyDensity);
-	}
 
 	ImGui::End();
 

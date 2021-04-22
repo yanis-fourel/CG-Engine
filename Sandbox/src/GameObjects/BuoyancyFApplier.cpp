@@ -29,7 +29,7 @@ void BuoyancyFApplier::update(double d) noexcept
 		return;
 	
 	auto sphereVolume = (4.f/3.f) * std::numbers::pi * std::pow((trans.scale.x + trans.scale.y + trans.scale.z) / 3.0, 3);
-	double verticalForce = std::min(1.f, depth / trans.scale.y) * sphereVolume * m_density * 32.f;
+	double verticalForce = std::min<CG::Vector3::value_type>(1, depth / trans.scale.y) * sphereVolume * m_density * 32.f;
 
 	m_obj.getComponent<CG::Rigidbody>().addForce(CG::Vector3(0, verticalForce, 0));
 }

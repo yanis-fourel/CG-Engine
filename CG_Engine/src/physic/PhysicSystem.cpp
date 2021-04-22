@@ -18,6 +18,18 @@ void CG::physic::update(const AGame &game, double deltatime) noexcept
 	detail::resolveConstraints(game);
 }
 
+void CG::physic::detail::integrateAll(const AGame &game, double deltatime) noexcept
+{
+	auto view = game.getWorld().view<Transform, Rigidbody>();
+
+	view.each([&](Transform &transform, Rigidbody &rigidbody) {
+		rigidbody.setPosition(transform.position);
+		rigidbody.integrate(deltatime);
+
+		transform.position = rigidbody.getPosition();
+	});
+}
+
 void CG::physic::detail::resolveConstraints(const AGame &game) noexcept
 {
 	constexpr int kIteration = 50;
@@ -72,6 +84,7 @@ void CG::physic::detail::handleCollision(entt::registry &world, entt::entity e1,
 	}
 
 	{ // velocity resolver
+
 		auto restitution = (rb1.getRestitution() + rb2.getRestitution()) / 2;
 
 		auto separatingIndice = Vector3::dot(collision->hitNormal, rb1.getVelocity() - rb2.getVelocity());
@@ -83,16 +96,4 @@ void CG::physic::detail::handleCollision(entt::registry &world, entt::entity e1,
 		rb1.addImpulse(impulsePerIMass * imass1);
 		rb2.addImpulse(-impulsePerIMass * imass2);
 	}
-}
-
-void CG::physic::detail::integrateAll(const AGame &game, double deltatime) noexcept
-{
-	auto view = game.getWorld().view<Transform, Rigidbody>();
-
-	view.each([&](Transform &transform, Rigidbody &rigidbody) {
-		rigidbody.setPosition(transform.position);
-		rigidbody.integrate(deltatime);
-
-		transform.position = rigidbody.getPosition();
-	});
 }

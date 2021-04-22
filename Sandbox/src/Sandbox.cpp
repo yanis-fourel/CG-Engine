@@ -215,6 +215,8 @@ void Sandbox::update(double deltatime)
 {
 	if (getGame()->isFrozen())
 		handleBallDragDrop();
+	else
+		m_avgTimePerFrame.add(deltatime);
 
 	m_simulationTime += static_cast<float>(deltatime);
 
@@ -225,7 +227,7 @@ void Sandbox::update(double deltatime)
 	//	return;
 
 	float width = getGame()->getWindow().getSize().x;
-	float height = 150;
+	float height = 175;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(width, height));
@@ -234,6 +236,7 @@ void Sandbox::update(double deltatime)
 
 	ImGui::Text("fps : %.1f (%.1fms)", 1 / getGame()->getRealDeltatime(), getGame()->getRealDeltatime() * 1000);
 	ImGui::Text("Simulation time : %.3fs", m_simulationTime);
+	ImGui::Text("Average time per frame : %.3fms", m_avgTimePerFrame.get() * 1000);
 
 	ImGui::SetCursorPosX((width - 100) * 0.5f);
 	if (ImGui::Button(getGame()->isFrozen() ? "Play" : "Pause", ImVec2(100, 0)))

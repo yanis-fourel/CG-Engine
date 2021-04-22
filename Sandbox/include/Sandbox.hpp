@@ -11,6 +11,7 @@
 #include <CG/ui/imfilebrowser.h>
 #include <CG/prefabs/PointLight.hpp>
 #include <CG/prefabs/Cube.hpp>
+#include <CG/utils/Average.hpp>
 
 #include "GameObjects/BuoyancyFApplier.hpp"
 
@@ -34,6 +35,7 @@ private:
 	CG::prefabs::PointLight *m_pointLight;
 
 	float m_simulationTime;
+	CG::Average<double> m_avgTimePerFrame;
 
 	CG::GameObject *m_dragging = nullptr;
 

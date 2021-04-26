@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt/fwd.hpp>
+#include <spdlog/spdlog.h>
 
 #include "CG/Game.hpp"
 
@@ -17,6 +18,8 @@ void handleCollision(entt::registry &world, entt::entity e1, entt::entity e2) no
 
 
 void integrateAll(const AGame &game, double deltatime) noexcept;
+
+
 
 }
 }

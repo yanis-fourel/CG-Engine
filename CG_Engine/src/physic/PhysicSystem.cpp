@@ -9,6 +9,9 @@
 
 #include "CG/components/collider/SphereCollider.hpp"
 
+	struct PlaneCollider {}; struct CubeCollider {};
+
+
 void CG::physic::update(const AGame &game, double deltatime) noexcept
 {
 	if (deltatime == 0) [[unlikely]]
@@ -16,6 +19,8 @@ void CG::physic::update(const AGame &game, double deltatime) noexcept
 
 	detail::integrateAll(game, deltatime);
 	detail::resolveConstraints(game);
+
+	CG::handleCollisionChecks<SphereCollider, PlaneCollider, CubeCollider>();
 }
 
 void CG::physic::detail::integrateAll(const AGame &game, double deltatime) noexcept

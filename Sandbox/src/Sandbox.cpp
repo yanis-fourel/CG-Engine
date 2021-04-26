@@ -124,35 +124,22 @@ void Sandbox::resetSimulation()
 	std::vector<CG::GameObject *> balls;
 
 
-	constexpr float kPoleHeight = 50.f;
-	constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
-	constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
+	//constexpr float kPoleHeight = 50.f;
+	//constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
+	//constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
 
-	auto &pole = instanciate<CG::GameObject>();
+	//auto &pole = instanciate<CG::GameObject>();
 
-	pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
-	pole.setTag<"simulation_object"_hs>();
+	//pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
+	//pole.setTag<"simulation_object"_hs>();
 
-
-	//auto &ball1 = instanciate<TestBall>(CG::Vector3(1, 0.5, 1), 0.5f, CG::material::Solid::YellowPlastic());
-	//auto &ball2 = instanciate<TestBall>(CG::Vector3(1, 0.5, -1), 0.5f, CG::material::Solid::RedPlastic());
-
-	//// Disable gravity
-	//ball1.getComponent<CG::Rigidbody>().setAcceleration(CG::Vector3::Zero());
-	//ball2.getComponent<CG::Rigidbody>().setAcceleration(CG::Vector3::Zero());
-
-	////ball1.getComponent<CG::Rigidbody>().setMass(2);
-
-	////ball1.getComponent<CG::Rigidbody>().addImpulse(CG::Vector3(0.1f, 0, -0.5f));
-	////ball2.getComponent<CG::Rigidbody>().addImpulse(CG::Vector3(0, 0, 0.5f));
-
-	//instanciate<Spring>(ball1, ball2, 5.f, 0.f);
-
-	constexpr auto kBallCount = 50;
+	constexpr auto kBallCount = 7;
 	for (int i = 0; i < kBallCount; ++i) {
-		auto &ball = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
+		auto &newBall = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
 
-		instanciate<AnchorSpring>(kPoleTop, ball, 5.f, 0.f);
+		for (auto b : balls)
+			instanciate<Spring>(newBall, *b, 5.f, 0.f);
+		balls.push_back(&newBall);
 	}
 }
 

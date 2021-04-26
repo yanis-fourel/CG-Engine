@@ -57,7 +57,7 @@ add_library(CG_Engine STATIC
     "src/math/Ray.cpp"
     "src/physic/Raycast.cpp"
     "src/physic/PhysicSystem.cpp"
-)
+  "include/CG/physic/rbConstraint/LocalResolver.hpp")
 
 target_include_directories(CG_Engine
 PUBLIC   

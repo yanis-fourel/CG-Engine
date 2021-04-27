@@ -25,25 +25,25 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Sol
 
 void TestBall::update(double deltatime)
 {
-	if (deltatime == 0)
-		return;
+	//if (deltatime == 0)
+	//	return;
 
-	auto &rb = getComponent<CG::Rigidbody>();
-	auto &transform = getComponent<CG::Transform>();
+	//auto &rb = getComponent<CG::Rigidbody>();
+	//auto &transform = getComponent<CG::Transform>();
 
-	const auto radius = transform.scale.y * 0.5;
+	//const auto radius = transform.scale.y * 0.5;
 
-	auto pos = transform.position;
+	//auto pos = transform.position;
 
-	// Floor colision
-	if (pos.y < radius) {
-		pos.y = radius + (radius - pos.y);
-		transform.position = pos;
+	//// Floor colision
+	//if (pos.y < radius) {
+	//	pos.y = radius + (radius - pos.y);
+	//	transform.position = pos;
 
-		auto vel = rb.getVelocity();
-		vel.y = -vel.y;
-		rb.setVelocity(vel);
-	}
+	//	auto vel = rb.getVelocity();
+	//	vel.y = -vel.y;
+	//	rb.setVelocity(vel);
+	//}
 
 	// Invisible wall collision
 	//const auto wallX = 9.5;

@@ -8,7 +8,7 @@ struct Ray {
 	Vector3 start;
 	Vector3 finish;
 
-	[[nodiscard]] auto length() const noexcept -> float;
+	[[nodiscard]] auto length() const noexcept -> double;
 	[[nodiscard]] auto direction() const noexcept -> Vector3;
 };
 

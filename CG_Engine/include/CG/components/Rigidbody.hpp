@@ -12,7 +12,11 @@ namespace CG {
 class Rigidbody 
 {
 public:
-	static constexpr CG::Vector3 kGravity = {0, -9.81, 0};
+	static constexpr CG::Vector3 kGravity = {
+		static_cast<CG::Vector3::value_type>(0), 
+		static_cast<CG::Vector3::value_type>(-9.81),
+		static_cast<CG::Vector3::value_type>(0)
+	};
 
 public:
 	void addForce(const CG::Vector3 &val) noexcept { m_particle.addForce(val); }

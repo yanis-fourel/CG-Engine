@@ -1,6 +1,6 @@
 #include "CG/math/Ray.hpp"
 
-auto CG::Ray::length() const noexcept -> float
+auto CG::Ray::length() const noexcept -> double
 {
 	return (finish - start).magnitude();
 }

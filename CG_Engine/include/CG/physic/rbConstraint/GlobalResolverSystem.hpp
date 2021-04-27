@@ -36,28 +36,33 @@ void matchAllEntities_2(entt::registry &world) noexcept
 	v1.each([&](auto &t1, auto &rb1, auto &col1) {
 		v2.each([&](auto &t2, auto &rb2, auto &col2) {
 			CG::physic::localConstraintSolver(t1, rb1, col1, t2, rb2, col2);
+			});
 		});
-	});
 }
 
 template <typename Col>
 void matchAllEntities_1(entt::registry &world) noexcept
 {
-	auto v = world.view<Transform, Rigidbody, Col>();
+	//if constexpr (std::is_same<Col, CG::PlaneCollider>())
+	//	return;
 
-	for (auto it = v.begin(); it != v.end(); ) {
-		auto &t1 = world.get<Transform>(*it);
-		auto &rb1 = world.get<Rigidbody>(*it);
-		auto &col1 = world.get<Col>(*it);
+	std::vector<std::tuple<Transform *, Rigidbody *, Col *>> entities;
 
-		it++;
-		for (auto it2 = it; it2 != v.end(); it2++)
+	{
+		auto v = world.view<Transform, Rigidbody, Col>();
+		v.each([&](Transform &t, Rigidbody &rb, Col &c) {
+			entities.emplace_back(&t, &rb, &c);
+			});
+	}
+
+	for (auto i = 0u; i < entities.size(); i++) {
+		auto [t1, rb1, col1] = entities[i];
+
+		for (auto j = i + 1; j < entities.size(); j++)
 		{
-			auto &t2 = world.get<Transform>(*it2);
-			auto &rb2 = world.get<Rigidbody>(*it2);
-			auto &col2 = world.get<Col>(*it2);
+			auto [t2, rb2, col2] = entities[j];
 
-			CG::physic::localConstraintSolver(t1, rb1, col1, t2, rb2, col2);
+			CG::physic::localConstraintSolver(*t1, *rb1, *col1, *t2, *rb2, *col2);
 		}
 	}
 }

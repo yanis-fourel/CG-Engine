@@ -76,6 +76,12 @@ struct Vector3
 		};
 	}
 
+	template <typename T>
+	Vector3 &operator*=(T fact) noexcept
+	{
+		*this = *this * fact;
+		return *this;
+	}
 
 	template <typename T>
 	constexpr Vector3 operator/(T real) const noexcept

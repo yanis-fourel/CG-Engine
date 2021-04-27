@@ -40,4 +40,3 @@ void CG::physic::detail::resolveConstraints(const AGame &game) noexcept
 	for (int i = 0; i < kIteration; i++)
 		CG::physic::globalConstraintSolver<SphereCollider, PlaneCollider>(game.getWorld());
 }
-

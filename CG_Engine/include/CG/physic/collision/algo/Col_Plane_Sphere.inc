@@ -7,11 +7,11 @@ auto CG::checkCollision(
 	const Transform &t_plane, const PlaneCollider &col_plane,
 	const Transform &t_sphere, const SphereCollider &col_sphere) noexcept -> std::optional<CollisionResult>
 {
-	auto c0 = t_sphere.position + col_sphere.center;
-	auto radius = col_sphere.radius * (t_sphere.scale.x + t_sphere.scale.y + t_sphere.scale.z) / 3;
+	Vector3 c0 = t_sphere.position + col_sphere.center;
+	double radius = col_sphere.radius * (t_sphere.scale.x + t_sphere.scale.y + t_sphere.scale.z) / 3;
 
-	auto p0 = t_plane.position + col_plane.point;
-	auto n = (t_plane.rotation * col_plane.normal).normalized();
+	Vector3 p0 = t_plane.position + col_plane.point;
+	Vector3 n = (t_plane.rotation * col_plane.normal).normalized();
 
 	auto distance = Vector3::dot(c0 - p0, n);
 

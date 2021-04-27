@@ -9,7 +9,7 @@
 Floor::Floor(double height)
 	: CG::prefabs::Plane(
 		CG::Vector3(0, height, 0),
-		CG::Quaternion::fromEuler(0, std::numbers::pi / 2, 0),
+		CG::Quaternion::fromEuler(0.0, 0.0, 0.0),
 		CG::Vector2(999.0, 999.0)
 	)
 {

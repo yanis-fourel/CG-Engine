@@ -122,7 +122,7 @@ void Sandbox::resetSimulation()
 	//pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
 	//pole.setTag<"simulation_object"_hs>();
 
-	constexpr auto kBallCount = 1;
+	constexpr auto kBallCount = 10;
 	for (int i = 0; i < kBallCount; ++i) {
 		auto &newBall = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
 

@@ -7,8 +7,8 @@
 namespace CG::material {
 
 struct Checkerboard : public AMaterial {
-	static constexpr std::string_view VertexShaderPath = "checkerBoard.vert.glsl";
-	static constexpr std::string_view FragmentShaderPath = "checkerBoard.frag.glsl";
+	static constexpr std::string_view VertexShaderPath = "checkerboard.vert.glsl";
+	static constexpr std::string_view FragmentShaderPath = "checkerboard.frag.glsl";
 
 public:
 	Color color1, color2;

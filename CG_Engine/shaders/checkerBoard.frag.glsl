@@ -63,9 +63,14 @@ vec3 get_specular(vec3 tileColor)
 
 void main()
 {   
-    // TODO: benchmark to see if this is worth the reduced lisibility
-    bool isColor1 = mod(round(f_pos.x) + round(f_pos.y / u_size.y) + round(f_pos.z / u_size.z), 2) < 1;
-    vec3 tileColor = (int(isColor1) * u_color1) + (int(!isColor1) * u_color2);
+    vec3 tileColor;
+
+    // This is more performant than my best branchless attempt
+    if (mod(round(f_pos.x) + round(f_pos.y / u_size.y) + round(f_pos.z / u_size.z), 2) < 1)
+        tileColor = u_color1;
+    else
+        tileColor = u_color2;
+
 
     vec3 result = (get_ambiant(tileColor) + get_diffuse(tileColor) + get_specular(tileColor)) * f_color;
     out_color = vec4(result, 1);

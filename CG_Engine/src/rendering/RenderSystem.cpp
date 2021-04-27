@@ -10,6 +10,7 @@
 #include "CG/components/renderer/_all.hpp"
 
 #include "CG/rendering/materials/MaterialSolid.hpp"
+#include "CG/rendering/materials/Checkerboard.hpp"
 #include "CG/rendering/GLLine.hpp"
 
 // TODO: support other renderer transparency + performance optimisation
@@ -47,6 +48,7 @@ void CG::Renderer::renderScene(const AGame &game) noexcept
 		if (sr.hasTransparence()) // Terrible branching
 			transparentShapes.push_back(std::make_pair(&sr, transform));
 		else {
+
 			sr.material->getShader().use();
 			uploadModelMatrixes(sr.material->getShader(), transform, game.getCamera());
 			sr.draw();
@@ -69,12 +71,13 @@ void CG::Renderer::renderScene(const AGame &game) noexcept
 void CG::Renderer::detail::uploadGlobalUniforms(const AGame &game) noexcept
 {
 	std::vector<const ShaderProgram *> allShaders = {
-		&getMaterialShader<::CG::material::Solid>()
+		&getMaterialShader<::CG::material::Solid>(),
+		&getMaterialShader<::CG::material::Checkerboard>(),
 	};
 
 	// TODO: Support multiple lights and multiple light types
 	glm::vec3 lightPos;
-	::CG::PointLight pointLight;
+	CG::PointLight pointLight;
 
 	game.getWorld().view<::CG::PointLight, ::CG::Transform>().each([&](const auto &light, const auto t) {
 		pointLight = light;
@@ -82,7 +85,7 @@ void CG::Renderer::detail::uploadGlobalUniforms(const AGame &game) noexcept
 		});
 
 
-
+	// TODO: rework that, not every shader will need these exact same uniforms... Specialize for each shader
 	// TODO: shared uniforms (uniform that would be shared across every shader, if possible?)
 	for (const auto &shader : allShaders) {
 		shader->use();

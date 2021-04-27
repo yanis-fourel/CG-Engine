@@ -9,17 +9,12 @@ uniform mat4 u_model;
 uniform mat4 u_viewProj;
 uniform mat3 u_normalMatrix;
 
+
 // -- OUT ---------------------
 
 out vec3 f_normal;
 out vec3 f_pos;
 out vec3 f_color;
-
-
-// Texture
-out int f_hasTexture;
-out vec2 f_texCoord;
-uniform bool u_hasTexture;
 
 // ----------------------------
 
@@ -28,12 +23,6 @@ void main()
     gl_Position = u_viewProj * u_model * vec4(v_position, 1.0);
 
     f_pos = vec3(u_model * vec4(v_position, 1.0));
-
     f_normal = normalize(u_normalMatrix * v_normal);
-    
     f_color = vec3(v_color);
-
-    // Texture
-    f_texCoord = v_texCoord;
-    f_hasTexture = int(u_hasTexture);
 }

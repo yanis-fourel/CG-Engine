@@ -20,7 +20,7 @@ public:
 	{}
 
 	void uploadUniforms() const noexcept override;
-	bool hasTransparence() const noexcept { return false; }
-	auto getShader() const noexcept -> const ShaderProgram & { return getMaterialShader<Line>(); }
+	bool hasTransparence() const noexcept override { return false; }
+	auto getShader() const noexcept -> const ShaderProgram & override { return getMaterialShader<Line>(); }
 };
 }

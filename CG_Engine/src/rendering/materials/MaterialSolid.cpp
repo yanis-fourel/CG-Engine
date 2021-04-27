@@ -2,7 +2,7 @@
 
 void CG::material::Solid::uploadUniforms() const noexcept
 {
-	const auto &shader = getMaterialShader<Solid>();
+	const auto &shader = getShader();
 
 	shader.uploadUniformVec3("u_material.ambient", ambiant.toVec3());
 	shader.uploadUniformVec3("u_material.diffuse", diffuse.toVec3());

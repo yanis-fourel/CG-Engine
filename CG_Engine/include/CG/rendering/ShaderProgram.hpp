@@ -36,6 +36,10 @@ private:
     bool _validated = false;
     std::vector<GLuint> _shaders;
     GLuint _program = -1;
+
+#ifndef NDEBUG
+    std::string m_debugName = "";
+#endif
 };
 
 }

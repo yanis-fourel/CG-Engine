@@ -16,8 +16,8 @@ struct Solid : public AMaterial {
 	{}
 
 	void uploadUniforms() const noexcept override;
-	bool hasTransparence() const noexcept { return opacity < 1; }
-	auto getShader() const noexcept -> const ShaderProgram & { return getMaterialShader<Solid>(); }
+	bool hasTransparence() const noexcept override { return opacity < 1; }
+	auto getShader() const noexcept -> const ShaderProgram & override { return getMaterialShader<Solid>(); }
 
 	Color ambiant;
 	Color diffuse;

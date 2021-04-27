@@ -15,6 +15,9 @@ CG::ShaderProgram::~ShaderProgram()
 
 void CG::ShaderProgram::addShader(GLenum type, const std::string_view relpath)
 {
+#ifndef NDEBUG
+	m_debugName += std::string(relpath.data()) + ", ";
+#endif
 	std::ifstream ifs(std::string(CG_SHADER_DIR) + relpath.data());
 
 	if (!ifs)
@@ -74,8 +77,15 @@ std::optional<GLint> CG::ShaderProgram::getUniformLocation(std::string_view name
 	if (position != -1)
 		return position;
 	else {
-		// Commented because it was causing lags during Lightning and Material rework
-		//spdlog::error("Unknown uniform name '{}'", name.data());
+		// TOTO: Stop feeding useless uniform to be able to actually use this as an error hinter
+//		spdlog::error("{} {} : \n\tUnknown uniform name '{}'",
+//			_program,
+//#ifndef NDEBUG
+//			m_debugName,
+//#else
+//			"",
+//#endif
+//			name.data());
 		return {};
 	}
 }

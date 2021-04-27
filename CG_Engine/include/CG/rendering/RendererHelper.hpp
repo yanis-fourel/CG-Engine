@@ -1,5 +1,8 @@
 #pragma once
 
+//#include <iostream>
+//#include "CG/utils/glmMatrixFormat.hpp"
+
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
@@ -18,8 +21,9 @@ inline void uploadModelMatrixes(const ShaderProgram &sp, const CG::Transform &t,
 	model *= glm::toMat4(static_cast<glm::quat>(t.rotation));
 	model = glm::scale(model, static_cast<glm::vec3>(t.scale));
 
+	//std::cout << model << std::endl;
+
 	sp.uploadUniformMat4("u_model", model);
-	sp.uploadUniformMat4("u_modelViewMatrix", c.getViewMatrix() * model);
 	sp.uploadUniformMat3("u_normalMatrix", glm::mat3(glm::transpose(glm::inverse(glm::mat3(model)))));
 }
 

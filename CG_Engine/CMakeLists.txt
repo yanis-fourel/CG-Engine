@@ -35,7 +35,7 @@ add_library(CG_Engine STATIC
     "src/GameObject.cpp"
     "src/Game.cpp"
     "src/InputManager.cpp"
-    "src/internal/ShaderManager.cpp"
+    "src/rendering/ShaderManager.cpp"
     "src/internal/Texture.cpp"
     "src/internal/GlError.cpp"
     "src/components/renderer/ShapeRenderer.cpp"
@@ -49,6 +49,7 @@ add_library(CG_Engine STATIC
     "src/rendering/GLLine.cpp"
     "src/rendering/materials/MaterialSolid.cpp"
     "src/rendering/materials/LineMaterial.cpp"
+    "src/rendering/materials/Checkerboard.cpp"
     "src/prefabs/PointLight.cpp"
     "src/prefabs/Sphere.cpp" 
     "src/prefabs/Plane.cpp"
@@ -57,7 +58,7 @@ add_library(CG_Engine STATIC
     "src/math/Ray.cpp"
     "src/physic/Raycast.cpp"
     "src/physic/PhysicSystem.cpp"
-  "include/CG/physic/rbConstraint/LocalResolver.hpp" )
+ "include/CG/utils/glmMatrixFormat.hpp")
 
 target_include_directories(CG_Engine
 PUBLIC   

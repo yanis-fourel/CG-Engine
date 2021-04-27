@@ -24,7 +24,7 @@
 #include "Sandbox.hpp"
 
 #include "GameObjects/FreeCameraManager.hpp"
-#include "GameObjects/Tile.hpp"
+#include "GameObjects/Floor.hpp"
 #include "GameObjects/TestBall.hpp"
 #include "GameObjects/Spring.hpp"
 #include "GameObjects/AnchorSpring.hpp"
@@ -43,33 +43,22 @@ void Sandbox::start()
 
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
-	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 1, 5, 2 }, CG::Color::White());
+	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 0, 50, 0 }, CG::Color::White());
 
-	createGrid(CG::Vector2(20, 20));
+	instanciate<Floor>(0.0);
+
 	createAxis();
 	resetSimulation();
-}
-
-void Sandbox::createGrid(const CG::Vector2 &size)
-{
-	float height = 0.f;
-
-	for (int x = static_cast<int>(size.x * -.5); x < size.x * 0.5; ++x)
-		for (int y = static_cast<int>(size.y * -.5); y < size.y * 0.5; ++y)
-			instanciate<Tile>(
-				CG::Vector3(x + 0.5f, height, y + 0.5f),
-				CG::Vector2::One(),
-				(x + y) % 2 ? CG::material::Solid::BlackRubber() : CG::material::Solid::WhiteRubber()
-				);
 }
 
 void Sandbox::createAxis()
 {
 	constexpr auto axisLength = 100000.f;
+	constexpr auto axisHeight = 0.0;
 
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(axisLength, 0, 0), CG::material::Line{ CG::Color::Red() });
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, axisLength, 0), CG::material::Line{ CG::Color::Green() });
-	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3::Zero(), CG::Vector3(0, 0, axisLength), CG::material::Line{ CG::Color::Blue() });
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(axisLength, axisHeight, 0), CG::material::Line{ CG::Color::Red() });
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(0, axisLength, 0), CG::material::Line{ CG::Color::Green() });
+	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(0, axisHeight, axisLength), CG::material::Line{ CG::Color::Blue() });
 
 	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
 	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
@@ -240,7 +229,7 @@ void Sandbox::update(double deltatime)
 		getGame()->setGlobalTimeFactor(m_simulationSpeed);
 	}
 	ImGui::SameLine();
-	if (ImGui::SliderFloat("Simulation speed", &m_simulationSpeed, 0.01, 10))
+	if (ImGui::SliderFloat("Simulation speed", &m_simulationSpeed, 0.01f, 10))
 		getGame()->setGlobalTimeFactor(m_simulationSpeed);
 
 	{ // Freeze in x ticks

@@ -6,11 +6,13 @@ add_executable(Sandbox
 	
 	"src/Sandbox.cpp" 
 	"src/GameObjects/FreeCameraManager.cpp"
-	"src/GameObjects/Tile.cpp"
+	
 	"src/GameObjects/TestBall.cpp" 
 	"src/GameObjects/Spring.cpp"
 	"src/GameObjects/AnchorSpring.cpp"
-	"src/GameObjects/WaterCube.cpp" "src/GameObjects/BuoyancyFApplier.cpp")
+	"src/GameObjects/WaterCube.cpp"
+	"src/GameObjects/BuoyancyFApplier.cpp"
+ "src/GameObjects/Floor.cpp" "include/GameObjects/Floor.hpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

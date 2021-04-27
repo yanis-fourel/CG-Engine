@@ -38,6 +38,7 @@ uniform sampler2D f_texture;
 
 out vec4 out_color;
 
+// -------------------------------------------------------------
 
 vec3 get_ambiant()
 {

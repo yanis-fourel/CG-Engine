@@ -25,7 +25,6 @@ public:
 
 private:
 	void createAxis();
-	void createGrid(const CG::Vector2 &size);
 	void resetSimulation();
 
 	auto getRandomSpawnPoint() -> CG::Vector3 const;

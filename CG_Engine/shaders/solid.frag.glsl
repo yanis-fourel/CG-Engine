@@ -50,7 +50,7 @@ vec3 get_diffuse()
     vec3 lightDir = normalize(vec3(u_pointLight.position) - f_pos);  
     float intensity = max(dot(f_normal, lightDir), 0.0);
 
-    return  intensity * u_pointLight.diffuseIntensity * u_pointLight.color * u_pointLight.diffuseIntensity * u_material.diffuse;
+    return  intensity * u_pointLight.diffuseIntensity * u_pointLight.color * u_material.diffuse;
 }
 
 vec3 get_specular()
@@ -60,7 +60,7 @@ vec3 get_specular()
     vec3 reflectDir = reflect(-lightDir, f_normal);  
 
     float intensity = pow(max(dot(viewDir, reflectDir), 0.0), u_material.shininess);
-    return intensity * u_pointLight.specularIntensity * u_pointLight.color * u_pointLight.specularIntensity * u_material.specular;  
+    return intensity * u_pointLight.specularIntensity * u_pointLight.color * u_material.specular;  
 }
 
 void main()

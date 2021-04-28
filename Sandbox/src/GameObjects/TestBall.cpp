@@ -10,6 +10,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Sol
 	setTag<"simulation_object"_hs>();
 
 	getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(material);
+	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 
 	//addComponent<CG::Updateable>([this](double d) {update(d); });
 

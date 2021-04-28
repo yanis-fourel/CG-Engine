@@ -1,4 +1,4 @@
-#include "CG/physic/Raycast.hpp"
+#include "CG/physic/raycast/Raycast.hpp"
 #include "CG/Gameobject.hpp"
 
 auto CG::castRaycast(AGame &game, const Ray &ray) noexcept -> RaycastResult

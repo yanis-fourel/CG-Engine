@@ -25,4 +25,4 @@ std::optional<Vector3> castRaycastOn(const T &col, const CG::Transform &trans, c
 
 }
 
-#include "raycastImpl/all.inc"
+#include "algo/_all.inc"

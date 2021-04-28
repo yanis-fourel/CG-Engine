@@ -1,7 +1,5 @@
 #include <optional>
 
-#include "CG/physic/Raycast.hpp"
-
 #include "CG/math/Vector3.hpp"
 #include "CG/math/Ray.hpp"
 

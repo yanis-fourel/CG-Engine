@@ -11,7 +11,7 @@
 #include <CG/prefabs/Sphere.hpp>
 #include <CG/prefabs/Plane.hpp>
 #include <CG/ui/imfilebrowser.h>
-#include <CG/physic/Raycast.hpp>
+#include <CG/physic/raycast/Raycast.hpp>
 
 #include "CG/components/PointLight.hpp"
 #include "CG/components/Transform.hpp"
@@ -59,13 +59,6 @@ void Sandbox::createAxis()
 	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(axisLength, axisHeight, 0), CG::material::Line{ CG::Color::Red() });
 	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(0, axisLength, 0), CG::material::Line{ CG::Color::Green() });
 	instanciate<CG::GameObject>().addComponent<CG::LineRenderer>(CG::Vector3(0, axisHeight, 0), CG::Vector3(0, axisHeight, axisLength), CG::material::Line{ CG::Color::Blue() });
-
-	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, axisLength * 0.5f, 0), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisLength, axisThickness) })
-	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::RedPlastic());
-	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(axisLength * 0.5f, 0, 0), CG::Quaternion::identity(), CG::Vector3(axisLength, axisThickness, axisThickness) })
-	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::GreenPlastic());
-	//instanciate<CG::prefabs::Cube>(CG::Transform{ CG::Vector3(0, 0, axisLength * 0.5f), CG::Quaternion::identity(), CG::Vector3(axisThickness, axisThickness, axisLength) })
-	//	.getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::BluePlastic());
 }
 
 void Sandbox::resetSimulation()
@@ -165,17 +158,20 @@ void Sandbox::handleBallDragDrop()
 	}
 	else {
 		if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
-			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::fromEuler(0, 3.1415 * 0.5f, 0), CG::Vector3::One() };
+			CG::Transform planTransform{ m_dragging->getComponent<CG::Transform>().position, CG::Quaternion::identity(), CG::Vector3(9999, 0, 9999) };
 
 			if (im.isKeyDown(GLFW_KEY_LEFT_CONTROL))
-				planTransform.rotation = CG::Quaternion::identity();
+				planTransform.rotation = CG::Quaternion::fromLookDirection(CG::Vector3::Up(), CG::Vector3::Right());
+
+			// TODO: Still some debug to do here
+			//instanciate<CG::prefabs::Plane>(planTransform).getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(CG::material::Solid::Chrome());
 
 			const auto &screenPos = getWindow().pointToNormalized(im.getMousePosition());
 			const auto ray = CG::getRayFromScreenPos(getCamera(), screenPos);
 
 			auto castResult = CG::castRaycastOn(CG::PlaneCollider{}, planTransform, ray);
 			if (!castResult) {
-				planTransform.rotation *= CG::Quaternion::fromEuler(180, 0, 0);
+				planTransform.rotation *= CG::Quaternion::fromEuler(0, std::numbers::pi, 0);
 				castResult = CG::castRaycastOn(CG::PlaneCollider{}, planTransform, ray);
 			}
 

@@ -12,8 +12,8 @@ FreeCameraManager::FreeCameraManager()
 void FreeCameraManager::start()
 {
 	// arbitrary start position
-	GameCamera->setPosition(glm::vec3(5, 58, 6));
-	GameCamera->setFacingDirection(glm::vec3(-0.251, -0.737, -0.627));
+	GameCamera->setPosition(glm::vec3(5, 5, 5));
+	GameCamera->setFacingDirection(glm::vec3(-5, -4, -5));
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);
 	GameCamera->setAspectRatio(16.f / 9);

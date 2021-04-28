@@ -1,5 +1,7 @@
 #pragma once
 
+#include <numbers>
+
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
@@ -29,6 +31,16 @@ public:
 	static Quaternion fromRotationAxis(const Vector3 &axis, float angle) noexcept
 	{
 		return glm::angleAxis(angle, static_cast<glm::vec3>(axis.normalized()));
+	}
+
+	static Quaternion fromLookDirection(const Vector3 &lookDirection, const Vector3 &upDirection = Vector3::Up()) noexcept
+	{
+		return glm::quatLookAt(static_cast<glm::vec3>(lookDirection), static_cast<glm::vec3>(upDirection));
+	}
+
+	static Quaternion inverse(const Quaternion &quat) noexcept
+	{
+		return glm::inverse(static_cast<glm::quat>(quat));
 	}
 
 	constexpr operator glm::quat() const noexcept

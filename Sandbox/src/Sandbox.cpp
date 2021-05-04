@@ -26,12 +26,13 @@
 #include "GameObjects/FreeCameraManager.hpp"
 #include "GameObjects/Floor.hpp"
 #include "GameObjects/TestBall.hpp"
-#include "GameObjects/Spring.hpp"
-#include "GameObjects/AnchorSpring.hpp"
+#include "GameObjects/links/Spring.hpp"
+#include "GameObjects/links/AnchorSpring.hpp"
 #include "GameObjects/WaterCube.hpp"
 #include "GameObjects/BuoyancyFApplier.hpp"
 #include "AssetDir.hpp"
 
+#include "BridgeFactory.hpp"
 
 #define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
 #define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
@@ -103,28 +104,7 @@ void Sandbox::resetSimulation()
 		CG::material::Solid::BlueRubber(),
 	};
 
-	std::vector<CG::GameObject *> balls;
-
-
-	auto &newBall = instanciate<TestBall>(CG::Vector3(0, 1, 0), 0.5f, CG::material::Solid::YellowPlastic());
-
-	//constexpr float kPoleHeight = 50.f;
-	//constexpr CG::Vector3 kPoleBase = CG::Vector3(5, 0, 5);
-	//constexpr CG::Vector3 kPoleTop = CG::Vector3(5, kPoleHeight, 5);
-
-	//auto &pole = instanciate<CG::GameObject>();
-
-	//pole.addComponent<CG::LineRenderer>(kPoleBase, kPoleTop, CG::material::Line{ CG::Color::Grey() });
-	//pole.setTag<"simulation_object"_hs>();
-
-	//constexpr auto kBallCount = 10;
-	//for (int i = 0; i < kBallCount; ++i) {
-	//	auto &newBall = instanciate<TestBall>(getRandomSpawnPoint(), RANDRANGE(0.2f, 1.f), materials[std::rand() % materials.size()]);
-
-	//	for (auto b : balls)
-	//		instanciate<Spring>(newBall, *b, 5.f, 0.f);
-	//	balls.push_back(&newBall);
-	//}
+	createBridge(*getGame());
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const

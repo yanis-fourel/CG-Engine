@@ -5,7 +5,7 @@
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
-#include "GameObjects/AnchorSpring.hpp"
+#include "GameObjects/links/AnchorSpring.hpp"
 
 AnchorSpring::AnchorSpring(const CG::Vector3 &anchor, CG::GameObject &b, double force, double restLength)
 	: m_anchor(anchor), m_obj(b), m_force(force), m_restLength(restLength)
@@ -29,7 +29,7 @@ void AnchorSpring::update(double d) noexcept
 	lr.from = pos1;
 	lr.to = pos2;
 
-	lr.material.color = lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.2));
+	lr.material.color = CG::Color::lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.2));
 
 	if (getGame()->isFrozen())
 		return;

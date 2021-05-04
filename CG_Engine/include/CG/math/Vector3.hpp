@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <glm/geometric.hpp>
+
 #include <cyclone/core.h>
 
 namespace CG {
@@ -123,6 +125,17 @@ struct Vector3
 	static constexpr float dot(const Vector3 &a, const Vector3 &b) noexcept
 	{
 		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
+	// right hand rule
+	static constexpr Vector3 cross(const Vector3 &a, const Vector3 &b) noexcept
+	{
+		return glm::cross(static_cast<glm::vec3>(a), static_cast<glm::vec3>(b));
+	}
+
+	static Vector3 lerp(const Vector3 &a, const Vector3 &b, double val) noexcept
+	{
+		return a + (b - a) * val;
 	}
 
 

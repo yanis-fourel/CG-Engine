@@ -7,7 +7,7 @@
 class TestBall : public CG::prefabs::Sphere
 {
 public:
-	TestBall(const CG::Vector3 &pos, float radius, const CG::material::Solid &material);
+	TestBall(const CG::Vector3 &pos, float radius = 0.5f, const CG::material::Solid &material = CG::material::Solid::Default());
 
 private:
 	void update(double deltatime);

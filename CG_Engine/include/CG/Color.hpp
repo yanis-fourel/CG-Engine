@@ -19,6 +19,16 @@ struct Color
 
 	constexpr Vector3 toVec3() const noexcept { return { r, g, b }; }
 
+	static constexpr Color lerp(const Color &a, const Color &b, double val)
+	{
+		return Color {
+			std::lerp(a.r, b.r, static_cast<value_type>(val)),
+			std::lerp(a.g, b.g, static_cast<value_type>(val)),
+			std::lerp(a.b, b.b, static_cast<value_type>(val)),
+			std::lerp(a.a, b.a, static_cast<value_type>(val)),
+		};
+	}
+
 	static constexpr Color Transparent() { return { 1, 1, 1, 0 }; }
 	static constexpr Color White() { return { 1, 1, 1, 1 }; }
 	static constexpr Color Black() { return { 0, 0, 0, 1 }; }
@@ -33,16 +43,5 @@ struct Color
 	static constexpr Color Magenta() { return { 1, 1, 0, 1 }; }
 
 };
-
-
-inline Color lerp(const Color &a, const Color &b, Color::value_type val)
-{
-	return Color {
-		std::lerp(a.r, b.r, val),
-		std::lerp(a.g, b.g, val),
-		std::lerp(a.b, b.b, val),
-		std::lerp(a.a, b.a, val),
-	};
-}
 
 }

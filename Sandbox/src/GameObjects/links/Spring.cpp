@@ -5,7 +5,7 @@
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
-#include "GameObjects/Spring.hpp"
+#include "GameObjects/links/Spring.hpp"
 
 Spring::Spring(CG::GameObject &a, CG::GameObject &b, double force, double restLength)
 	: m_obj1(a), m_obj2(b), m_force(force), m_restLength(restLength)
@@ -28,7 +28,7 @@ void Spring::update(double d) noexcept
 	lr.from = pos1;
 	lr.to = pos2;
 
-	lr.material.color = lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.2));
+	lr.material.color = CG::Color::lerp(CG::Color::Green(), CG::Color::Red(), std::min(1.0, force_1to2.magnitude() * 0.2));
 
 	if (getGame()->isFrozen())
 		return;

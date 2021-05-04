@@ -10,6 +10,7 @@ public:
 
 private:
 	void update(double d) noexcept;
+	void lateUpdate(double d) noexcept;
 
 private:
 	CG::Vector3 m_anchor;

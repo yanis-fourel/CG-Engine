@@ -1,4 +1,5 @@
-#include <CG/components/Updateable.hpp>
+#include <CG/components/CustomPhysicResolver.hpp>
+#include <CG/components/LateUpdateable.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
@@ -8,12 +9,14 @@ Rod::Rod(CG::GameObject &a, CG::GameObject &b, double length) : m_obj1(a), m_obj
 {
 	setTag<"simulation_object"_hs>();
 
-	addComponent<CG::Updateable>([this](double d) {update(d); });
+	addComponent<CG::CustomPhysicResolver>([this]() {resolve(); });
+	addComponent<CG::LateUpdateable>([this](double d) {lateUpdate(d); });
+
 	addComponent<CG::LineRenderer>().material.color = CG::Color::Grey();
 }
 
 
-void Rod::update(double ) noexcept
+void Rod::resolve() noexcept
 {
 	auto p1 = m_obj1.getComponent<CG::Transform>().position;
 	auto p2 = m_obj2.getComponent<CG::Transform>().position;
@@ -27,13 +30,13 @@ void Rod::update(double ) noexcept
 	auto p1_p2 = (p2 - p1).normalized();
 	auto movePerIm = p1_p2 * (distance - m_length) / imTotal;
 
-	if (!getGame()->isFrozen()) {
-		m_obj1.getComponent<CG::Transform>().position += movePerIm * im1;
-		m_obj2.getComponent<CG::Transform>().position += -movePerIm * im2;
-	}
+	m_obj1.getComponent<CG::Transform>().position += movePerIm * im1;
+	m_obj2.getComponent<CG::Transform>().position += -movePerIm * im2;
+}
 
+void Rod::lateUpdate(double) noexcept
+{
 	auto &lr = getComponent<CG::LineRenderer>();
 	lr.from = m_obj1.getComponent<CG::Transform>().position;
 	lr.to = m_obj2.getComponent<CG::Transform>().position;
-
 }

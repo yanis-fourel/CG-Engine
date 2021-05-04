@@ -9,7 +9,8 @@ public:
 	Rod(CG::GameObject &a, CG::GameObject &b, double length);
 
 private:
-	void update(double d) noexcept;
+	void resolve() noexcept;
+	void lateUpdate(double d) noexcept;
 
 private:
 	CG::GameObject &m_obj1;

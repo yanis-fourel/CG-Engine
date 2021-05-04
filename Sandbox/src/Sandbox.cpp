@@ -167,10 +167,8 @@ void Sandbox::handleBallDragDrop()
 
 void Sandbox::update(double deltatime)
 {
-	if (getGame()->isFrozen())
-		handleBallDragDrop();
-	else
-		m_avgTimePerFrame.add(deltatime);
+	handleBallDragDrop();
+	m_avgTimePerFrame.add(deltatime);
 
 	m_simulationTime += static_cast<float>(deltatime);
 
@@ -245,7 +243,7 @@ void Sandbox::update(double deltatime)
 		pauseAtEnabled |= ImGui::InputDouble("##pauseAtInput", &m_pauseAtSimulationTime, 0.0, 0.0, "%.2f");
 		ImGui::SameLine();
 		ImGui::Checkbox("##pauseAtInput_enabled", &pauseAtEnabled);
-		
+
 		if (pauseAtEnabled && m_simulationTime >= m_pauseAtSimulationTime) {
 			getGame()->setFrozen(true);
 			pauseAtEnabled = false;

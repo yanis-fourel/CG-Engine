@@ -1,4 +1,5 @@
-#include <CG/components/Updateable.hpp>
+#include <CG/components/CustomPhysicResolver.hpp>
+#include <CG/components/LateUpdateable.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
@@ -8,21 +9,22 @@ AnchorCable::AnchorCable(const CG::Vector3 &anchor, CG::GameObject &b, double le
 {
 	setTag<"simulation_object"_hs>();
 
-	addComponent<CG::Updateable>([this](double d) {update(d); });
+	addComponent<CG::CustomPhysicResolver>([this]() {resolve(); });
+	addComponent<CG::LateUpdateable>([this](double d) {lateUpdate(d); });
 	addComponent<CG::LineRenderer>().material.color = CG::Color::Grey();
 }
 
 
-void AnchorCable::update(double) noexcept
+void AnchorCable::resolve() noexcept
 {
-	auto p = m_obj.getComponent<CG::Transform>().position;
+	auto pos = m_obj.getComponent<CG::Transform>().position;
 
-	auto distance = CG::Vector3::distance(p, m_anchor);
+	auto distance = CG::Vector3::distance(pos, m_anchor);
 
-	auto dir = (m_anchor - p).normalized();
+	auto dir = (m_anchor - pos).normalized();
 	auto move = dir * (distance - m_length);
 
-	if (!getGame()->isFrozen() && distance > m_length) {
+	if (distance > m_length) {
 		m_obj.getComponent<CG::Transform>().position += move;
 
 		auto vel = m_obj.getComponent<CG::Rigidbody>().getVelocity();
@@ -32,6 +34,13 @@ void AnchorCable::update(double) noexcept
 			m_obj.getComponent<CG::Rigidbody>().setVelocity(vel);
 		}
 	}
+}
+
+void AnchorCable::lateUpdate(double) noexcept
+{
+	auto pos = m_obj.getComponent<CG::Transform>().position;
+
+	auto distance = CG::Vector3::distance(pos, m_anchor);
 
 	auto &lr = getComponent<CG::LineRenderer>();
 	lr.from = m_anchor;

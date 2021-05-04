@@ -10,6 +10,7 @@
 
 #include "CG/internal/components/ToDelete.hpp"
 #include "CG/components/Updateable.hpp"
+#include "CG/components/LateUpdateable.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
 
@@ -45,6 +46,7 @@ void CG::Core::tick(double deltatime)
 
 	updateGame(deltatime);
 	physic::update(*m_game, deltatime);
+	lateUpdate(deltatime);
 
 	cleanupDeadGameobjects();
 
@@ -57,11 +59,18 @@ void CG::Core::updateGame(double deltaGametime)
 
 	m_game->getWorld().view<CG::Updateable>().each([deltaGametime](const CG::Updateable &u) {
 		u.call(deltaGametime);
-	});
+		});
 }
 
 void CG::Core::cleanupDeadGameobjects()
 {
 	for (const auto &e : m_game->getWorld().view<CG::ToDelete>())
 		m_game->immediateDestroy(e);
+}
+
+void CG::Core::lateUpdate(double deltaGametime)
+{
+	m_game->getWorld().view<CG::LateUpdateable>().each([deltaGametime](const CG::LateUpdateable &u) {
+		u.call(deltaGametime);
+		});
 }

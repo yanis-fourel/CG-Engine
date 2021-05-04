@@ -9,7 +9,8 @@ public:
 	AnchorCable(const CG::Vector3 &anchor, CG::GameObject &b, double length);
 
 private:
-	void update(double d) noexcept;
+	void resolve() noexcept;
+	void lateUpdate(double d) noexcept;
 
 private:
 	CG::Vector3 m_anchor;

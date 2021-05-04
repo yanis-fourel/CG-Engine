@@ -10,7 +10,8 @@ public:
 
 private:
 	void update(double d) noexcept;
-
+	void lateUpdate(double d) noexcept;
+	
 private:
 	CG::GameObject &m_obj1;
 	CG::GameObject &m_obj2;

@@ -17,6 +17,8 @@ private:
 	void tick(double deltatime);
 
 	void updateGame(double deltatime);
+	void lateUpdate(double deltatime);
+
 	void cleanupDeadGameobjects();
 
 public:

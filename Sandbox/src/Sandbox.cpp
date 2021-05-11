@@ -4,6 +4,7 @@
 
 #include <imgui.h>
 
+#include <CG/utils/Random.hpp>
 #include <CG/Color.hpp>
 #include <CG/math/Vector3.hpp>
 #include <CG/math/Utility.hpp>
@@ -34,14 +35,9 @@
 
 #include "BridgeFactory.hpp"
 
-#define RAND_0_1 (static_cast<float>(rand()) / RAND_MAX) 
-#define RANDRANGE(x, y) ((x) + RAND_0_1 * ((y) - (x)))
-
 
 void Sandbox::start()
 {
-	srand(static_cast<unsigned int>(time(nullptr))); // TODO: Engine random utilities
-
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 0, 50, 0 }, CG::Color::White());
@@ -82,9 +78,9 @@ void Sandbox::resetSimulation()
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
 {
 	return CG::Vector3{
-		RANDRANGE(-8, 8),
-		RANDRANGE(1, 5),
-		RANDRANGE(-8, 7)
+		CG::RandomRange<float>(-8, 8),
+		CG::RandomRange<float>(1, 5),
+		CG::RandomRange<float>(-8, 7)
 	};
 }
 

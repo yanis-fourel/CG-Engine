@@ -6,6 +6,7 @@
 #include <CG/components/Rigidbody.hpp>
 #include <CG/rendering/materials/MaterialTextured.hpp>
 #include <CG/rendering/materials/MaterialSolid.hpp>
+#include <CG/utils/Random.hpp>
 
 #include "GameObjects/TestBall.hpp"
 #include "AssetDir.hpp"
@@ -34,6 +35,6 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 void TestBall::update(double deltatime)
 {
-	const auto rotVel = CG::Quaternion::fromEuler(1.5, 2, 2.7);
+	const auto rotVel = CG::Quaternion::fromEuler(CG::RandomRange(-5, 10), CG::RandomRange(-5, 10), CG::RandomRange(-5, 10));
 	getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 }

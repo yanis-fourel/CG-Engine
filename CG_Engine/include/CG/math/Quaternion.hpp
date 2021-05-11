@@ -48,9 +48,23 @@ public:
 		return _quat;
 	}
 
+	// Yaw as `y`, pitch as `x`, roll as `z`. Values in radian
+	CG::Vector3 getEulerAngles() const noexcept
+	{
+		return glm::eulerAngles(_quat);
+	}
+
 	Quaternion operator*(const Quaternion &other) const noexcept
 	{
 		return _quat * other._quat;
+	}
+
+	Quaternion operator*(double scalar) const noexcept
+	{
+		// TODO: this can probably be optimized...
+
+		auto eulers = getEulerAngles() * scalar;
+		return  Quaternion::fromEuler(eulers.y, eulers.x, eulers.z);
 	}
 
 	Vector3 operator*(const Vector3 &vec) const noexcept

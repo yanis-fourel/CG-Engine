@@ -31,7 +31,7 @@ public:
 	auto getId() const noexcept { return static_cast<id_type>(m_entity); }
 
 	void destroy() noexcept;
-	
+
 	template<typename T, typename... TArgs>
 	T &addComponent(TArgs &&... args) noexcept;
 
@@ -69,11 +69,18 @@ T &CG::GameObject::getComponent() noexcept
 template<typename T, typename... TArgs>
 T &CG::GameObject::addComponent(TArgs &&... args) noexcept
 {
+	//  We could also store instances of base classes as
+	//
+	//if constexpr (std::is_base_of<ACollider, T>())
+	//	getGame()->getWorld().emplace<AColliderGetter>([&](entt::entity e) -> ACollider * { return &getGame()->getWorld().get<T>(e); });
+	//
+	// which could be handled as override in `getComponent` to return the result of the call to previously stored lambda
+
 	return getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
 }
 
 template<typename T, typename ...TArgs>
-inline T & CG::GameObject::replaceComponent(TArgs && ...args) noexcept
+inline T &CG::GameObject::replaceComponent(TArgs && ...args) noexcept
 {
 	return getGame()->getWorld().emplace_or_replace<T>(m_entity, std::forward<TArgs>(args)...);
 }

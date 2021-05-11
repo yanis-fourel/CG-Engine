@@ -1,3 +1,5 @@
+#include <spdlog/spdlog.h>
+
 #include <CG/components/renderer/ShapeRenderer.hpp>
 #include <CG/components/Updateable.hpp>
 #include <CG/components/Transform.hpp>
@@ -18,19 +20,20 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 	getComponent<CG::ShapeRenderer>().material = std::move(mat);
 	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 
-	//addComponent<CG::Updateable>([this](double d) {update(d); });
+	addComponent<CG::Updateable>([this](double d) {update(d); });
 
 	auto &p = addComponent<CG::Rigidbody>();
 
 	p.setVelocity(CG::Vector3::Zero());
 	p.setMass(1.0f);
 	p.setDamping(0.95f);
-	p.setAcceleration(cyclone::Vector3::GRAVITY);
+	//p.setAcceleration(cyclone::Vector3::GRAVITY);
 
 	p.setRestitution(0.759); // About a tennis ball
 }
 
 void TestBall::update(double deltatime)
 {
-	// uncomment the a addComponent<CG::Updateable>() to use that
+	const auto rotVel = CG::Quaternion::fromEuler(1.5, 2, 2.7);
+	getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 }

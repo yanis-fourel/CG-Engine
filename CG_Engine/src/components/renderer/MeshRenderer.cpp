@@ -94,8 +94,9 @@ void CG::MeshRenderer::processAssimpMesh(const aiScene *scene, const aiMesh *mes
 	builder.vertices.reserve(mesh->mNumVertices);
 	builder.indices.reserve(static_cast<std::size_t>(mesh->mNumFaces) * 3);
 
-	if (mesh->mTextureCoords)
-		builder.texture = m_textures[mesh->mMaterialIndex];
+	// TODO: create materials with texture properly handled
+	//if (mesh->mTextureCoords)
+	//	builder.textureId = m_textures[mesh->mMaterialIndex];
 
 	for (unsigned i = 0; i < mesh->mNumVertices; ++i) {
 		assert(mesh->mNormals && "Currently requires normals");

@@ -69,7 +69,7 @@ void main()
 
     // branch :( at least branch predictor *should* be doing a god job
     if (bool(f_hasTexture)) 
-        surfaceColor *= texture2D(f_texture, f_texCoord);
+        surfaceColor *= vec3(texture2D(f_texture, f_texCoord));
 
 
     vec3 result = (get_ambiant() + get_diffuse() + get_specular()) * surfaceColor;

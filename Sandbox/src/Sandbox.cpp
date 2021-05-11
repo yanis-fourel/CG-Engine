@@ -104,7 +104,9 @@ void Sandbox::resetSimulation()
 		CG::material::Solid::BlueRubber(),
 	};
 
-	createBridge(*getGame());
+	//createBridge(*getGame());
+
+	instanciate<TestBall>(CG::Vector3(0, 10, 0), 8.f);
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const

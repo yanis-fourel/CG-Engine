@@ -1,4 +1,5 @@
 #include <glm/gtc/constants.hpp>
+#include <spdlog/spdlog.h>
 
 #include "CG/components/renderer/ShapeRenderer.hpp"
 #include "CG/rendering/ShaderProgram.hpp"
@@ -29,11 +30,12 @@ CG::ShapeRenderer CG::ShapeRenderer::Sphere(std::uint32_t slices, std::uint32_t 
 	std::vector<Vertex> vertices;
 	builder.vertices.reserve(nVerts);
 
-	for (unsigned i = 0; i < 3 * nVerts; i += 3) {
+	for (unsigned i = 0; i < nVerts; i++) {
 		builder.vertices.push_back(Vertex{
-			.position = CG::Vector3{v[i], v[i + 1], v[i + 2]},
-			.normal = CG::Vector3{n[i], n[i + 1], n[i + 2]},
+			.position = CG::Vector3{v[3 * i], v[3 * i + 1], v[3 * i + 2]},
+			.normal = CG::Vector3{n[3 * i], n[3 * i + 1], n[3 * i + 2]},
 			.color = CG::Color::White(),
+			.textureUV = CG::Vector2(tex[2 * i], tex[2 * i + 1])
 			});
 	}
 

@@ -4,12 +4,15 @@
 #include <CG/components/Rigidbody.hpp>
 
 #include "GameObjects/TestBall.hpp"
+#include "AssetDir.hpp"
 
 TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Solid &material) : CG::prefabs::Sphere(pos, radius)
 {
 	setTag<"simulation_object"_hs>();
 
-	getComponent<CG::ShapeRenderer>().material = std::make_unique<CG::material::Solid>(material);
+	auto mat = std::make_unique<CG::material::Solid>(material);
+	mat->setTexture(ASSET_DIR "world-map.png");
+	getComponent<CG::ShapeRenderer>().material = std::move(mat);
 	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 
 	//addComponent<CG::Updateable>([this](double d) {update(d); });

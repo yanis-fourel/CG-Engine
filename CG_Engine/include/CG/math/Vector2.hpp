@@ -6,7 +6,7 @@ namespace CG {
 
 struct Vector2
 {
-	using value_type = double;
+	using value_type = float;
 
 	value_type x, y;
 

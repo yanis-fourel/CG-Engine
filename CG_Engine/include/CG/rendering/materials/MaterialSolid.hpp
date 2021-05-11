@@ -3,7 +3,6 @@
 #include "CG/Color.hpp"
 #include "CG/rendering/Material.hpp"
 
-
 namespace CG::material {
 
 struct Solid : public AMaterial {
@@ -25,7 +24,14 @@ struct Solid : public AMaterial {
 	float shininess;
 	float opacity = 1;
 
-	// TODO:  find a way to remoev that (or =default)
+private:
+	GLuint textureID; // TODO: move texture to different material?
+	bool has_texture = false;
+public:
+
+	void setTexture(std::string_view path);
+
+	// TODO:  find a way to remove that (or =default)
 	Solid &operator=(const Solid &other)
 	{
 		ambiant = other.ambiant;
@@ -39,7 +45,8 @@ struct Solid : public AMaterial {
 
 
 	// taken from http://devernay.free.fr/cours/opengl/materials.html
-	//static constexpr MaterialSolid asd() { return MaterialSolid{}; }
+	static /* constexpr */ Solid Debug_White() { return { {1.f, 1.f, 1.f}, { 1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, 0.05f * 128 }; }
+
 	static /* constexpr */ Solid Default() { return { {0.8f, 0.8f, 0.8f}, { 0.5f, 0.5f, 0.5f}, {0.01f, 0.01f, 0.01f}, 0.05f * 128 }; }
 	static /* constexpr */ Solid Emerald() { return { {0.0215f, 0.1745f, 0.0215f}, { 0.07568f, 0.61424f, 0.07568f}, {0.633f, 0.727811f, 0.633f}, 0.6f * 128 }; }
 	static /* constexpr */ Solid Jade() { return { {0.135f, 0.2225f, 0.1575f}, {0.54f, 0.89f, 0.63f}, {0.316228f, 0.316228f, 0.316228f}, 0.1f * 128 }; }

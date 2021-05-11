@@ -76,8 +76,8 @@ void generateVertices(float *verts, float *norms, float *tex, GLuint *el, std::u
 			norms[idx] = nx; norms[idx + 1] = ny; norms[idx + 2] = nz;
 			idx += 3;
 
-			tex[tIdx] = s;
-			tex[tIdx + 1] = t;
+			tex[tIdx] = (GLfloat)(i + 1) / (slices + 2);
+			tex[tIdx + 1] = (GLfloat)(j + 1) / (stacks + 2);
 			tIdx += 2;
 		}
 	}

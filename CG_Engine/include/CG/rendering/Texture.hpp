@@ -16,7 +16,6 @@ struct Texture {
 
 	int width;
 	int height;
-	int nbrChannels; // 3 -> RBG, 4 -> RGBA
 	unsigned char *data;
 };
 

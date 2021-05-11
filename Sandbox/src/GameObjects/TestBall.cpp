@@ -12,7 +12,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 {
 	setTag<"simulation_object"_hs>();
 
-	auto mat = std::make_unique<CG::material::Textured>(ASSET_DIR "basketball.png");
+	auto mat = std::make_unique<CG::material::Textured>(ASSET_DIR "world-map.jpg");
 	//auto mat = std::make_unique<CG::material::Solid>(CG::material::Solid::Gold());
 
 	getComponent<CG::ShapeRenderer>().material = std::move(mat);

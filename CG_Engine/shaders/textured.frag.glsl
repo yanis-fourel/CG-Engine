@@ -62,6 +62,5 @@ vec3 get_specular()
 void main()
 {
     vec4 surfaceColor = vec4(f_color, 1) * texture2D(f_texture, f_texCoord);
-
     out_color = vec4(get_ambiant() + get_diffuse() + get_specular(), 1) * surfaceColor;
 }

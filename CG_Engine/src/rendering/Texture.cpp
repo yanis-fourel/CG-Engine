@@ -13,8 +13,6 @@ CG::Texture::Texture(const std::string &path)
 	if (!data)
 		throw std::runtime_error(std::string("Could not load texture from '") + path + "'");
 
-	auto a = 2 <=> 4;
-
 	spdlog::info("Loaded texture '{}', number of channels : '{}'", path, nbrChannels);
 }
 

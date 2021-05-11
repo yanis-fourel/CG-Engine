@@ -12,18 +12,13 @@ void CG::material::Textured::uploadUniforms() const noexcept
 	shader.uploadUniform1f("u_material.shininess", shininess);
 	shader.uploadUniform1f("u_material.opacity", opacity);
 
-	shader.uploadUniform1b("u_hasTexture", has_texture);
-
-	if (has_texture)
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 // TODO: proper assets cache
 void CG::material::Textured::setTexture(std::string_view path)
 {
 	auto t = Texture(path.data());
-
-	has_texture = true;
 
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);

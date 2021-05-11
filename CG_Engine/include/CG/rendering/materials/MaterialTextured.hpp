@@ -42,7 +42,6 @@ struct Textured : public AMaterial {
 
 private:
 	GLuint textureID; // TODO: move texture to different material?
-	bool has_texture = false;
 public:
 	void setTexture(std::string_view path);
 
@@ -55,7 +54,6 @@ public:
 		shininess = other.shininess;
 		opacity = other.opacity;
 		textureID = other.textureID;
-		has_texture = other.has_texture;
 		return *this;
 	}
 

@@ -36,7 +36,7 @@ add_library(CG_Engine STATIC
     "src/Game.cpp"
     "src/InputManager.cpp"
     "src/rendering/ShaderManager.cpp"
-    "src/internal/Texture.cpp"
+    "src/rendering/Texture.cpp"
     "src/internal/GlError.cpp"
     "src/components/renderer/ShapeRenderer.cpp"
     "src/components/renderer/Cube.cpp"

@@ -3,6 +3,7 @@
 in vec3 f_normal;
 in vec3 f_pos;
 in vec3 f_color;
+in vec2 f_texCoord;
 
 uniform vec3 u_eyePos;
 
@@ -29,6 +30,7 @@ struct PointLight {
 uniform PointLight u_pointLight;
 uniform vec3 u_ambiantLightColor;
 
+uniform sampler2D f_texture;
 
 out vec4 out_color;
 
@@ -59,6 +61,7 @@ vec3 get_specular()
 
 void main()
 {
-    vec3 result = (get_ambiant() + get_diffuse() + get_specular()) * f_color;
-    out_color = vec4(result, u_material.opacity);
+    vec4 surfaceColor = vec4(f_color, 1) * texture2D(f_texture, f_texCoord);
+
+    out_color = vec4(get_ambiant() + get_diffuse() + get_specular(), 1) * surfaceColor;
 }

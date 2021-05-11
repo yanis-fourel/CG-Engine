@@ -9,8 +9,9 @@
 
 #include "CG/components/renderer/_all.hpp"
 
-#include "CG/rendering/materials/MaterialSolid.hpp"
 #include "CG/rendering/materials/Checkerboard.hpp"
+#include "CG/rendering/materials/MaterialSolid.hpp"
+#include "CG/rendering/materials/MaterialTextured.hpp"
 #include "CG/rendering/GLLine.hpp"
 
 // TODO: support other renderer transparency + performance optimisation
@@ -73,6 +74,7 @@ void CG::Renderer::detail::uploadGlobalUniforms(const AGame &game) noexcept
 	std::vector<const ShaderProgram *> allShaders = {
 		&getMaterialShader<::CG::material::Solid>(),
 		&getMaterialShader<::CG::material::Checkerboard>(),
+		&getMaterialShader<::CG::material::Textured>(),
 	};
 
 	// TODO: Support multiple lights and multiple light types

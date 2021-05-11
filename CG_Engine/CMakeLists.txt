@@ -47,9 +47,10 @@ add_library(CG_Engine STATIC
     "src/rendering/GLTrianglesBuilder.cpp"
     "src/rendering/RenderSystem.cpp"
     "src/rendering/GLLine.cpp"
-    "src/rendering/materials/MaterialSolid.cpp"
     "src/rendering/materials/LineMaterial.cpp"
     "src/rendering/materials/Checkerboard.cpp"
+    "src/rendering/materials/MaterialSolid.cpp"
+    "src/rendering/materials/MaterialTextured.cpp"
     "src/prefabs/PointLight.cpp"
     "src/prefabs/Sphere.cpp" 
     "src/prefabs/Plane.cpp"
@@ -58,7 +59,7 @@ add_library(CG_Engine STATIC
     "src/math/Ray.cpp"
     "src/physic/Raycast.cpp"
     "src/physic/PhysicSystem.cpp"
- "include/CG/utils/glmMatrixFormat.hpp")
+)
 
 target_include_directories(CG_Engine
 PUBLIC   

@@ -74,36 +74,6 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	std::vector<CG::material::Solid> materials = {
-		CG::material::Solid::Default(),
-		CG::material::Solid::Emerald(),
-		CG::material::Solid::Jade(),
-		CG::material::Solid::Obsidian(),
-		CG::material::Solid::Pearl(),
-		CG::material::Solid::Ruby(),
-		CG::material::Solid::Turquoise(),
-		CG::material::Solid::Brass(),
-		CG::material::Solid::Bronze(),
-		CG::material::Solid::Chrome(),
-		CG::material::Solid::Copper(),
-		CG::material::Solid::Gold(),
-		CG::material::Solid::Silver(),
-		CG::material::Solid::BlackPlastic(),
-		CG::material::Solid::WhitePlastic(),
-		CG::material::Solid::CyanPlastic(),
-		CG::material::Solid::GreenPlastic(),
-		CG::material::Solid::RedPlastic(),
-		CG::material::Solid::YellowPlastic(),
-		CG::material::Solid::BluePlastic(),
-		CG::material::Solid::BlackRubber(),
-		CG::material::Solid::CyanRubber(),
-		CG::material::Solid::GreenRubber(),
-		CG::material::Solid::RedRubber(),
-		CG::material::Solid::WhiteRubber(),
-		CG::material::Solid::YellowRubber(),
-		CG::material::Solid::BlueRubber(),
-	};
-
 	//createBridge(*getGame());
 
 	instanciate<TestBall>(CG::Vector3(0, 10, 0), 8.f);

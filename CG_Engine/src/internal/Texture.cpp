@@ -1,4 +1,5 @@
 #include <spdlog/spdlog.h>
+#include <stdexcept>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -8,6 +9,11 @@
 CG::Texture::Texture(const std::string &path)
 {
 	data = ::stbi_load(path.c_str(), &width, &height, &nbrChannels, 0); 
+
+	if (!data)
+		throw std::runtime_error(std::string("Could not load texture from '") + path + "'");
+
+	auto a = 2 <=> 4;
 
 	spdlog::info("Loaded texture '{}', number of channels : '{}'", path, nbrChannels);
 }

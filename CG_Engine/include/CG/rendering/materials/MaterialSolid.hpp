@@ -24,13 +24,6 @@ struct Solid : public AMaterial {
 	float shininess;
 	float opacity = 1;
 
-private:
-	GLuint textureID; // TODO: move texture to different material?
-	bool has_texture = false;
-public:
-
-	void setTexture(std::string_view path);
-
 	// TODO:  find a way to remove that (or =default)
 	Solid &operator=(const Solid &other)
 	{

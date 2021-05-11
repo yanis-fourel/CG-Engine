@@ -2,16 +2,19 @@
 #include <CG/components/Updateable.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
+#include <CG/rendering/materials/MaterialTextured.hpp>
+#include <CG/rendering/materials/MaterialSolid.hpp>
 
 #include "GameObjects/TestBall.hpp"
 #include "AssetDir.hpp"
 
-TestBall::TestBall(const CG::Vector3 &pos, float radius, const CG::material::Solid &material) : CG::prefabs::Sphere(pos, radius)
+TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(pos, radius)
 {
 	setTag<"simulation_object"_hs>();
 
-	auto mat = std::make_unique<CG::material::Solid>(material);
-	mat->setTexture(ASSET_DIR "world-map.png");
+	//auto mat = std::make_unique<CG::material::Textured>(ASSET_DIR "world-map.png");
+	auto mat = std::make_unique<CG::material::Solid>(CG::material::Solid::Gold());
+
 	getComponent<CG::ShapeRenderer>().material = std::move(mat);
 	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 

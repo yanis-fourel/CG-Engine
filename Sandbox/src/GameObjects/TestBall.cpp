@@ -25,7 +25,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 	auto &p = addComponent<CG::Rigidbody>();
 
-	p.setVelocity(CG::Vector3::Zero());
+	p.setVelocity(CG::Vector3::Zero());	
 	p.setMass(1.0f);
 	p.setDamping(0.95f);
 	//p.setAcceleration(cyclone::Vector3::GRAVITY);
@@ -35,6 +35,6 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 void TestBall::update(double deltatime)
 {
-	const auto rotVel = CG::Quaternion::fromEuler(CG::RandomRange(-5, 10), CG::RandomRange(-5, 10), CG::RandomRange(-5, 10));
+	const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
 	getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 }

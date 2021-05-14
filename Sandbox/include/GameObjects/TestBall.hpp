@@ -10,4 +10,5 @@ public:
 
 private:
 	void update(double deltatime);
+	void onCollide(CG::GameObject &obj);
 };

@@ -12,15 +12,16 @@
 
 namespace CG::physic {
 
+// Returns whether or not object did collide
 template <typename Col1, typename Col2>
-void localConstraintSolver(
+bool localConstraintSolver(
 	CG::Transform &t1, CG::Rigidbody &rb1, const Col1 &col1,
 	CG::Transform &t2, CG::Rigidbody &rb2, const Col2 &col2)
 {
 	auto collision = checkCollision(t1, col1, t2, col2);
 
 	if (!collision)
-		return;
+		return false;
 
 	auto imass1 = rb1.getInvertMass();
 	auto imass2 = rb2.getInvertMass();
@@ -48,6 +49,8 @@ void localConstraintSolver(
 		rb1.addImpulse(impulsePerIMass * imass1);
 		rb2.addImpulse(-impulsePerIMass * imass2);
 	}
+
+	return true;
 }
 
 }

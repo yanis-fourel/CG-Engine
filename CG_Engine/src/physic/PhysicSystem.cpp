@@ -37,11 +37,13 @@ void CG::physic::detail::resolveConstraints(const AGame &game) noexcept
 {
 	constexpr int kIteration = 50;
 
-	for (int i = 0; i < kIteration; i++) {
-		CG::physic::globalConstraintSolver<SphereCollider, PlaneCollider>(game.getWorld());
+	CG::physic::globalConstraintSolver<true, SphereCollider, PlaneCollider>(game.getWorld());
 
+	for (int i = 0; i < kIteration - 1; i++) {
 		game.getWorld().view<CG::CustomPhysicResolver>().each([](const CG::CustomPhysicResolver &resolver) {
 			resolver.call();
-			});
+		});
+
+		CG::physic::globalConstraintSolver<false, SphereCollider, PlaneCollider>(game.getWorld());
 	}
 }

@@ -7,13 +7,13 @@ namespace CG {
 
 // Callback will be called right before rendering
 class OnCollision {
-	using callback_t = std::function<void(AGameObject &)>;
+	using callback_t = std::function<void(GameObject &)>;
 
 public:
 	explicit OnCollision(callback_t c) noexcept : m_callback(std::move(c))
 	{}
 
-	inline void call(AGameObject &obj) const { m_callback(obj); }
+	inline void call(GameObject &obj) const { m_callback(obj); }
 private:
 	callback_t m_callback;
 };

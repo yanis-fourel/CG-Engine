@@ -23,6 +23,9 @@ public:
 	template<typename T>
 	T &getComponent() noexcept;
 
+	template<typename T>
+	T *tryGetComponent() noexcept;
+
 	[[nodiscard]] AGame *getGame() const noexcept;
 
 	template <std::uint32_t Tag>
@@ -64,6 +67,12 @@ template<typename T>
 T &CG::GameObject::getComponent() noexcept
 {
 	return getGame()->getWorld().get<T>(m_entity);
+}
+
+template<typename T>
+T *CG::GameObject::tryGetComponent() noexcept
+{
+	return getGame()->getWorld().try_get<T>(m_entity);
 }
 
 template<typename T, typename... TArgs>

@@ -13,7 +13,7 @@ CG::Texture::Texture(const std::string &path)
 	if (!data)
 		throw std::runtime_error(std::string("Could not load texture from '") + path + "' : " + stbi_failure_reason());
 
-	spdlog::info("Loaded texture '{}'");
+	spdlog::info("Loaded texture '{}'", path);
 }
 
 CG::Texture::~Texture()

@@ -5,11 +5,11 @@
 namespace CG {
 
 // Callback will be called right before rendering
-class LateUpdateable {
+class OnLateUpdate {
 	using callback_t = std::function<void(double)>;
 
 public:
-	explicit LateUpdateable(callback_t c) noexcept : m_callback(std::move(c))
+	explicit OnLateUpdate(callback_t c) noexcept : m_callback(std::move(c))
 	{}
 
 	inline void call(double d) const { m_callback(d); }

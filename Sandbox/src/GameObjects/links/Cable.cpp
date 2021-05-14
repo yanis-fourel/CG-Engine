@@ -1,5 +1,5 @@
 #include <CG/components/CustomPhysicResolver.hpp>
-#include <CG/components/LateUpdateable.hpp>
+#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
@@ -10,7 +10,7 @@ Cable::Cable(CG::GameObject &a, CG::GameObject &b, double length) : m_obj1(a), m
 	setTag<"simulation_object"_hs>();
 
 	addComponent<CG::CustomPhysicResolver>([this]() {resolve(); });
-	addComponent<CG::LateUpdateable>([this](double d) {lateUpdate(d); });
+	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
 
 	addComponent<CG::LineRenderer>().material.color = CG::Color::Grey();
 }

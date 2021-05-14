@@ -1,12 +1,12 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/Updateable.hpp>
+#include <CG/components/OnUpdate.hpp>
 
 #include "GameObjects/FreeCameraManager.hpp"
 
 FreeCameraManager::FreeCameraManager()
 {
-	addComponent<CG::Updateable>([this](double d) { update(d); });
+	addComponent<CG::OnUpdate>([this](double d) { update(d); });
 }
 
 void FreeCameraManager::start()

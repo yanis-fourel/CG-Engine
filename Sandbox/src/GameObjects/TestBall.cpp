@@ -1,7 +1,7 @@
 #include <spdlog/spdlog.h>
 
 #include <CG/components/renderer/ShapeRenderer.hpp>
-#include <CG/components/Updateable.hpp>
+#include <CG/components/OnUpdate.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/rendering/materials/MaterialTextured.hpp>
@@ -21,7 +21,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 	getComponent<CG::ShapeRenderer>().material = std::move(mat);
 	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 
-	addComponent<CG::Updateable>([this](double d) {update(d); });
+	addComponent<CG::OnUpdate>([this](double d) {update(d); });
 
 	auto &p = addComponent<CG::Rigidbody>();
 

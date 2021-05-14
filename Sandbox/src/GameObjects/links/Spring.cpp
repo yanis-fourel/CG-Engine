@@ -1,7 +1,7 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/Updateable.hpp>
-#include <CG/components/LateUpdateable.hpp>
+#include <CG/components/OnUpdate.hpp>
+#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
@@ -13,8 +13,8 @@ Spring::Spring(CG::GameObject &a, CG::GameObject &b, double force, double restLe
 {
 	setTag<"simulation_object"_hs>();
 
-	addComponent<CG::Updateable>([this](double d) { update(d); });
-	addComponent<CG::LateUpdateable>([this](double d) {lateUpdate(d); });
+	addComponent<CG::OnUpdate>([this](double d) { update(d); });
+	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
 
 	addComponent<CG::LineRenderer>();
 }

@@ -72,7 +72,8 @@ void Sandbox::resetSimulation()
 
 	//createBridge(*getGame());
 
-	instanciate<TestBall>(CG::Vector3(0, 10, 0), 8.f);
+	for (int i = 0; i < 50; i++)
+		instanciate<TestBall>(getRandomSpawnPoint(), 0.5f);
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const
@@ -136,12 +137,14 @@ void Sandbox::handleBallDragDrop()
 void Sandbox::update(double deltatime)
 {
 	handleBallDragDrop();
-	m_avgTimePerFrame.add(deltatime);
-
-	m_simulationTime += static_cast<float>(deltatime);
 
 	if (getInputManager().isKeyDown(GLFW_KEY_ESCAPE))
 		getWindow().close();
+
+	if (deltatime > 0) {
+		m_avgTimePerFrame.add(deltatime);
+		m_simulationTime += static_cast<float>(deltatime);
+	}
 
 	//if (getInputManager().isMouseCaptured())
 	//	return;

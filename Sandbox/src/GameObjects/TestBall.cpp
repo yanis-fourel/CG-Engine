@@ -37,7 +37,7 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 void TestBall::update(double deltatime)
 {
-	const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
+	//const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
 	//getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 }
 

@@ -1,7 +1,5 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/OnUpdate.hpp>
-#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
@@ -12,13 +10,11 @@ AnchorSpring::AnchorSpring(const CG::Vector3 &anchor, CG::GameObject &b, double 
 	: m_anchor(anchor), m_obj(b), m_force(force), m_restLength(restLength)
 {
 	addComponent<CG::LineRenderer>();
-	addComponent<CG::OnUpdate>([this](double d) { update(d); });
-	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
 
 	setTag<"simulation_object"_hs>();
 }
 
-void AnchorSpring::update(double d) noexcept
+void AnchorSpring::update(double d)
 {
 	auto pos1 = m_obj.getComponent<CG::Transform>().position;
 	auto pos2 = m_anchor;
@@ -34,7 +30,7 @@ void AnchorSpring::update(double d) noexcept
 }
 
 
-void AnchorSpring::lateUpdate(double) noexcept
+void AnchorSpring::lateUpdate(double)
 {
 	auto pos1 = m_obj.getComponent<CG::Transform>().position;
 	auto pos2 = m_anchor;

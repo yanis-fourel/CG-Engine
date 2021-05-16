@@ -1,7 +1,5 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/OnUpdate.hpp>
-#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
@@ -13,13 +11,10 @@ Spring::Spring(CG::GameObject &a, CG::GameObject &b, double force, double restLe
 {
 	setTag<"simulation_object"_hs>();
 
-	addComponent<CG::OnUpdate>([this](double d) { update(d); });
-	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
-
 	addComponent<CG::LineRenderer>();
 }
 
-void Spring::update(double d) noexcept
+void Spring::update(double d)
 {
 	auto pos1 = m_obj1.getComponent<CG::Transform>().position;
 	auto pos2 = m_obj2.getComponent<CG::Transform>().position;
@@ -31,13 +26,11 @@ void Spring::update(double d) noexcept
 	if (getGame()->isFrozen())
 		return;
 
-	//spdlog::info("Distance : {}, force : {} aka {}, {}, {}", currentLength, force_1to2.magnitude(), force_1to2.x, force_1to2.y, force_1to2.z);
-
 	m_obj1.getComponent<CG::Rigidbody>().addForce(force_1to2);
 	m_obj2.getComponent<CG::Rigidbody>().addForce(-force_1to2);
 }
 
-void Spring::lateUpdate(double d) noexcept
+void Spring::lateUpdate(double d)
 {
 	auto pos1 = m_obj1.getComponent<CG::Transform>().position;
 	auto pos2 = m_obj2.getComponent<CG::Transform>().position;

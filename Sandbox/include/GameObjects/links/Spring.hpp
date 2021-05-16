@@ -9,8 +9,8 @@ public:
 	Spring(CG::GameObject &a, CG::GameObject &b, double force, double restLength);
 
 private:
-	void update(double d) noexcept;
-	void lateUpdate(double d) noexcept;
+	void update(double d) override;
+	void lateUpdate(double d) override;
 	
 private:
 	CG::GameObject &m_obj1;

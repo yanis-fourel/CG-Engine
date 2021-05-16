@@ -1,4 +1,6 @@
 #include <stdexcept>
+#include <algorithm>
+#include <ranges>
 
 #include "CG/Game.hpp"
 #include "CG/components/collider/SphereCollider.hpp"
@@ -13,6 +15,12 @@ CG::AGame::AGame(const CG::Vector2 windowSize, const std::string &windowName) : 
 auto CG::AGame::getObject(entt::entity e) -> GameObject &
 {
 	return *m_objects.at(e);
+}
+
+void CG::AGame::forEachObj(std::function<void(GameObject&obj)> func)
+{
+	for (auto &[_, obj] : m_objects)
+		func(*obj);
 }
 
 void CG::AGame::clearScene()

@@ -1,5 +1,4 @@
 #include <CG/components/CustomPhysicResolver.hpp>
-#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
@@ -10,7 +9,6 @@ Rod::Rod(CG::GameObject &a, CG::GameObject &b, double length) : m_obj1(a), m_obj
 	setTag<"simulation_object"_hs>();
 
 	addComponent<CG::CustomPhysicResolver>([this]() {resolve(); });
-	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
 
 	addComponent<CG::LineRenderer>().material.color = CG::Color::Grey();
 }
@@ -34,7 +32,7 @@ void Rod::resolve() noexcept
 	m_obj2.getComponent<CG::Transform>().position += -movePerIm * im2;
 }
 
-void Rod::lateUpdate(double) noexcept
+void Rod::lateUpdate(double) 
 {
 	auto &lr = getComponent<CG::LineRenderer>();
 	lr.from = m_obj1.getComponent<CG::Transform>().position;

@@ -11,7 +11,7 @@ public:
 
 	void setDensity(float val) noexcept { m_density = val; }
 private:
-	void update(double d) noexcept;
+	void update(double d) override;
 
 private:
 	CG::GameObject &m_obj;

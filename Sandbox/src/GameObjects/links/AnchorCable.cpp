@@ -1,5 +1,4 @@
 #include <CG/components/CustomPhysicResolver.hpp>
-#include <CG/components/OnLateUpdate.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
@@ -10,7 +9,6 @@ AnchorCable::AnchorCable(const CG::Vector3 &anchor, CG::GameObject &b, double le
 	setTag<"simulation_object"_hs>();
 
 	addComponent<CG::CustomPhysicResolver>([this]() {resolve(); });
-	addComponent<CG::OnLateUpdate>([this](double d) {lateUpdate(d); });
 	addComponent<CG::LineRenderer>().material.color = CG::Color::Grey();
 }
 
@@ -36,7 +34,7 @@ void AnchorCable::resolve() noexcept
 	}
 }
 
-void AnchorCable::lateUpdate(double) noexcept
+void AnchorCable::lateUpdate(double)
 {
 	auto pos = m_obj.getComponent<CG::Transform>().position;
 

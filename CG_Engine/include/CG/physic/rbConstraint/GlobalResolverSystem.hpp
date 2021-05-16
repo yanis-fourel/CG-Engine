@@ -8,7 +8,6 @@
 #include <entt/entt.hpp>
 
 #include "LocalResolver.hpp"
-#include "CG/components/OnCollision.hpp"
 
 namespace CG::physic {
 
@@ -30,13 +29,8 @@ namespace detail {
 
 void callOnCollideEvent(GameObject &obj1, GameObject &obj2)
 {
-	auto ev1 = obj1.tryGetComponent<OnCollision>();
-	auto ev2 = obj2.tryGetComponent<OnCollision>();
-
-	if (ev1)
-		ev1->call(obj2);
-	if (ev2)
-		ev2->call(obj1);
+	obj1.onCollide(obj2);
+	obj2.onCollide(obj1);
 }
 
 template <bool callEvent, typename Col1, typename Col2>

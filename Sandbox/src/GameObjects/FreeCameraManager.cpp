@@ -1,18 +1,15 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/OnUpdate.hpp>
-
 #include "GameObjects/FreeCameraManager.hpp"
 
 FreeCameraManager::FreeCameraManager()
 {
-	addComponent<CG::OnUpdate>([this](double d) { update(d); });
 }
 
 void FreeCameraManager::start()
 {
 	// arbitrary start position
-	GameCamera->setPosition(glm::vec3(5, 5, 5));
+	GameCamera->setPosition(glm::vec3(10, 8, 10));
 	GameCamera->setFacingDirection(glm::vec3(-5, -4, -5));
 	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
 	GameCamera->setFov(103);

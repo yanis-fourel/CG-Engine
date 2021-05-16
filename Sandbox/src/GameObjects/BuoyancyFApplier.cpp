@@ -3,7 +3,6 @@
 #include <spdlog/spdlog.h>
 
 #include <CG/math/Vector3.hpp>
-#include <CG/components/OnUpdate.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 
@@ -13,10 +12,9 @@ BuoyancyFApplier::BuoyancyFApplier(CG::GameObject &obj, float seaLevel, float se
 	: m_obj(obj), m_seaLevel(seaLevel), m_density(seaDensity)
 {
 	setTag<"simulation_object"_hs>();
-	addComponent<CG::OnUpdate>([this](double d) {this->update(d); });
 }
 
-void BuoyancyFApplier::update(double d) noexcept
+void BuoyancyFApplier::update(double d)
 {
 	if (getGame()->isFrozen())
 		return;

@@ -9,6 +9,6 @@ public:
 	TestBall(const CG::Vector3 &pos, float radius = 0.5f);
 
 private:
-	void update(double deltatime);
-	void onCollide(CG::GameObject &obj);
+	void update(double deltatime) override;
+	void onCollide(CG::GameObject &obj) override;
 };

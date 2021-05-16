@@ -20,6 +20,14 @@ public:
 	// Called once upon gameobject creation
 	virtual void start() {};
 
+	virtual void update(double deltatime) {};
+
+	// Last bit of logic before rendering
+	virtual void lateUpdate(double deltatime) {};
+
+	virtual void onCollide(GameObject &other) {};
+
+
 	template<typename T>
 	T &getComponent() noexcept;
 

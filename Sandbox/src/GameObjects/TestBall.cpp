@@ -1,8 +1,6 @@
 #include <spdlog/spdlog.h>
 
 #include <CG/components/renderer/ShapeRenderer.hpp>
-#include <CG/components/OnUpdate.hpp>
-#include <CG/components/OnCollision.hpp>
 #include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/rendering/materials/MaterialTextured.hpp>
@@ -22,9 +20,6 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 	getComponent<CG::ShapeRenderer>().material = std::move(mat);
 	//getComponent<CG::Transform>().rotation = CG::Quaternion::fromEuler(0.0, 0.0, 0.2);
 
-	addComponent<CG::OnUpdate>([this](double d) {update(d); });
-	addComponent<CG::OnCollision>([this](CG::GameObject &obj) {onCollide(obj); });
-
 	auto &p = addComponent<CG::Rigidbody>();
 
 	p.setVelocity(CG::Vector3::Zero());	
@@ -37,8 +32,8 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 void TestBall::update(double deltatime)
 {
-	//const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
-	//getComponent<CG::Transform>().rotation *= rotVel * deltatime;
+	const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
+	getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 }
 
 void TestBall::onCollide(CG::GameObject & obj)

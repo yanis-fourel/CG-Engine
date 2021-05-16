@@ -9,8 +9,6 @@
 #include "CG/Window.hpp"
 
 #include "CG/internal/components/ToDelete.hpp"
-#include "CG/components/OnUpdate.hpp"
-#include "CG/components/OnLateUpdate.hpp"
 #include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
 
@@ -57,9 +55,9 @@ void CG::Core::updateGame(double deltaGametime)
 {
 	m_game->update(deltaGametime);
 
-	m_game->getWorld().view<CG::OnUpdate>().each([deltaGametime](const CG::OnUpdate &u) {
-		u.call(deltaGametime);
-		});
+	m_game->forEachObj([&](GameObject &obj) {
+		obj.update(deltaGametime);
+	});
 }
 
 void CG::Core::cleanupDeadGameobjects()
@@ -70,7 +68,7 @@ void CG::Core::cleanupDeadGameobjects()
 
 void CG::Core::lateUpdate(double deltaGametime)
 {
-	m_game->getWorld().view<CG::OnLateUpdate>().each([deltaGametime](const CG::OnLateUpdate &u) {
-		u.call(deltaGametime);
-		});
+	m_game->forEachObj([&](GameObject &obj) {
+		obj.lateUpdate(deltaGametime);
+	});
 }

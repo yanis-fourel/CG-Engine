@@ -10,7 +10,7 @@ public:
 
 private:
 	void resolve() noexcept;
-	void lateUpdate(double d) noexcept;
+	void lateUpdate(double d) override;
 
 private:
 	CG::Vector3 m_anchor;

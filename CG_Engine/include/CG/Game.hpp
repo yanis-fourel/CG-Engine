@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 #include <functional>
 #include <cstdint>
+#include <ranges>
 
 #include "CG/Window.hpp"
 #include "CG/GameObject.hpp"
@@ -40,6 +41,7 @@ public:
 	void getObjectsOfTag(std::function<void(GameObject &)> func) noexcept;
 
 	[[nodiscard]] auto getObject(entt::entity e)->GameObject &;
+	void forEachObj(std::function<void(GameObject &obj)> func);
 
 	// Destroys every single object of the scene
 	void clearScene();

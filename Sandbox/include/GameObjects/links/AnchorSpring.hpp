@@ -9,8 +9,8 @@ public:
 	AnchorSpring(const CG::Vector3 &anchor, CG::GameObject &b, double force, double restLength);
 
 private:
-	void update(double d) noexcept;
-	void lateUpdate(double d) noexcept;
+	void update(double d) override;
+	void lateUpdate(double d) override;
 
 private:
 	CG::Vector3 m_anchor;

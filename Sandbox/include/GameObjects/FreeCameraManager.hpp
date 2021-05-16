@@ -8,7 +8,7 @@ public:
 	FreeCameraManager();
 
 	void start() override;
-	void update(double deltatime);
+	void update(double deltatime) override;
 
 private:
 	double m_speed = 10;

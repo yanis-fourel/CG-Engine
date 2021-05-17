@@ -27,9 +27,12 @@ void CG::physic::detail::integrateAll(const AGame &game, double deltatime) noexc
 
 	view.each([&](Transform &transform, Rigidbody &rigidbody) {
 		rigidbody.setPosition(transform.position);
+		rigidbody.setRotation(transform.rotation);
+
 		rigidbody.integrate(deltatime);
 
 		transform.position = rigidbody.getPosition();
+		transform.rotation = rigidbody.getRotation();
 		});
 }
 

@@ -24,16 +24,19 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 	p.setVelocity(CG::Vector3::Zero());	
 	p.setMass(1.0f);
-	p.setDamping(0.95f);
-	p.setAcceleration(cyclone::Vector3::GRAVITY);
+	p.setLinearDamping(0.95f);
+	p.setAngularDamping(0.95f);
+	//p.setAcceleration(cyclone::Vector3::GRAVITY);
+	p.setAngularVelocity(CG::Vector3(1, 2, 3));
 
 	p.setRestitution(0.759); // About a tennis ball
 }
 
 void TestBall::update(double deltatime)
 {
-	const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
-	getComponent<CG::Transform>().rotation *= rotVel * deltatime;
+	//const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
+	//getComponent<CG::Transform>().rotation *= rotVel * deltatime;
+
 }
 
 void TestBall::onCollide(CG::GameObject & obj)

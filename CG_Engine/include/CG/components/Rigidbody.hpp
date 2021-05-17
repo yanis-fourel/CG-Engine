@@ -1,8 +1,9 @@
 #pragma once
 
-#include <cyclone/particle.h>
+#include <cyclone/body.h>
 
 #include "CG/math/Vector3.hpp"
+#include "CG/math/Quaternion.hpp"
 
 namespace CG {
 
@@ -18,35 +19,49 @@ public:
 		static_cast<CG::Vector3::value_type>(0)
 	};
 
+	public:
+		Rigidbody()
+		{
+			m_body.setAwake(true);
+		}
 public:
-	void addForce(const CG::Vector3 &val) noexcept { m_particle.addForce(val); }
+	void addForce(const CG::Vector3 &val) noexcept { m_body.addForce(val); }
 	void addImpulse(const CG::Vector3 &val) noexcept;
 
-	void setVelocity(const CG::Vector3 &val) noexcept { m_particle.setVelocity(val); }
-	void setAcceleration(const CG::Vector3 &val) noexcept { m_particle.setAcceleration(val); }
+	void setVelocity(const CG::Vector3 &val) noexcept { m_body.setVelocity(val); }
+	void setAcceleration(const CG::Vector3 &val) noexcept { m_body.setAcceleration(val); }
 
-	void setMass(double val) noexcept { m_particle.setMass(val); }
-	void setDamping(double val) noexcept { m_particle.setDamping(val); }
+	void setAngularVelocity(const CG::Vector3 &val) noexcept { m_body.setRotation(val); }
+
+	void setMass(double val) noexcept { m_body.setMass(val); }
+	void setLinearDamping(double val) noexcept { m_body.setLinearDamping(val); }
+	void setAngularDamping(double val) noexcept { m_body.setAngularDamping(val); }
 	void setRestitution(double val) noexcept { m_restitution = val; }
 
 
-	[[nodiscard]] auto getVelocity() const noexcept -> CG::Vector3 { return m_particle.getVelocity(); }
-	[[nodiscard]] auto getAcceleration() const noexcept -> CG::Vector3 { return m_particle.getAcceleration(); }
+	[[nodiscard]] auto getVelocity() const noexcept -> CG::Vector3 { return m_body.getVelocity(); }
+	[[nodiscard]] auto getAcceleration() const noexcept -> CG::Vector3 { return m_body.getAcceleration(); }
 
-	[[nodiscard]] auto getMass() const noexcept -> double { return m_particle.getMass(); }
-	[[nodiscard]] auto getInvertMass() const noexcept -> double { return m_particle.getInverseMass(); }
-	[[nodiscard]] auto getDamping() const noexcept -> double { return m_particle.getDamping(); }
+	[[nodiscard]] auto getAngularVelocity() const noexcept -> CG::Vector3 { return m_body.getRotation(); }
+
+
+	[[nodiscard]] auto getMass() const noexcept -> double { return m_body.getMass(); }
+	[[nodiscard]] auto getInvertMass() const noexcept -> double { return m_body.getInverseMass(); }
+	[[nodiscard]] auto getLinearDamping() const noexcept -> double { return m_body.getLinearDamping(); }
+	[[nodiscard]] auto getAngularDamping() const noexcept -> double { return m_body.getAngularDamping(); }
 	[[nodiscard]] auto getRestitution() const noexcept -> double { return m_restitution; }
 
 CG_INTERNAL_METHOD:
-	void setPosition(const CG::Vector3 &val) noexcept { m_particle.setPosition(val); }
+	void setPosition(const CG::Vector3 &val) noexcept { m_body.setPosition(val); }
+	void setRotation(const CG::Quaternion &val) noexcept { m_body.setOrientation(val); }
 
-	[[nodiscard]] auto getPosition() const noexcept -> CG::Vector3 { return m_particle.getPosition(); }
+	[[nodiscard]] auto getPosition() const noexcept -> CG::Vector3 { return m_body.getPosition(); }
+	[[nodiscard]] auto getRotation() const noexcept -> CG::Quaternion { return m_body.getOrientation(); }
 
-	void integrate(double deltatime) noexcept { m_particle.integrate(deltatime); }
+	void integrate(double deltatime) noexcept { m_body.integrate(deltatime); }
 
 private:
-	cyclone::Particle m_particle;
+	cyclone::RigidBody m_body;
 	
 	double m_restitution = 1;
 };

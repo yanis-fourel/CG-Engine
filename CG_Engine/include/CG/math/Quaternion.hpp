@@ -4,6 +4,7 @@
 
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <cyclone/core.h>
 
 #include "Vector3.hpp"
 
@@ -14,6 +15,8 @@ class Quaternion
 public:
 	Quaternion() = default;
 	Quaternion(const glm::quat &quat) : _quat(quat)
+	{}
+	Quaternion(const cyclone::Quaternion &quat) : _quat(quat.r, quat.i, quat.j, quat.k)
 	{}
 
 	static Quaternion identity() noexcept
@@ -46,6 +49,11 @@ public:
 	constexpr operator glm::quat() const noexcept
 	{
 		return _quat;
+	}
+
+	operator cyclone::Quaternion() const noexcept
+	{
+		return cyclone::Quaternion(_quat.w, _quat.x, _quat.y, _quat.z);
 	}
 
 	// Yaw as `y`, pitch as `x`, roll as `z`. Values in radian

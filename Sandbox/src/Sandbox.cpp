@@ -24,15 +24,11 @@
 #include "Sandbox.hpp"
 
 #include "GameObjects/FreeCameraManager.hpp"
-#include "GameObjects/Floor.hpp"
-#include "GameObjects/TestBall.hpp"
+#include "GameObjects/PongBall.hpp"
 #include "GameObjects/links/Spring.hpp"
 #include "GameObjects/links/AnchorSpring.hpp"
-#include "GameObjects/WaterCube.hpp"
-#include "GameObjects/BuoyancyFApplier.hpp"
 #include "AssetDir.hpp"
 
-#include "BridgeFactory.hpp"
 
 
 void Sandbox::start()
@@ -40,8 +36,6 @@ void Sandbox::start()
 	instanciate<FreeCameraManager>();
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 0, 50, 0 }, CG::Color::White());
-
-	instanciate<Floor>(0.0).getComponent<CG::Transform>();
 
 	createAxis();
 	resetSimulation();

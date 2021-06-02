@@ -13,8 +13,6 @@
 #include <CG/prefabs/Cube.hpp>
 #include <CG/utils/Average.hpp>
 
-#include "GameObjects/BuoyancyFApplier.hpp"
-
 class Sandbox : public CG::AGame {
 public:
 	Sandbox() : CG::AGame(CG::Vector2{ 1600, 900 }, "Sandbox")

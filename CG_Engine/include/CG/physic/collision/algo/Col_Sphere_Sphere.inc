@@ -24,6 +24,7 @@ auto CG::checkCollision(
 
 	return CollisionResult {
 		.hitNormal = hitNormal,
+		.hitPosition = (center1 + center2) / 2, // TODO: Take into account speed of both objects to solve the equation ? this is good enough for now though
 		.penetration = penetration
 	};
 }

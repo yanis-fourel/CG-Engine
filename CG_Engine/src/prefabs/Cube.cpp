@@ -1,9 +1,9 @@
 #include "CG/prefabs/Cube.hpp"
-#include "CG/components/Transform.hpp"
 #include "CG/components/renderer/ShapeRenderer.hpp"
+#include "CG/components/Transform.hpp"
 
-CG::prefabs::Cube::Cube(const CG::Transform &transform)
+CG::prefabs::Cube::Cube()
 {
-	addComponent<CG::Transform>(transform);
+	addComponent<CG::Transform>();
 	addComponent<CG::ShapeRenderer>(CG::ShapeRenderer::Cube());
 }

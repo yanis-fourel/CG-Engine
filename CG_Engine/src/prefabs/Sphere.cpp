@@ -1,7 +1,7 @@
 #include "CG/prefabs/Sphere.hpp"
-#include "CG/components/Transform.hpp"
 #include "CG/components/renderer/ShapeRenderer.hpp"
 #include "CG/components/collider/SphereCollider.hpp"
+#include "CG/components/Transform.hpp"
 
 CG::prefabs::Sphere::Sphere(const Vector3 &pos, float radius)
 {

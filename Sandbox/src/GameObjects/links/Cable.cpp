@@ -1,5 +1,6 @@
 #include <CG/components/CustomPhysicResolver.hpp>
 #include <CG/components/Rigidbody.hpp>
+#include <CG/components/Transform.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
 
 #include "GameObjects/links/Cable.hpp"

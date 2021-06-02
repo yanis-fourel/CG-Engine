@@ -1,5 +1,4 @@
 #include "CG/components/collider/PlaneCollider.hpp"
-#include "CG/components/Transform.hpp"
 
 
 // Ignore for now, Planes are infinite so checking their collisions don't make much sense

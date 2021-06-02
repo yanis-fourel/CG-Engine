@@ -2,9 +2,12 @@
 
 #include <entt/entt.hpp>
 #include <string_view>
+#include <type_traits>
 
 #include "CG/InputManager.hpp"
 #include "CG/Camera.hpp"
+
+#include "CG/components/Transform.hpp"
 
 namespace CG {
 
@@ -83,6 +86,14 @@ T *CG::GameObject::tryGetComponent() noexcept
 	return getGame()->getWorld().try_get<T>(m_entity);
 }
 
+
+template<typename T>
+concept WantObjectToBeRegistered = requires(T a, CG::GameObject &obj)
+{
+	a.registerObject(std::ref(obj));
+};
+
+
 template<typename T, typename... TArgs>
 T &CG::GameObject::addComponent(TArgs &&... args) noexcept
 {
@@ -93,13 +104,24 @@ T &CG::GameObject::addComponent(TArgs &&... args) noexcept
 	//
 	// which could be handled as override in `getComponent` to return the result of the call to previously stored lambda
 
-	return getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
+	auto &result = getGame()->getWorld().emplace<T>(m_entity, std::forward<TArgs>(args)...);
+
+	if constexpr (WantObjectToBeRegistered<T>)
+		result.registerObject(*this);
+
+	return result;
 }
 
 template<typename T, typename ...TArgs>
-inline T &CG::GameObject::replaceComponent(TArgs && ...args) noexcept
+T &CG::GameObject::replaceComponent(TArgs && ...args) noexcept
 {
-	return getGame()->getWorld().emplace_or_replace<T>(m_entity, std::forward<TArgs>(args)...);
+	auto &result = getGame()->getWorld().emplace_or_replace<T>(m_entity, std::forward<TArgs>(args)...);
+
+	if constexpr (WantObjectToBeRegistered<T>)
+		result.registerObject(*this);
+
+	return result;
+
 }
 
 template<typename T>

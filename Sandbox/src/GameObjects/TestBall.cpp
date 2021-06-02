@@ -1,7 +1,6 @@
 #include <spdlog/spdlog.h>
 
 #include <CG/components/renderer/ShapeRenderer.hpp>
-#include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/rendering/materials/MaterialTextured.hpp>
 #include <CG/rendering/materials/MaterialSolid.hpp>
@@ -26,8 +25,8 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 	p.setMass(1.0f);
 	p.setLinearDamping(0.95f);
 	p.setAngularDamping(0.95f);
-	//p.setAcceleration(cyclone::Vector3::GRAVITY);
-	p.setAngularVelocity(CG::Vector3(1, 2, 3));
+	p.setAcceleration(cyclone::Vector3::GRAVITY);
+	//p.setAngularVelocity(CG::Vector3(1, 2, 3));
 
 	p.setRestitution(0.759); // About a tennis ball
 }

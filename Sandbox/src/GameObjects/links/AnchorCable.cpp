@@ -1,6 +1,7 @@
 #include <CG/components/CustomPhysicResolver.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
+#include <CG/components/Transform.hpp>
 
 #include "GameObjects/links/AnchorCable.hpp"
 

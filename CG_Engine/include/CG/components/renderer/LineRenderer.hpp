@@ -3,6 +3,7 @@
 #include "CG/math/Vector3.hpp"
 #include "CG/Color.hpp"
 #include "CG/rendering/materials/LineMaterial.hpp"	
+#include "CG/GameObject.hpp"
 
 namespace CG {
 

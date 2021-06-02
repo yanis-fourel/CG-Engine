@@ -1,8 +1,8 @@
 #include <spdlog/spdlog.h>
 
-#include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
+#include <CG/components/Transform.hpp>
 
 #include "GameObjects/links/Spring.hpp"
 

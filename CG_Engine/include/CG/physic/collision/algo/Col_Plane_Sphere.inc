@@ -1,6 +1,5 @@
 #include "CG/components/collider/SphereCollider.hpp"
 #include "CG/components/collider/PlaneCollider.hpp"
-#include "CG/components/Transform.hpp"
 
 template <>
 auto CG::checkCollision(
@@ -24,6 +23,7 @@ auto CG::checkCollision(
 
 	return CollisionResult {
 		.hitNormal = n,
+		.hitPosition = c0 - n * radius,
 		.penetration = radius - distance 
 	};
 }

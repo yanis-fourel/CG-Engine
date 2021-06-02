@@ -7,7 +7,6 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-#include "CG/components/Transform.hpp"
 #include "CG/rendering/ShaderProgram.hpp"
 #include "CG/Camera.hpp"
 

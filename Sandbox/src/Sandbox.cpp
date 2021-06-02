@@ -15,7 +15,6 @@
 #include <CG/physic/raycast/Raycast.hpp>
 
 #include "CG/components/PointLight.hpp"
-#include "CG/components/Transform.hpp"
 #include "CG/components/Rigidbody.hpp"
 #include "CG/components/renderer/ShapeRenderer.hpp"
 #include "CG/components/renderer/LineRenderer.hpp"
@@ -42,7 +41,7 @@ void Sandbox::start()
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 	m_pointLight = &instanciate<CG::prefabs::PointLight>(CG::Vector3{ 0, 50, 0 }, CG::Color::White());
 
-	instanciate<Floor>(0.0);
+	instanciate<Floor>(0.0).getComponent<CG::Transform>();
 
 	createAxis();
 	resetSimulation();

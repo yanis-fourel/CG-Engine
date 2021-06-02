@@ -9,7 +9,6 @@
 #include "CG/Window.hpp"
 
 #include "CG/internal/components/ToDelete.hpp"
-#include "CG/components/Transform.hpp"
 #include "CG/components/PointLight.hpp"
 
 #include "CG/physic/PhysicSystem.hpp"

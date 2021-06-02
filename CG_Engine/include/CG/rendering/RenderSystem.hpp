@@ -6,7 +6,6 @@
 #include "CG/Game.hpp"
 #include "CG/rendering/Material.hpp"
 #include "CG/rendering/ShaderProgram.hpp"
-#include "CG/components/Transform.hpp"
 
 namespace CG::Renderer {
 

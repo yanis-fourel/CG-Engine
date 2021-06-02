@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CG/math/Vector3.hpp"
+#include "CG/GameObject.hpp"
 
 namespace CG {
 

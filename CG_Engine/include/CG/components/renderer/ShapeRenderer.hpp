@@ -5,6 +5,7 @@
 
 #include "CG/rendering/GLTriangles.hpp"
 #include "CG/rendering/Material.hpp"
+#include "CG/Gameobject.hpp"
 
 namespace CG {
 

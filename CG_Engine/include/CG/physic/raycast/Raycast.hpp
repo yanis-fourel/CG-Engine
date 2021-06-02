@@ -4,7 +4,6 @@
 
 #include "CG/GameObject.hpp"
 #include "CG/Game.hpp"
-#include "CG/components/Transform.hpp"
 #include "CG/math/Ray.hpp"
 
 namespace CG {

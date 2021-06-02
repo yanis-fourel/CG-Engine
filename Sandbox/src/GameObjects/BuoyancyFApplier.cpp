@@ -3,7 +3,6 @@
 #include <spdlog/spdlog.h>
 
 #include <CG/math/Vector3.hpp>
-#include <CG/components/Transform.hpp>
 #include <CG/components/Rigidbody.hpp>
 
 #include "GameObjects/BuoyancyFApplier.hpp"

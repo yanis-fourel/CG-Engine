@@ -5,7 +5,6 @@
 //
 
 
-#include "CG/components/Transform.hpp"
 #include "CG/components/Rigidbody.hpp"
 
 #include "CG/physic/collision/collisionDetector.hpp"
@@ -28,26 +27,27 @@ bool localConstraintSolver(
 
 	auto totalInvertMass = imass1 + imass2;
 
-	{ // position resolver
-
-		auto movePerIMass = collision->hitNormal * (collision->penetration / totalInvertMass);
-
-		t1.position += movePerIMass * imass1;
-		t2.position -= movePerIMass * imass2;
-	}
-
-	{ // velocity resolver
-
+	{ // derivative resolver
 		auto restitution = (rb1.getRestitution() + rb2.getRestitution()) / 2;
 
+		// TODO: take into account both object's velocity `at impact point`, which can change depending on current roation velocity
 		auto separatingIndice = Vector3::dot(collision->hitNormal, rb1.getVelocity() - rb2.getVelocity());
 		auto newSeparatingIndice = separatingIndice * -restitution;
 		auto deltaSepIndice = newSeparatingIndice - separatingIndice;
 
 		auto impulsePerIMass = collision->hitNormal * (deltaSepIndice / totalInvertMass);
 
-		rb1.addImpulse(impulsePerIMass * imass1);
-		rb2.addImpulse(-impulsePerIMass * imass2);
+		// TODO: take into account frictions
+		rb1.addImpulseAtPoint(impulsePerIMass * imass1, collision->hitPosition);
+		rb2.addImpulseAtPoint(-impulsePerIMass * imass2, collision->hitPosition);
+	}
+
+	{ // position resolver
+
+		auto movePerIMass = collision->hitNormal * (collision->penetration / totalInvertMass);
+
+		t1.position += movePerIMass * imass1;
+		t2.position -= movePerIMass * imass2;
 	}
 
 	return true;

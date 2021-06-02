@@ -26,15 +26,10 @@ void CG::physic::detail::integrateAll(const AGame &game, double deltatime) noexc
 	auto view = game.getWorld().view<Transform, Rigidbody>();
 
 	view.each([&](Transform &transform, Rigidbody &rigidbody) {
-		rigidbody.setPosition(transform.position);
-		rigidbody.setRotation(transform.rotation);
-
 		rigidbody.integrate(deltatime);
-
-		transform.position = rigidbody.getPosition();
-		transform.rotation = rigidbody.getRotation();
 		});
 }
+
 
 void CG::physic::detail::resolveConstraints(const AGame &game) noexcept
 {
@@ -45,7 +40,7 @@ void CG::physic::detail::resolveConstraints(const AGame &game) noexcept
 	for (int i = 0; i < kIteration - 1; i++) {
 		game.getWorld().view<CG::CustomPhysicResolver>().each([](const CG::CustomPhysicResolver &resolver) {
 			resolver.call();
-		});
+			});
 
 		CG::physic::globalConstraintSolver<false, SphereCollider, PlaneCollider>(game.getWorld());
 	}

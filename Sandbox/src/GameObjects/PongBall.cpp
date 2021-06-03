@@ -9,7 +9,7 @@
 #include "GameObjects/PongBall.hpp"
 #include "AssetDir.hpp"
 
-TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(pos, radius)
+PongBall::PongBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(pos, radius)
 {
 	setTag<"simulation_object"_hs>();
 
@@ -31,14 +31,14 @@ TestBall::TestBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 	p.setRestitution(0.759); // About a tennis ball
 }
 
-void TestBall::update(double deltatime)
+void PongBall::update(double deltatime)
 {
 	//const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
 	//getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 
 }
 
-void TestBall::onCollide(CG::GameObject & obj)
+void PongBall::onCollide(CG::GameObject & obj)
 {
-	spdlog::info("Bounce !");
+
 }

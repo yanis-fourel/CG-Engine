@@ -63,6 +63,9 @@ struct Vector3
 		};
 	}
 
+	constexpr bool operator==(const CG::Vector3 &other) const noexcept = default;
+
+
 	constexpr Vector3 operator -() const noexcept
 	{
 		return Vector3{ -x, -y, -z };

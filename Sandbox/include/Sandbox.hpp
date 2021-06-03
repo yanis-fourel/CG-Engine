@@ -25,20 +25,6 @@ private:
 	void createAxis();
 	void resetSimulation();
 
-	auto getRandomSpawnPoint() -> CG::Vector3 const;
-
-	void handleBallDragDrop();
 private:
-	CG::prefabs::PointLight *m_pointLight;
-
-	float m_simulationTime;
 	CG::Average<double> m_avgTimePerFrame;
-
-	CG::GameObject *m_dragging = nullptr;
-
-
-	float m_simulationSpeed = 1;
-	int m_freezeInXTicks = 0;
-
-	double m_pauseAtSimulationTime = 0;
 };

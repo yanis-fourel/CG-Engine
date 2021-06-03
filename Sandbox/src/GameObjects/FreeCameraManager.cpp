@@ -9,13 +9,13 @@ FreeCameraManager::FreeCameraManager()
 void FreeCameraManager::start()
 {
 	// arbitrary start position
-	GameCamera->setPosition(glm::vec3(10, 8, 10));
-	GameCamera->setFacingDirection(glm::vec3(-5, -4, -5));
-	GameCamera->setUpDirection(glm::vec3(0, 1, 0));
-	GameCamera->setFov(103);
-	GameCamera->setAspectRatio(16.f / 9);
-	GameCamera->setRenderDistance(99999);
-	InputManager->setMouseCapture(false);
+	//GameCamera->setPosition(glm::vec3(10, 8, 10));
+	//GameCamera->setFacingDirection(glm::vec3(-5, -4, -5));
+	//GameCamera->setUpDirection(glm::vec3(0, 1, 0));
+	//GameCamera->setFov(103);
+	//GameCamera->setAspectRatio(16.f / 9);
+	//GameCamera->setRenderDistance(99999);
+	//InputManager->setMouseCapture(false);
 }
 
 void FreeCameraManager::update(double deltatime)

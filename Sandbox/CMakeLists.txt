@@ -5,14 +5,16 @@ add_executable(Sandbox
 	"src/main.cpp"
 	
 	"src/Sandbox.cpp" 
-	"src/GameObjects/FreeCameraManager.cpp"
+	
 	"src/GameObjects/PongBall.cpp" 
 	"src/GameObjects/links/Spring.cpp"
 	"src/GameObjects/links/AnchorSpring.cpp"
 	"src/GameObjects/links/Rod.cpp" 
 	"src/GameObjects/links/Cable.cpp"
 	"src/GameObjects/links/AnchorCable.cpp"
-)
+	"src/GameObjects/InvisiblePlane.cpp"
+	"src/GameObjects/FreeCameraManager.cpp"
+	"src/LevelCreator.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

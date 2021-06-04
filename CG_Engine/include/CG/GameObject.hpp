@@ -59,7 +59,7 @@ public:
 	void setTag();
 
 protected: // QoL getters
-	template <typename Tag>
+	template <std::uint32_t Tag>
 	void getObjectsOfTag(std::function<void(GameObject &)> func) const noexcept;
 
 	InputManager *InputManager;
@@ -142,7 +142,7 @@ bool CG::GameObject::hasTag() const noexcept
 	return getGame()->getWorld().has<entt::tag<Tag>>(m_entity);
 }
 
-template <typename Tag>
+template <std::uint32_t Tag>
 void CG::GameObject::getObjectsOfTag(std::function<void(GameObject &)> func) const noexcept
 {
 	getGame()->getObjectsOfTag<Tag>(func);

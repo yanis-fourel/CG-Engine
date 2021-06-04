@@ -11,7 +11,7 @@
 
 PongBall::PongBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(pos, radius)
 {
-	setTag<"simulation_object"_hs>();
+	setTag<"ball"_hs>();
 
 	auto mat = std::make_unique<CG::material::Textured>(ASSET_DIR "world-map.jpg");
 	//auto mat = std::make_unique<CG::material::Solid>(CG::material::Solid::Gold());

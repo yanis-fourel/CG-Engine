@@ -30,6 +30,7 @@
 #include "GameObjects/links/AnchorSpring.hpp"
 
 #include "GameObjects/paddles/PlayerPaddle.hpp"
+#include "GameObjects/paddles/AIPaddle.hpp"
 
 #include "LevelCreator.hpp"
 
@@ -40,11 +41,6 @@
 void Sandbox::start()
 {
 	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
-	Level::create(*getGame());
-
-	instanciate<FreeCameraManager>();
-
-	instanciate<PlayerPaddle>();
 
 	resetSimulation();
 
@@ -54,7 +50,7 @@ void Sandbox::start()
 void Sandbox::resetSimulation()
 {
 	getGame()->setFrozen(true);
-
+	getGame()->clearScene();
 
 	getGame()->getObjectsOfTag<"simulation_object"_hs>([&](auto &obj) {
 		obj.destroy();
@@ -62,19 +58,14 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	//createBridge(*getGame());
+	Level::create(*getGame());
+
+	instanciate<FreeCameraManager>();
 
 	auto obj = &instanciate<PongBall>(CG::Vector3(0, 0, 0), 0.5f);
 
-	//std::vector<CG::GameObject *> objs;
-
-	//for (int i = 0; i < 50; i++) {
-
-	//	for (auto &o : objs)
-	//		instanciate<Spring>(*obj, *o, 5, 5);
-
-	//	objs.push_back(obj);
-	//}
+	instanciate<PlayerPaddle>();
+	instanciate<AIPaddle>();
 }
 
 void Sandbox::update(double deltatime)

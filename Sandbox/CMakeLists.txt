@@ -17,7 +17,7 @@ add_executable(Sandbox
 	"src/GameObjects/paddles/APaddle.cpp"
 	"src/GameObjects/paddles/PlayerPaddle.cpp"
 	"src/LevelCreator.cpp" 
-	)
+	 "include/GameObjects/paddles/AIPaddle.hpp" "src/GameObjects/paddles/AIPaddle.cpp")
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

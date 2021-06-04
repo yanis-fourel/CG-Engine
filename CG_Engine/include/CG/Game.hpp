@@ -11,6 +11,7 @@
 #include "CG/InputManager.hpp"
 
 #include "CG/Color.hpp"
+#include "CG/internal/components/ToDelete.hpp"
 
 namespace CG {
 
@@ -95,6 +96,6 @@ T &CG::AGame::instanciate(TArgs &&... args)
 template<std::uint32_t Tag>
 void CG::AGame::getObjectsOfTag(std::function<void(CG::GameObject &)> func) noexcept
 {
-	for (auto id : m_world.view<entt::tag<Tag>>())
+	for (auto id : m_world.view<entt::tag<Tag>>(entt::exclude<CG::ToDelete>))
 		func(*m_objects.at(id));
 }

@@ -14,7 +14,10 @@ add_executable(Sandbox
 	"src/GameObjects/links/AnchorCable.cpp"
 	"src/GameObjects/InvisiblePlane.cpp"
 	"src/GameObjects/FreeCameraManager.cpp"
-	"src/LevelCreator.cpp")
+	"src/GameObjects/paddles/APaddle.cpp"
+	"src/GameObjects/paddles/PlayerPaddle.cpp"
+	"src/LevelCreator.cpp" 
+	)
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

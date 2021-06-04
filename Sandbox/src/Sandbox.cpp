@@ -29,6 +29,8 @@
 #include "GameObjects/links/Spring.hpp"
 #include "GameObjects/links/AnchorSpring.hpp"
 
+#include "GameObjects/paddles/PlayerPaddle.hpp"
+
 #include "LevelCreator.hpp"
 
 #include "AssetDir.hpp"
@@ -42,7 +44,11 @@ void Sandbox::start()
 
 	instanciate<FreeCameraManager>();
 
+	instanciate<PlayerPaddle>();
+
 	resetSimulation();
+
+	getGame()->setFrozen(false);
 }
 
 void Sandbox::resetSimulation()

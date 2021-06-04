@@ -19,9 +19,18 @@ struct Color
 
 	constexpr Vector3 toVec3() const noexcept { return { r, g, b }; }
 
+	constexpr Color operator*(double scalar) const noexcept
+	{
+		return Color(
+			r * scalar,
+			g * scalar,
+			b * scalar
+		);
+	}
+
 	static constexpr Color lerp(const Color &a, const Color &b, double val)
 	{
-		return Color {
+		return Color{
 			std::lerp(a.r, b.r, static_cast<value_type>(val)),
 			std::lerp(a.g, b.g, static_cast<value_type>(val)),
 			std::lerp(a.b, b.b, static_cast<value_type>(val)),

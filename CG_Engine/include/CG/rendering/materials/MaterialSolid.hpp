@@ -10,6 +10,10 @@ struct Solid : public AMaterial {
 	static constexpr std::string_view FragmentShaderPath = "solid.frag.glsl";
 
 	Solid() = default;
+	constexpr Solid(Color color, float shininess = 32, float opacity = 1) noexcept
+		: ambiant(color * 0.5), diffuse(color), specular(color), shininess(shininess), opacity(opacity)
+	{}
+
 	constexpr Solid(Color ambiant, Color diffuse, Color specular, float shininess, float opacity = 1) noexcept
 		: ambiant(ambiant), diffuse(diffuse), specular(specular), shininess(shininess), opacity(opacity)
 	{}

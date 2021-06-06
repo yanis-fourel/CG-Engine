@@ -62,7 +62,8 @@ void Sandbox::resetSimulation()
 
 	instanciate<FreeCameraManager>();
 
-	auto obj = &instanciate<PongBall>(CG::Vector3(0, 0, 0), 0.5f);
+	auto ball = &instanciate<PongBall>(CG::Vector3(0, 0, 0), 0.5f);
+
 
 	instanciate<PlayerPaddle>();
 	instanciate<AIPaddle>();

@@ -1,10 +1,17 @@
 #include <CG/components/renderer/ShapeRenderer.hpp>
 #include <CG/components/renderer/LineRenderer.hpp>
+#include <CG/components/Rigidbody.hpp>
 #include <CG/rendering/materials/MaterialSolid.hpp>
 #include "GameObjects/paddles/APaddle.hpp"
 
 APaddle::APaddle(float posZ, const CG::Color &color, const CG::Color &bordureColor)
 {
+	getObjectsOfTag<"ball"_hs>([&](CG::GameObject &obj) {
+		m_ball = &obj;
+		});
+
+	assert(m_ball && "Please instanciate ball *before* the paddle, or find a better way to get a reference to the ball");
+
 	addComponent<CG::Transform>(
 		CG::Vector3(0, 0, posZ),
 		CG::Quaternion::fromLookDirection(CG::Vector3::Down(), CG::Vector3(0, 0, -posZ)),
@@ -25,6 +32,14 @@ APaddle::APaddle(float posZ, const CG::Color &color, const CG::Color &bordureCol
 void APaddle::update(double deltatime)
 {
 	move(deltatime);
+
+	if (doesCollideWithBall(m_ball->getComponent<CG::Transform>())) {
+		auto &rb = m_ball->getComponent<CG::Rigidbody>();
+
+		auto vel = rb.getVelocity();
+		vel.z = -vel.z;
+		rb.setVelocity(vel);
+	}
 }
 
 void APaddle::lateUpdate(double deltatime)
@@ -49,4 +64,23 @@ void APaddle::lateUpdate(double deltatime)
 	m_bordureRenderers[3]->getComponent<CG::LineRenderer>().from = bottomLeft;
 
 	m_bordureRenderers[3]->getComponent<CG::LineRenderer>().to = topLeft;
+}
+
+bool APaddle::doesCollideWithBall(const CG::Transform &ballT) const noexcept
+{
+	auto pos = getComponent<CG::Transform>().position;
+
+	// Z axis
+	if (std::abs(ballT.position.z - pos.z) > 0.5 * ballT.scale.z)
+		return false;
+
+	// X axis
+	if (std::abs(ballT.position.x - pos.x) > 0.5 * (ballT.scale.x + kPaddleWidth))
+		return false;
+
+	// X axis
+	if (std::abs(ballT.position.y - pos.y) > 0.5 * (ballT.scale.y + kPaddleHeight))
+		return false;
+
+	return true;
 }

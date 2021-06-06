@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>
 
@@ -72,7 +74,8 @@ struct Vector3
 	}
 
 	template <typename T>
-	constexpr Vector3 operator*(T fact) const noexcept
+	constexpr Vector3 operator*(T fact) const noexcept 
+		requires std::integral<T> || std::floating_point<T>
 	{
 		return {
 			x * static_cast<value_type>(fact),

@@ -29,13 +29,13 @@ inline void uploadModelMatrixes(const ShaderProgram &sp, const CG::Transform &t,
 	}
 
 
-	Vector3 n1 = t.rotation * Vector3::Up();
+	Vector3 n1 = Vector3::Up() * t.rotation;
 	Vector3 n2 = static_cast<glm::vec3>(Vector3::Up()) * glm::toMat3(static_cast<glm::quat>(t.rotation));
 	Vector3 n3 = static_cast<glm::vec3>(Vector3::Up()) * glm::mat3(glm::transpose(glm::inverse(glm::mat3(model))));
 
 	//std::cout << model << std::endl;
 
-	Vector3 p1 = t.rotation * Vector3(0, 0, 1);
+	Vector3 p1 = Vector3(0, 0, 1) * t.rotation;
 	Vector3 p2 = glm::vec3(glm::vec4(0, 0, 0.001, 1) * model);
 
 

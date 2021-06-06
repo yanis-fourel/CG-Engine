@@ -11,4 +11,8 @@ public:
 private:
 	void update(double deltatime) override;
 	void onCollide(CG::GameObject &obj) override;
+
+private:
+	static constexpr double kBaseSpeed = 5.f;
+	static constexpr double kAcceleration = 0.5f;
 };

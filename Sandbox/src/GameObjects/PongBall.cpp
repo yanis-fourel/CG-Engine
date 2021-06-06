@@ -21,14 +21,26 @@ PongBall::PongBall(const CG::Vector3 &pos, float radius) : CG::prefabs::Sphere(p
 
 	auto &p = addComponent<CG::Rigidbody>();
 
-	p.setVelocity(CG::Vector3::Zero());	
+	p.setVelocity(CG::Vector3::Zero());
 	p.setMass(1.0f);
-	p.setLinearDamping(0.95f);
-	p.setAngularDamping(0.95f);
-	p.setAcceleration(cyclone::Vector3::GRAVITY);
+	p.setLinearDamping(1.f);
+	p.setAngularDamping(1.f);
+	//p.setAcceleration(cyclone::Vector3::GRAVITY);
 	//p.setAngularVelocity(CG::Vector3(1, 2, 3));
 
-	p.setRestitution(0.759); // About a tennis ball
+	p.setRestitution(1.f);
+
+
+	auto initialDirection = CG::Vector3::Forward() * CG::Quaternion::fromEuler(
+		CG::random::range(-std::numbers::pi / 4, std::numbers::pi / 4),
+		CG::random::range(-std::numbers::pi / 4, std::numbers::pi / 4),
+		0
+	);
+
+	if (CG::random::oneIn(2))
+		initialDirection.z = -initialDirection.z;
+
+	p.setVelocity(initialDirection * kBaseSpeed);
 }
 
 void PongBall::update(double deltatime)
@@ -36,9 +48,12 @@ void PongBall::update(double deltatime)
 	//const auto rotVel = CG::Quaternion::fromEuler(1, 2, 3);
 	//getComponent<CG::Transform>().rotation *= rotVel * deltatime;
 
+	auto &rb = getComponent<CG::Rigidbody>();
+
+	rb.setVelocity(rb.getVelocity() + rb.getVelocity().normalized() * kAcceleration * deltatime);
 }
 
-void PongBall::onCollide(CG::GameObject & obj)
+void PongBall::onCollide(CG::GameObject &obj)
 {
 
 }

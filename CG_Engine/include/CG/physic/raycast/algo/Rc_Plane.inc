@@ -10,7 +10,7 @@ namespace CG {
 template <>
 inline std::optional<Vector3> castRaycastOn<PlaneCollider>(const PlaneCollider &col, const CG::Transform &trans, const Ray &ray)
 {
-	auto normal = trans.rotation * col.normal;
+	auto normal = col.normal * trans.rotation;
 	auto p0 = trans.position + col.point;
 
 	auto denom = Vector3::dot(normal, ray.direction());

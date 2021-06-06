@@ -8,6 +8,4 @@ public:
 protected:
 	void move(double deltatime) override;
 
-private:
-	CG::GameObject *m_ball = nullptr;
 };

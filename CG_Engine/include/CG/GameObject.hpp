@@ -35,6 +35,9 @@ public:
 	T &getComponent() noexcept;
 
 	template<typename T>
+	const T &getComponent() const noexcept;
+
+	template<typename T>
 	T *tryGetComponent() noexcept;
 
 	[[nodiscard]] AGame *getGame() const noexcept;
@@ -81,6 +84,12 @@ T &CG::GameObject::getComponent() noexcept
 }
 
 template<typename T>
+const T &CG::GameObject::getComponent() const noexcept
+{
+	return getGame()->getWorld().get<T>(m_entity);
+}
+
+template<typename T>
 T *CG::GameObject::tryGetComponent() noexcept
 {
 	return getGame()->getWorld().try_get<T>(m_entity);
@@ -88,7 +97,7 @@ T *CG::GameObject::tryGetComponent() noexcept
 
 
 template<typename T>
-concept WantObjectToBeRegistered = requires(T a, CG::GameObject &obj)
+concept WantObjectToBeRegistered = requires(T a, CG::GameObject & obj)
 {
 	a.registerObject(std::ref(obj));
 };

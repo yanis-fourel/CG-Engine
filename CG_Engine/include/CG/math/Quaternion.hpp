@@ -75,7 +75,7 @@ public:
 		return  Quaternion::fromEuler(eulers.y, eulers.x, eulers.z);
 	}
 
-	Vector3 operator*(const Vector3 &vec) const noexcept
+	Vector3 rotateVector(const Vector3 &vec) const noexcept
 	{
 		return static_cast<glm::vec3>(vec) * _quat;
 	}
@@ -89,5 +89,10 @@ public:
 private:
 	glm::quat _quat;
 };
+
+inline Vector3 operator*(const CG::Vector3 &vec, const CG::Quaternion &quat) noexcept
+{
+	return quat.rotateVector(vec);
+}
 
 }

@@ -10,7 +10,7 @@ auto CG::checkCollision(
 	double radius = col_sphere.radius * (t_sphere.scale.x + t_sphere.scale.y + t_sphere.scale.z) / 3;
 
 	Vector3 p0 = t_plane.position + col_plane.point;
-	Vector3 n = (t_plane.rotation * col_plane.normal).normalized();
+	Vector3 n = (col_plane.normal * t_plane.rotation).normalized();
 
 	auto distance = Vector3::dot(c0 - p0, n);
 

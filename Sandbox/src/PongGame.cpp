@@ -1,6 +1,7 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 #include <iostream>
+#include <sstream>
 
 #include <imgui.h>
 
@@ -21,7 +22,7 @@
 
 #include "CG/components/collider/PlaneCollider.hpp"
 
-#include "Sandbox.hpp"
+#include "PongGame.hpp"
 
 #include "GameObjects/PongBall.hpp"
 #include "GameObjects/InvisiblePlane.hpp"
@@ -38,23 +39,25 @@
 
 
 
-void Sandbox::start()
+void PongGame::start()
 {
-	getGame()->setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
+	// Conserved default font
+	ImGui::GetIO().Fonts->AddFontDefault();
+
+	ImFontConfig cfg;
+	cfg.SizePixels = 32.f;
+	m_scoreFont = ImGui::GetIO().Fonts->AddFontDefault(&cfg);
+
+	setAmbiantLight(CG::Color(0.8f, 0.8f, 0.8f, 1.f));
 
 	resetSimulation();
 
-	getGame()->setFrozen(false);
+	setFrozen(false);
 }
 
-void Sandbox::resetSimulation()
+void PongGame::resetSimulation()
 {
-	getGame()->setFrozen(true);
-	getGame()->clearScene();
-
-	getGame()->getObjectsOfTag<"simulation_object"_hs>([&](auto &obj) {
-		obj.destroy();
-		});
+	clearScene();
 
 	// clear ^^^ vvv setup
 
@@ -69,15 +72,31 @@ void Sandbox::resetSimulation()
 	instanciate<AIPaddle>();
 }
 
-void Sandbox::update(double deltatime)
+void PongGame::onScore(Team goalTeam)
 {
+	spdlog::info("Goal for {}", goalTeam == Team::Player ? "AI" : "player");
+	m_shouldReset = true;
+
+	if (goalTeam == Team::Player)
+		m_EnemiScore++;
+	else
+		m_playerScore++;
+}
+
+void PongGame::update(double deltatime)
+{
+	if (m_shouldReset) {
+		resetSimulation();
+		m_shouldReset = false;
+	}
+
 	if (getInputManager().isKeyDown(GLFW_KEY_ESCAPE))
 		getWindow().close();
 
 	if (deltatime > 0)
 		m_avgTimePerFrame.add(deltatime);
 
-	float width = getGame()->getWindow().getSize().x;
+	float width = getWindow().getSize().x;
 	float height = 100;
 
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -85,18 +104,35 @@ void Sandbox::update(double deltatime)
 	ImGui::SetNextWindowBgAlpha(0.f);
 	ImGui::Begin("Simulation", nullptr, ImGuiWindowFlags_NoDecoration);
 
-	ImGui::Text("fps : %.1f (%.1fms)", 1 / getGame()->getRealDeltatime(), getGame()->getRealDeltatime() * 1000);
+	ImGui::Text("fps : %.1f (%.1fms)", 1 / getRealDeltatime(), getRealDeltatime() * 1000);
 	ImGui::Text("Average time per frame : %.3fms", m_avgTimePerFrame.get() * 1000);
 
 	ImGui::SetCursorPosX((width - 100) * 0.5f);
-	if (ImGui::Button(getGame()->isFrozen() ? "Play" : "Pause", ImVec2(100, 0)))
-		getGame()->setFrozen(!getGame()->isFrozen());
+	ImGui::SetCursorPosY(10);
+
+	if (ImGui::Button(isFrozen() ? "Play" : "Pause", ImVec2(100, 0))
+		|| getInputManager().isKeyPressed(GLFW_KEY_SPACE))
+		setFrozen(!isFrozen());
 
 	ImGui::SameLine();
 	if (ImGui::Button("Reset", ImVec2(50, 0))) {
 		resetSimulation();
 	}
 
-	ImGui::End();
 
+	{
+		ImGui::PushFont(m_scoreFont);
+
+		// TODO: replace with std::format once it's implemented with MSVC
+		auto text = (std::stringstream{} << "Player " << m_playerScore << " : " << m_EnemiScore << " Enemy").str();
+		auto textSize = ImGui::CalcTextSize(text.c_str()).x;
+
+		ImGui::SetCursorPosX((width - textSize) * 0.5f);
+		ImGui::SetCursorPosY(50);
+
+		ImGui::Text(text.c_str());
+		ImGui::PopFont();
+	}
+
+	ImGui::End();
 }

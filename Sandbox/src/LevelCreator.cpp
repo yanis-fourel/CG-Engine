@@ -3,6 +3,7 @@
 
 #include "LevelCreator.hpp"
 #include "GameObjects/InvisiblePlane.hpp"
+#include "GameObjects/Goal.hpp"
 
 namespace Level {
 
@@ -50,7 +51,8 @@ void create(CG::AGame &game)
 	game.instanciate<InvisiblePlane>(CG::Vector3(-0.5 * kWidth, 0, 0), CG::Quaternion::fromEuler(0, 0, +0.5 * std::numbers::pi));
 	game.instanciate<InvisiblePlane>(CG::Vector3(+0.5 * kWidth, 0, 0), CG::Quaternion::fromEuler(0, 0, -0.5 * std::numbers::pi));
 
-
+	game.instanciate<Goal>(Team::Player, 0.5 * (kDepth + 1));
+	game.instanciate<Goal>(Team::Enemy, -0.5 * (kDepth + 1));
 
 	setupCamera(game.getCamera());
 	game.getInputManager().setMouseCapture(false);

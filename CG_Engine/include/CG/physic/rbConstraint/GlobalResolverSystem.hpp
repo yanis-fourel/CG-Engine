@@ -7,6 +7,7 @@
 
 #include <entt/entt.hpp>
 
+#include <CG/internal/components/ToDelete.hpp>
 #include "LocalResolver.hpp"
 
 namespace CG::physic {
@@ -36,8 +37,8 @@ void callOnCollideEvent(GameObject &obj1, GameObject &obj2)
 template <bool callEvent, typename Col1, typename Col2>
 void matchAllEntities_2(entt::registry &world) noexcept
 {
-	auto v1 = world.view<Transform, Rigidbody, Col1>();
-	auto v2 = world.view<Transform, Rigidbody, Col2>();
+	auto v1 = world.view<Transform, Rigidbody, Col1>(entt::exclude<CG::ToDelete>);
+	auto v2 = world.view<Transform, Rigidbody, Col2>(entt::exclude<CG::ToDelete>);
 
 	v1.each([&](auto e1, auto &t1, auto &rb1, auto &col1) {
 		v2.each([&](auto e2, auto &t2, auto &rb2, auto &col2) {
@@ -59,7 +60,7 @@ void matchAllEntities_1(entt::registry &world) noexcept
 	std::vector<std::tuple<entt::entity, Transform *, Rigidbody *, Col *>> entities;
 
 	{
-		auto v = world.view<Transform, Rigidbody, Col>();
+		auto v = world.view<Transform, Rigidbody, Col>(entt::exclude<CG::ToDelete>);
 		v.each([&](auto e, Transform &t, Rigidbody &rb, Col &c) {
 			entities.emplace_back(e, &t, &rb, &c);
 			});

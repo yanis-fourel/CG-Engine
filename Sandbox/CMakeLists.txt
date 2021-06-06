@@ -4,7 +4,7 @@
 add_executable(Sandbox
 	"src/main.cpp"
 	
-	"src/Sandbox.cpp" 
+	"src/PongGame.cpp" 
 	
 	"src/GameObjects/PongBall.cpp" 
 	"src/GameObjects/links/Spring.cpp"
@@ -16,8 +16,10 @@ add_executable(Sandbox
 	"src/GameObjects/FreeCameraManager.cpp"
 	"src/GameObjects/paddles/APaddle.cpp"
 	"src/GameObjects/paddles/PlayerPaddle.cpp"
+	"src/GameObjects/paddles/AIPaddle.cpp" 
+	"src/GameObjects/Goal.cpp"
 	"src/LevelCreator.cpp" 
-	 "include/GameObjects/paddles/AIPaddle.hpp" "src/GameObjects/paddles/AIPaddle.cpp")
+	)
 
 target_link_libraries(Sandbox PUBLIC CG_Engine)
 

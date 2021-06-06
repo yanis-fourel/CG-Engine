@@ -1,5 +1,6 @@
 #pragma once
 
+#include <CG/GameObject.hpp>
 
 #include <CG/math/Vector3.hpp>
 #include <CG/math/Quaternion.hpp>

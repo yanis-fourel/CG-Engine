@@ -13,18 +13,27 @@
 #include <CG/prefabs/Cube.hpp>
 #include <CG/utils/Average.hpp>
 
-class Sandbox : public CG::AGame {
+#include "GameObjects/Goal.hpp"
+
+class PongGame : public CG::AGame {
 public:
-	Sandbox() : CG::AGame(CG::Vector2{ 1600, 900 }, "Sandbox")
+	PongGame() : CG::AGame(CG::Vector2{ 1600, 900 }, "PongGame")
 	{}
 
 	void start() override;
 	void update(double deltatime) override;
 
+	void onScore(Team goalTeam);
 private:
 	void createAxis();
 	void resetSimulation();
 
 private:
 	CG::Average<double> m_avgTimePerFrame;
+	bool m_shouldReset = false;
+
+	int m_playerScore = 0;
+	int m_EnemiScore = 0;
+
+	ImFont *m_scoreFont;
 };

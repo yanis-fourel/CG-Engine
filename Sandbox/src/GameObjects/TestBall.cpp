@@ -40,5 +40,5 @@ void TestBall::update(double deltatime)
 
 void TestBall::onCollide(CG::GameObject & obj)
 {
-	spdlog::info("Bounce !");
+	//spdlog::info("Bounce !");
 }

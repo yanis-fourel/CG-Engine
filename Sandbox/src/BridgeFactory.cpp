@@ -8,8 +8,8 @@
 
 void createBridge(CG::AGame &game)
 {
-	constexpr auto kStart = CG::Vector3(0, 5, 0);
-	constexpr auto kEnd = CG::Vector3(0, 5, 10);
+	constexpr auto kStart = CG::Vector3(10, 5, 0);
+	constexpr auto kEnd = CG::Vector3(10, 5, 10);
 	constexpr auto kWidth = 2.f;
 	constexpr auto kStepCount = 5u;
 	constexpr auto kCablesHeight = 3.f;

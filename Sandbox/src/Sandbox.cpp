@@ -69,18 +69,19 @@ void Sandbox::resetSimulation()
 
 	// clear ^^^ vvv setup
 
-	//createBridge(*getGame());
+	createBridge(*getGame());
 
+
+	std::vector<CG::GameObject *> objs;
+
+	for (int i = 0; i < 5; i++) {
 		auto obj = &instanciate<TestBall>(getRandomSpawnPoint(), 0.5f);
-	//std::vector<CG::GameObject *> objs;
 
-	//for (int i = 0; i < 50; i++) {
+		for (auto &o : objs)
+			instanciate<Spring>(*obj, *o, 5, 5);
 
-	//	for (auto &o : objs)
-	//		instanciate<Spring>(*obj, *o, 5, 5);
-
-	//	objs.push_back(obj);
-	//}
+		objs.push_back(obj);
+	}
 }
 
 auto Sandbox::getRandomSpawnPoint() -> CG::Vector3 const

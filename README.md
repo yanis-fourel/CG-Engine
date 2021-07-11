@@ -26,6 +26,7 @@ It supports :
 - complex object which can be loaded from files like `.obj` using [assimp library](https://github.com/assimp/assimp)
 - 3d lines
 - Transparent objects
+- Textures
 
 All the UI is done using [ImGui](https://github.com/ocornut/imgui)
 
